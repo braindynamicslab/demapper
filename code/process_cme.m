@@ -10,3 +10,7 @@ c1path = [s01path, ...
 
 c = cifti_read(c1path);
 
+size(c.cdata)
+
+cleft = cifti_struct_dense_extract_surface_data(c, 'CORTEX_LEFT');
+cright = cifti_struct_dense_extract_surface_data(c, 'CORTEX_RIGHT');
