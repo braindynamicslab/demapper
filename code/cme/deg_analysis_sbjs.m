@@ -62,9 +62,9 @@ for sbjid = 1:length(sbjs)
 end
 disp('...done')
 
-disp('Processing mappers...')
+fprintf('Processing %d mappers...', length(all_mappers));
 for mid = 1:length(all_mappers)
-    mapper_name = all_mappers(mid);
+    mapper_name = cell2mat(all_mappers(mid));
     disp(mapper_name)
 
     all_degs = zeros(length(sbjs), length(timing_arr));
