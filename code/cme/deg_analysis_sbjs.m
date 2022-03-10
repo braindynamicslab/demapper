@@ -5,7 +5,8 @@ module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev2.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev2.json/"
-matlab -r "datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; code/cme/deg_analysis_sbj.m"
+ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
+matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
 
 %}
 
@@ -35,8 +36,10 @@ sbjs = sbjs(startsWith(sbjs , 'SBJ'));
 
 all_mappers = {};
 
+disp('Extracting mappers...')
 for sbjid = 1:length(sbjs)
-    sbj = sbjs(sbjid);
+    sbj = cell2mat(sbjs(sbjid));
+    disp(sbj)
 
     mappers_dirs = dir(fullfile(datafolder, sbj));
     names = struct2cell(mappers_dirs); names = names(1,:);
@@ -57,9 +60,12 @@ for sbjid = 1:length(sbjs)
         all_mappers = new_mappers;
     end
 end
+disp('...done')
 
+disp('Processing mappers...')
 for mid = 1:length(all_mappers)
     mapper_name = all_mappers(mid);
+    disp(mapper_name)
 
     all_degs = zeros(length(sbjs), length(timing_arr));
     for sbjid = 1:length(sbjs)
@@ -73,6 +79,7 @@ for mid = 1:length(all_mappers)
     output_path = fullfile(output_dir, [mapper_name, '.png']);
     plot_degs(avg_degs, timing_labels, timing_changes, mapper_name);
 end
+disp('...done')
 
 
 %% Helper functions

@@ -1,7 +1,7 @@
 close all;
 basefolder  = split(pwd, 'demapper');
 basefolder  = [basefolder{1}, 'demapper'];
-codefolder  = [basefolder,'/sim'];
+codefolder  = [basefolder,'/code/sim'];
 addpath(genpath(codefolder));
 
 TRs_total = 1200;
