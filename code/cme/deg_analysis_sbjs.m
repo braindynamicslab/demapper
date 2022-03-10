@@ -1,5 +1,5 @@
 %{
-Run the with the following command on Sherlock
+Run the with the following command on Sherlock (on `sdev`)
 
 module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev2.json/"
@@ -62,16 +62,16 @@ for sbjid = 1:length(sbjs)
 end
 disp('...done')
 
-fprintf('Processing %d mappers...', length(all_mappers));
+fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
     disp(mapper_name)
 
     all_degs = zeros(length(sbjs), length(timing_arr));
     for sbjid = 1:length(sbjs)
-        sbj = sbjs(sbjid);
+        sbj = cell2mat(sbjs(sbjid));
 
-        mapper_path = fullfile(datafolder, sbjd, mapper_name, 'res.mat');
+        mapper_path = fullfile(datafolder, sbj, mapper_name, 'res.mat');
         all_degs(sbjid, :) = process(mapper_path);
     end
 
