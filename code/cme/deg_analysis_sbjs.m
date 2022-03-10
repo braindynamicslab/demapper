@@ -77,7 +77,7 @@ for mid = 1:length(all_mappers)
 
     avg_degs = mean(all_degs, 1);
     output_path = fullfile(output_dir, [mapper_name, '.png']);
-    plot_degs(avg_degs, timing_labels, timing_changes, mapper_name);
+    plot_degs(avg_degs, timing_labels, timing_changes, mapper_name, output_path);
 end
 disp('...done')
 
