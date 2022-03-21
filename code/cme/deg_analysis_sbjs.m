@@ -13,7 +13,7 @@ module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev2.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev2.json/"
-STAT_TYPE="compute_degrees"
+STAT_TYPE="degrees_TRs"
 ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; stat_type='${STAT_TYPE}';"
 matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
 
@@ -42,6 +42,7 @@ timing_table.task_name = string(timing_table.task_name);
 timing_labels = timing_table.task_name;
 timing_arr = timing_table.task;
 timing_changes = find([timing_arr(2:end) - timing_arr(1:end-1); 1]);
+target_chgs = findchangepts(timing_arr', 'MaxNumChanges', 15);
 
 sbjsdirs = dir(datafolder);
 sbjs = struct2cell(sbjsdirs); sbjs  = sbjs (1,:);
@@ -80,6 +81,7 @@ if ~exist(stat_outdir, 'dir')
     mkdir(stat_outdir)
 end
 
+chpts_errors = zeros(size(all_mappers));
 fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
@@ -99,8 +101,17 @@ for mid = 1:length(all_mappers)
 
     stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
     write_1d(avg_degs, stat_output_path);
+
+    chgs = findchangepts(avg_degs, 'MaxNumChanges', 7);
+    total_err = chgs_dist(chgs, target_chgs);
+    chpts_errors(mid) = total_err;
 end
 disp('...done')
+
+varNames = ["Mapper", "ChangePointsIndicesError"];
+mappers_table = table(all_mappers', chpts_errors','VariableNames', varNames);
+output_path = fullfile(stat_outdir, ['combined-', stat_type, '.csv']);
+writetable(mappers_table, output_path);
 
 
 %% Helper functions
@@ -161,6 +172,21 @@ function plot_degs(degs, timing_labels, timing_changes, mapper_name, output_path
 
     saveas(f, output_path);
     close(f);
+end
+
+function total_err = chgs_dist(chgs, target_chgs)
+    total_err = 0;
+    for i = 1:length(chgs)
+        ch_start = target_chgs(2*i); ch_end = target_chgs(2*i+1);
+        chg = chgs(1, i);
+        err = 0;
+        if chg < ch_start
+            err = ch_start - chg;
+        elseif chg > ch_end
+            err = ch_end - chg;
+        end
+        total_err = total_err + abs(err);
+    end
 end
 
 function data = read_1d(data_path)
