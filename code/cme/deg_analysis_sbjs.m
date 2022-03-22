@@ -82,6 +82,7 @@ if ~exist(stat_outdir, 'dir')
 end
 
 chpts_errors = zeros(size(all_mappers));
+chpts_residuals = zeros(size(all_mappers));
 fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
@@ -102,14 +103,16 @@ for mid = 1:length(all_mappers)
     stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
     write_1d(avg_degs, stat_output_path);
 
-    chgs = findchangepts(avg_degs, 'MaxNumChanges', 7);
+    [chgs, residual] = findchangepts(avg_degs, 'MaxNumChanges', 7);
     total_err = chgs_dist(chgs, target_chgs);
     chpts_errors(mid) = total_err;
+    chpts_residuals(mid) = residual;
 end
 disp('...done')
 
-varNames = ["Mapper", "ChangePointsIndicesError"];
-mappers_table = table(all_mappers', chpts_errors','VariableNames', varNames);
+varNames = ["Mapper", "ChangePointsIndicesError", "ChangePointsResiduals"];
+mappers_table = table(all_mappers', chpts_errors', chpts_residuals', ...
+    'VariableNames', varNames);
 output_path = fullfile(stat_outdir, ['combined-', stat_type, '.csv']);
 writetable(mappers_table, output_path);
 
