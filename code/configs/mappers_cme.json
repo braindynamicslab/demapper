@@ -1,0 +1,24 @@
+{
+  "preprocess": [
+      { "type": "drop-nan" },
+      { "type": "drop-lowvar", "var": 1e-2 },
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "BDLMapper",
+    "k": [16, 32, 48],
+    "resolution": [10, 15, 20, 25],
+    "gain": [50, 60, 70, 80]
+  },
+  {
+    "type": "NeuMapper",
+    "k": [24, 32, 40],
+    "resolution": [100, 150, 200, 250],
+    "gain": [35, 40, 45, 50]
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp" }
+  ]
+}
