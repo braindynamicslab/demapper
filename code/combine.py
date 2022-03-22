@@ -3,7 +3,7 @@ import os
 import json
 import pandas as pd
 
-
+# Combine the stats from a Mapper results into a big stats file and then group by Mappers
 def combine(datafolder, output_dir):
   sbjs = [fname for fname in os.listdir(datafolder) if fname.startswith('SBJ')]
 

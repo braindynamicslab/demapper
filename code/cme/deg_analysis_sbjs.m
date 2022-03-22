@@ -36,6 +36,8 @@ if ~exist('stat_type', 'var')
         'Please set up variable stat_type');
 end
 
+CHANGE_POINTS = 7;
+
 timing_table = readtable(fn_timing, 'FileType', 'text');
 timing_table.run_name = string(timing_table.run_name);
 timing_table.task_name = string(timing_table.task_name);
@@ -103,9 +105,9 @@ for mid = 1:length(all_mappers)
     stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
     write_1d(avg_degs, stat_output_path);
 
-    [chgs, residual] = findchangepts(avg_degs, 'MaxNumChanges', 7);
-    total_err = chgs_dist(chgs, target_chgs);
-    chpts_errors(mid) = total_err;
+    chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
+    [total_err, residual] = chgs_dist(avg_degs, chgs, target_chgs);
+    chpts_errors(mid) = total_err / CHANGE_POINTS;
     chpts_residuals(mid) = residual;
 end
 disp('...done')
@@ -177,7 +179,7 @@ function plot_degs(degs, timing_labels, timing_changes, mapper_name, output_path
     close(f);
 end
 
-function total_err = chgs_dist(chgs, target_chgs)
+function [total_err, residual] = chgs_dist(stat, chgs, target_chgs)
     total_err = 0;
     for i = 1:length(chgs)
         ch_start = target_chgs(2*i); ch_end = target_chgs(2*i+1);
@@ -190,6 +192,15 @@ function total_err = chgs_dist(chgs, target_chgs)
         end
         total_err = total_err + abs(err);
     end
+    residuals = zeros(length(chgs)+1, 1);
+    target_chgs = [target_chgs length(stat)];
+    chgs = [1 chgs length(stat)];
+    for i = 1:length(residuals)
+        true_mean = mean(stat( target_chgs(2*i-1) : target_chgs(2*i) ));
+        pred_mean = mean(stat( chgs(i) : chgs(i+1) ));
+        residuals(i) = abs(true_mean - pred_mean);
+    end
+    residual = mean(residuals, "all");
 end
 
 function data = read_1d(data_path)
