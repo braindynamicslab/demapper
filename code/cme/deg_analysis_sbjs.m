@@ -5,6 +5,7 @@ datafolder = '/Users/dh/workspace/BDL/demapper/data/cme/';
 fn_timing = '/Users/dh/workspace/BDL/neurolens/data/data-cme-shine375/timing.csv';
 output_dir = '/Users/dh/workspace/BDL/demapper/results/cme/test';
 stat_type = 'compute_degrees';
+CHANGE_POINTS = 7;
 deg_analysis_sbjs
 
 ## Run the with the following command on Sherlock (on `sdev`)
@@ -14,8 +15,10 @@ DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev2.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev2.json/"
 STAT_TYPE="degrees_TRs"
-ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; stat_type='${STAT_TYPE}';"
+CHANGE_POINTS=7
+ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; stat_type='${STAT_TYPE}'; CHANGE_POINTS=${CHANGE_POINTS};"
 matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
+
 
 %}
 
@@ -36,7 +39,7 @@ if ~exist('stat_type', 'var')
         'Please set up variable stat_type');
 end
 
-CHANGE_POINTS = 7;
+% CHANGE_POINTS = 7;
 
 timing_table = readtable(fn_timing, 'FileType', 'text');
 timing_table.run_name = string(timing_table.run_name);
