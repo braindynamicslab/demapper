@@ -6,6 +6,7 @@ fn_timing = '/Users/dh/workspace/BDL/neurolens/data/data-cme-shine375/timing.csv
 output_dir = '/Users/dh/workspace/BDL/demapper/results/cme/test';
 stat_type = 'compute_degrees';
 CHANGE_POINTS = 7;
+HAS_INSTRUCTIONS=1
 deg_analysis_sbjs
 
 ## Run the with the following command on Sherlock (on `sdev`)
@@ -16,7 +17,9 @@ FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev2.json/"
 STAT_TYPE="degrees_TRs"
 CHANGE_POINTS=7
-ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; stat_type='${STAT_TYPE}'; CHANGE_POINTS=${CHANGE_POINTS};"
+HAS_INSTRUCTIONS=1
+ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; stat_type='${STAT_TYPE}';"
+ARGS="$ARGS HAS_INSTRUCTIONS=${HAS_INSTRUCTIONS}; CHANGE_POINTS=${CHANGE_POINTS};"
 matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
 
 
@@ -37,6 +40,12 @@ end
 if ~exist('stat_type', 'var')
     error('MapperToolbox:IncorrectSetup', ...
         'Please set up variable stat_type');
+end
+if ~exist('CHANGE_POINTS', 'var')
+    CHANGE_POINTS = 7;
+end
+if ~exist('HAS_INSTRUCTIONS', 'var')
+    HAS_INSTRUCTIONS = 1;
 end
 
 % CHANGE_POINTS = 7;
@@ -112,7 +121,7 @@ for mid = 1:length(all_mappers)
     write_1d(avg_degs, stat_output_path);
 
     chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
-    [total_err, residual] = chgs_dist(avg_degs, chgs, target_chgs);
+    [total_err, residual] = chgs_dist(avg_degs, chgs, target_chgs, HAS_INSTRUCTIONS);
     chpts_errors(mid) = total_err / CHANGE_POINTS;
     chpts_residuals(mid) = residual;
 end
@@ -185,10 +194,14 @@ function plot_degs(degs, timing_labels, timing_changes, mapper_name, output_path
     close(f);
 end
 
-function [total_err, residual] = chgs_dist(stat, chgs, target_chgs)
+function [total_err, residual] = chgs_dist(stat, chgs, target_chgs, has_instructions)
     total_err = 0;
     for i = 1:length(chgs)
-        ch_start = target_chgs(2*i); ch_end = target_chgs(2*i+1);
+        if has_instructions
+            ch_start = target_chgs(2*i); ch_end = target_chgs(2*i+1);
+        else
+            ch_start = target_chgs(i); ch_end = target_chgs(i);
+        end
         chg = chgs(1, i);
         err = 0;
         if chg < ch_start
@@ -199,10 +212,14 @@ function [total_err, residual] = chgs_dist(stat, chgs, target_chgs)
         total_err = total_err + abs(err);
     end
     residuals = zeros(length(chgs)+1, 1);
-    target_chgs = [target_chgs length(stat)];
+    target_chgs = [1 target_chgs length(stat)];
     chgs = [1 chgs length(stat)];
     for i = 1:length(residuals)
-        true_mean = mean(stat( target_chgs(2*i-1) : target_chgs(2*i) ));
+        if has_instructions
+            true_mean = mean(stat( target_chgs(2*i) : target_chgs(2*i+1) ));
+        else
+            true_mean = mean(stat( target_chgs(i) : target_chgs(i+1) ));
+        end
         pred_mean = mean(stat( chgs(i) : chgs(i+1) ));
         residuals(i) = abs(true_mean - pred_mean);
     end
