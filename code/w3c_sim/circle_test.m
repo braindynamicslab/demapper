@@ -9,12 +9,12 @@ circle_test
 ## Run the with the following command on Sherlock (on `sdev`)
 
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv2.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv1.json/"
 FN_TIMING="/scratch/groups/saggar/demapper-w3c/data/task_info.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv2.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv1.json/"
 
 ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
-matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
+matlab -r "${ARGS} run('code/w3c_sim/circle_test.m')"
 
 
 %}
