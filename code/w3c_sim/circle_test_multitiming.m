@@ -10,9 +10,9 @@ circle_test_multitiming
 ## Run the with the following command on Sherlock (on `sdev`)
 
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv2.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv1.json/"
 COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv2.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv1.json/"
 
 ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
 matlab -r "${ARGS} run('code/w3c_sim/circle_test_multitiming.m')"
@@ -55,8 +55,9 @@ for task_path_id=1:length(uniq_task_paths)
 end
 
 sbjsdirs = dir(datafolder);
-sbjs = struct2cell(sbjsdirs); sbjs  = sbjs (1,:);
+sbjs = struct2cell(sbjsdirs); sbjs  = sbjs(1,:);
 sbjs = sbjs(startsWith(sbjs , 'SBJ'));
+sbjs = sort(sbjs);
 
 all_mappers = {};
 
@@ -87,13 +88,15 @@ end
 disp('...done')
 
 circle_errors = zeros(size(all_mappers));
+circle_errors_all = zeros(length(all_mappers) * length(sbjs), 1);
 fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
     disp(mapper_name)
 
-    all_scores = zeros(length(sbjs), 1);
-    for sbjid = 1:length(sbjs)
+    n_sbjs = length(sbjs);
+    all_scores = zeros(n_sbjs, 1);
+    for sbjid = 1:n_sbjs
         sbj = cell2mat(sbjs(sbjid));
 
         task_path = task_paths(sbj);
@@ -104,6 +107,7 @@ for mid = 1:length(all_mappers)
     end
 
     circle_errors(mid) = mean(all_scores, 1);
+    circle_errors_all((mid-1)*n_sbjs+1:mid*n_sbjs) = all_scores;
 end
 disp('...done')
 
@@ -115,6 +119,16 @@ varNames = ["Mapper", "CircleLoss"];
 mappers_table = table(all_mappers', circle_errors', ...
     'VariableNames', varNames);
 output_path = fullfile(output_dir, 'scores.csv');
+writetable(mappers_table, output_path);
+
+
+varNames = ["Mapper", "subject", "CircleLoss"];
+mappers_table = table( ...
+    reshape(repmat(all_mappers, 4, 1), 12, 1), ...
+    reshape(repmat(sbjs, 4, 1)', 12, 1), ...
+    circle_errors_all', ...
+    'VariableNames', varNames);
+output_path = fullfile(output_dir, 'scores-all.csv');
 writetable(mappers_table, output_path);
 
 
