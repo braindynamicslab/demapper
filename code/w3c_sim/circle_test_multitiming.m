@@ -2,19 +2,20 @@
 ## Run command locally:
 
 datafolder = '/Users/dh/workspace/BDL/demapper/results/w3c_sim/mappers_test/';
-fn_timing = '/Users/dh/workspace/BDL/demapper/data/w3c_sim/task_info.csv';
+cohort_path = '/Users/dh/workspace/BDL/demapper/data/w3c_subsampled/cohort.csv';
+timing_base_path = '/Users/dh/workspace/BDL/demapper/data/w3c_subsampled/';
 output_dir = '/Users/dh/workspace/BDL/demapper/results/w3c_sim/analysis/mappers_test/';
-circle_test
+circle_test_multitiming
 
 ## Run the with the following command on Sherlock (on `sdev`)
 
 module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv2.json/"
-FN_TIMING="/scratch/groups/saggar/demapper-w3c/data/task_info.csv"
+COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv2.json/"
 
-ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
-matlab -r "${ARGS} run('code/w3c_sim/circle_test.m')"
+ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
+matlab -r "${ARGS} run('code/w3c_sim/circle_test_multitiming.m')"
 
 
 %}
@@ -23,22 +24,34 @@ if ~exist('datafolder', 'var')
     error('MapperToolbox:IncorrectSetup', ...
         'Please set up variable datafolder');
 end
-if ~exist('fn_timing', 'var')
+if ~exist('cohort_path', 'var')
     error('MapperToolbox:IncorrectSetup', ...
-        'Please set up variable fn_timing');
+        'Please set up variable cohort_path');
 end
 if ~exist('output_dir', 'var')
     error('MapperToolbox:IncorrectSetup', ...
         'Please set up variable output_dir');
 end
 
-timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
-timing_table.task_name = string(timing_table.task_name);
-timing_labels = timing_table.task_name;
-if table_isfield(timing_table, 'task')
-    timing_arr = timing_table.task;
-else
-    timing_arr = get_timing_arr(timing_table.task_name);
+cohort = readtable(cohort_path, ...
+    delimitedTextImportOptions('Delimiter', ',', 'VariableNamesLine', 1, ...
+    'DataLines', 2));
+
+task_paths = containers.Map(cohort.('id0'), cohort.('task_path_G'));
+
+task_labels = containers.Map;
+uniq_task_paths = unique(cohort.('task_path_G'));
+for task_path_id=1:length(uniq_task_paths)
+    task_path = uniq_task_paths(task_path_id);
+    tp = cell2mat(task_path);
+    if exist('timing_base_path', 'var')
+        tp = replace(tp, fileparts(tp), timing_base_path);
+    end
+
+    timing_table = readtable(tp, 'FileType', 'text', 'Delimiter', ',');
+    timing_table.task_name = string(timing_table.task_name);
+    timing_labels = timing_table.task_name;
+    task_labels(cell2mat(task_path)) = timing_labels;
 end
 
 sbjsdirs = dir(datafolder);
@@ -82,6 +95,9 @@ for mid = 1:length(all_mappers)
     all_scores = zeros(length(sbjs), 1);
     for sbjid = 1:length(sbjs)
         sbj = cell2mat(sbjs(sbjid));
+
+        task_path = task_paths(sbj);
+        timing_labels = task_labels(cell2mat(task_path));
 
         mapper_path = fullfile(datafolder, sbj, mapper_name);
         all_scores(sbjid, 1) = process(mapper_path, timing_labels);
@@ -128,14 +144,6 @@ function score = process(mapper_path, tr_names)
     score_tmin = min(abs(mean(D(nonly_tmin, n_low), 2) - mean(D(nonly_tmin, n_up), 2)));
     score_tplus = min(abs(mean(D(nonly_tplus, n_low), 2) - mean(D(nonly_tplus, n_up), 2)));
     score = score_tplus + score_tmin;
-end
-
-function task_arr = get_timing_arr(task_names)
-    task_arr = zeros(size(task_names));
-    tasks = unique(task_names);
-    for i=1:length(tasks)
-        task_arr(task_names == tasks(i)) = i;
-    end
 end
 
 function b = table_isfield(tbl, f)
