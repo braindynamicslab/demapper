@@ -97,7 +97,7 @@ for mid = 1:length(all_mappers)
         sbj = cell2mat(sbjs(sbjid));
 
         task_path = task_paths(sbj);
-        timing_labels = task_labels(cell2mat(task_path));
+        timing_labels = task_labels(task_path);
 
         mapper_path = fullfile(datafolder, sbj, mapper_name);
         all_scores(sbjid, 1) = process(mapper_path, timing_labels);
