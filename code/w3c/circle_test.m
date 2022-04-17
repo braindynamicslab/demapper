@@ -14,7 +14,7 @@ FN_TIMING="/scratch/groups/saggar/demapper-w3c/data/task_info.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv2.json/"
 
 ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
-matlab -r "${ARGS} run('code/w3c_sim/circle_test.m')"
+matlab -r "${ARGS} run('code/w3c/circle_test.m')"
 
 
 %}
@@ -74,12 +74,14 @@ end
 disp('...done')
 
 circle_errors = zeros(size(all_mappers));
+circle_errors_all = zeros(length(all_mappers) * length(sbjs), 1);
 fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
     disp(mapper_name)
 
-    all_scores = zeros(length(sbjs), 1);
+    n_sbjs = length(sbjs);
+    all_scores = zeros(n_sbjs, 1);
     for sbjid = 1:length(sbjs)
         sbj = cell2mat(sbjs(sbjid));
 
@@ -88,6 +90,7 @@ for mid = 1:length(all_mappers)
     end
 
     circle_errors(mid) = mean(all_scores, 1);
+    circle_errors_all((mid-1)*n_sbjs+1:mid*n_sbjs) = all_scores;
 end
 disp('...done')
 
@@ -100,6 +103,15 @@ mappers_table = table(all_mappers', circle_errors', ...
     'VariableNames', varNames);
 output_path = fullfile(output_dir, 'scores.csv');
 writetable(mappers_table, output_path);
+
+varNames = ["Mapper", "subject", "CircleLoss"];
+all_mappers_table = table( ...
+    reshape(repmat(all_mappers, length(sbjs), 1), length(circle_errors_all), 1), ...
+    reshape(repmat(sbjs, length(all_mappers), 1)', length(circle_errors_all), 1), ...
+    circle_errors_all, ...
+    'VariableNames', varNames);
+all_output_path = fullfile(output_dir, 'scores-all.csv');
+writetable(all_mappers_table, all_output_path);
 
 
 %% Helper functions

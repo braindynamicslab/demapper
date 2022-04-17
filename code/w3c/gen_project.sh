@@ -94,3 +94,24 @@ sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/ss_w3c/run_
 sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/ss_w3c/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
     --rerun_uncomputed
+
+
+### Data with noise
+
+python3 neupipe/mapper.py w3c_wnoise \
+    /scratch/groups/saggar/demapper-w3c/data_wnoise \
+    --data-json-path W3C_ids_wnoise.json \
+    --output-path /scratch/groups/saggar/demapper-w3c/wnoise_results/ \
+    --project-dir $GROUP_SCRATCH/dh/pipeline/neupipe/projects/w3c_wnoise/ \
+    --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
+    --extra-args has_TR=True,RepetitionTime=0.72
+
+
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_wnoise//run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
+    --rerun_uncomputed
+
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_wnoise//run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
+    --rerun_uncomputed
+    

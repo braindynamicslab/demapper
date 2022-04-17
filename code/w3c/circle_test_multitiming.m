@@ -10,12 +10,12 @@ circle_test_multitiming
 ## Run the with the following command on Sherlock (on `sdev`)
 
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv1.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv2.json/"
 COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv1.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv2.json/"
 
 ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
-matlab -r "${ARGS} run('code/w3c_sim/circle_test_multitiming.m')"
+matlab -r "${ARGS} run('code/w3c/circle_test_multitiming.m')"
 
 
 %}
