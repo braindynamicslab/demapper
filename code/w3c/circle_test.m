@@ -133,8 +133,10 @@ function score = process(mapper_path, tr_names)
     % all nodes that contain only trans_minus or trans_plus
     nonly_tmin = (mm * trs_tmin > 0) & (mm * (1-trs_tmin) == 0);
     nonly_tplus = (mm * trs_tplus > 0) & (mm * (1-trs_tplus) == 0);
-    assert(sum(nonly_tmin) > 0)
-    assert(sum(nonly_tplus) > 0)
+    if sum(nonly_tmin) == 0 || sum(nonly_tplus) == 0
+        score = Inf;
+        return;
+    end
     
     g = graph(res.adjacencyMat); D = g.distances;
     score_tmin = min(abs(mean(D(nonly_tmin, n_low), 2) - mean(D(nonly_tmin, n_up), 2)));
