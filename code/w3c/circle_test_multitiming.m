@@ -45,7 +45,11 @@ for task_path_id=1:length(uniq_task_paths)
     task_path = uniq_task_paths(task_path_id);
     tp = cell2mat(task_path);
     if exist('timing_base_path', 'var')
-        tp = replace(tp, fileparts(tp), timing_base_path);
+        if isempty(fileparts(tp))
+            tp = fullfile(timing_base_path, tp);
+        else
+            tp = replace(tp, fileparts(tp), timing_base_path);
+        end
     end
 
     timing_table = readtable(tp, 'FileType', 'text', 'Delimiter', ',');
