@@ -155,14 +155,28 @@ sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_hightr/
     /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
     --rerun_uncomputed
 
-### Data subsampled so its hightr
 
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_hightr/run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
+    --rerun_uncomputed --rerun_analysis plot_task
+
+## Compute and combine
 
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv2.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv1.json/"
 COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv"
 TIMING_BASE_PATH="/scratch/groups/saggar/demapper-w3c/data_hightr/"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/hightr_results/analysis/mappers_w3cv2.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/hightr_results/analysis/mappers_w3cv1.json/"
 
 ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}'; timing_base_path='${TIMING_BASE_PATH}';"
 matlab -r "${ARGS} run('code/w3c/circle_test_multitiming.m')"
+
+
+python3 code/combine.py /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv2.json \
+    /scratch/groups/saggar/demapper-w3c/hightr_results/analysis/mappers_w3cv2.json/
+
+cd /scratch/groups/saggar/dh/pipeline
+python3 neupipe/tools/cache.py compute_stats \
+    --cohort_path /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv2.json/
+
