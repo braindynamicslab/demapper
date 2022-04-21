@@ -35,11 +35,6 @@ end
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
 timing_table.task_name = string(timing_table.task_name);
 timing_labels = timing_table.task_name;
-if table_isfield(timing_table, 'task')
-    timing_arr = timing_table.task;
-else
-    timing_arr = get_timing_arr(timing_table.task_name);
-end
 
 sbjsdirs = dir(datafolder);
 sbjs = struct2cell(sbjsdirs); sbjs  = sbjs (1,:);
@@ -112,17 +107,3 @@ all_mappers_table = table( ...
     'VariableNames', varNames);
 all_output_path = fullfile(output_dir, 'scores-all.csv');
 writetable(all_mappers_table, all_output_path);
-
-
-%% Helper functions
-function task_arr = get_timing_arr(task_names)
-    task_arr = zeros(size(task_names));
-    tasks = unique(task_names);
-    for i=1:length(tasks)
-        task_arr(task_names == tasks(i)) = i;
-    end
-end
-
-function b = table_isfield(tbl, f)
-    b = sum(ismember(tbl.Properties.VariableNames, f));
-end
