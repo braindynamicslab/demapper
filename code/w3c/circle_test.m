@@ -82,7 +82,7 @@ for mid = 1:length(all_mappers)
 
         mapper_path = fullfile(datafolder, sbj, mapper_name);
         all_scores(sbjid, 1) = circleloss_score(mapper_path, timing_labels);
-        all_scores(sbjid, 2) = circleness(mapper_path, timing_labels);
+        all_scores(sbjid, 2) = transition_betweeness(mapper_path, timing_labels);
     end
 
     circle_errors(mid, :) = mean(all_scores, 1);
@@ -94,13 +94,13 @@ if ~exist(output_dir, 'dir')
     mkdir(output_dir)
 end
 
-varNames = ["Mapper", "CircleLoss", "Circleness"];
+varNames = ["Mapper", "CircleLoss", "TransitionBetweeness"];
 mappers_table = table(all_mappers', circle_errors(:, 1), circle_errors(:, 2), ...
     'VariableNames', varNames);
 output_path = fullfile(output_dir, 'scores.csv');
 writetable(mappers_table, output_path);
 
-varNames = ["Mapper", "subject", "CircleLoss", "Circleness"];
+varNames = ["Mapper", "subject", "CircleLoss", "TransitionBetweeness"];
 all_mappers_table = table( ...
     reshape(repmat(all_mappers, length(sbjs), 1), length(circle_errors_all), 1), ...
     reshape(repmat(sbjs, length(all_mappers), 1)', length(circle_errors_all), 1), ...

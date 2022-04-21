@@ -1,4 +1,4 @@
-function score = circleness(mapper_path, tr_names)
+function score = transition_betweeness(mapper_path, tr_names)
     % Basically, compute the distance between nodes of states low and up. 
     % First on the graph without transition_plus nodes and then on the graph
     % without the transition_minus nodes. The minimum distances are
