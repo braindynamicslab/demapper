@@ -121,7 +121,7 @@ if ~exist(output_dir, 'dir')
 end
 
 varNames = ["Mapper", "CircleLoss", "Circleness"];
-mappers_table = table(all_mappers', circle_errors(:, 1)', circle_errors(:, 2)', ...
+mappers_table = table(all_mappers', circle_errors(:, 1), circle_errors(:, 2), ...
     'VariableNames', varNames);
 output_path = fullfile(output_dir, 'scores.csv');
 writetable(mappers_table, output_path);

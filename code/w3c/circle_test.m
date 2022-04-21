@@ -2,7 +2,7 @@
 ## Run command locally:
 
 datafolder = '/Users/dh/workspace/BDL/demapper/results/w3c_sim/mappers_test/';
-fn_timing = '/Users/dh/workspace/BDL/demapper/data/w3c_sim/task_info.csv';
+fn_timing = '/Users/dh/workspace/BDL/demapper/data/w3c/task_info.csv';
 output_dir = '/Users/dh/workspace/BDL/demapper/results/w3c_sim/analysis/mappers_test/';
 circle_test
 
@@ -68,8 +68,8 @@ for sbjid = 1:length(sbjs)
 end
 disp('...done')
 
-circle_errors = zeros(size(all_mappers));
-circle_errors_all = zeros(length(all_mappers) * length(sbjs), 1);
+circle_errors = zeros(length(all_mappers), 2);
+circle_errors_all = zeros(length(all_mappers) * length(sbjs), 2);
 fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
@@ -82,10 +82,11 @@ for mid = 1:length(all_mappers)
 
         mapper_path = fullfile(datafolder, sbj, mapper_name);
         all_scores(sbjid, 1) = circleloss_score(mapper_path, timing_labels);
+        all_scores(sbjid, 2) = circleness(mapper_path, timing_labels);
     end
 
-    circle_errors(mid) = mean(all_scores, 1);
-    circle_errors_all((mid-1)*n_sbjs+1:mid*n_sbjs) = all_scores;
+    circle_errors(mid, :) = mean(all_scores, 1);
+    circle_errors_all((mid-1)*n_sbjs+1:mid*n_sbjs, :) = all_scores;
 end
 disp('...done')
 
@@ -93,17 +94,18 @@ if ~exist(output_dir, 'dir')
     mkdir(output_dir)
 end
 
-varNames = ["Mapper", "CircleLoss"];
-mappers_table = table(all_mappers', circle_errors', ...
+varNames = ["Mapper", "CircleLoss", "Circleness"];
+mappers_table = table(all_mappers', circle_errors(:, 1), circle_errors(:, 2), ...
     'VariableNames', varNames);
 output_path = fullfile(output_dir, 'scores.csv');
 writetable(mappers_table, output_path);
 
-varNames = ["Mapper", "subject", "CircleLoss"];
+varNames = ["Mapper", "subject", "CircleLoss", "Circleness"];
 all_mappers_table = table( ...
     reshape(repmat(all_mappers, length(sbjs), 1), length(circle_errors_all), 1), ...
     reshape(repmat(sbjs, length(all_mappers), 1)', length(circle_errors_all), 1), ...
-    circle_errors_all, ...
+    circle_errors_all(:,1), ...
+    circle_errors_all(:,2), ...
     'VariableNames', varNames);
 all_output_path = fullfile(output_dir, 'scores-all.csv');
 writetable(all_mappers_table, all_output_path);

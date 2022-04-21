@@ -1,4 +1,8 @@
 function score = circleloss_score(mapper_path, tr_names)
+    % This score computes the length for each node to the low and up
+    % states. The loss is the subtraction of the distances to the two
+    % low and up states. The loss is computed and added for transition_plus
+    % and transition_minus.
     datapath = fullfile(mapper_path, 'res.mat');
     res = load(datapath).res;
 

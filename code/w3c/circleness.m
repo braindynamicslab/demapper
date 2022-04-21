@@ -1,4 +1,8 @@
 function score = circleness(mapper_path, tr_names)
+    % Basically, compute the distance between nodes of states low and up. 
+    % First on the graph without transition_plus nodes and then on the graph
+    % without the transition_minus nodes. The minimum distances are
+    % subtracted for a final score
     datapath = fullfile(mapper_path, 'res.mat');
     res = load(datapath).res;
 
@@ -24,12 +28,12 @@ function score = circleness(mapper_path, tr_names)
     % graph without trans_min
     g_wout_tmin = graph(res.adjacencyMat(~nonly_tmin, ~nonly_tmin));
     D_wout_tmin = g_wout_tmin.distances;
-    score_tplus = mean(D_wout_tmin(n_low, n_up), 2);
+    score_tplus = min(min(D_wout_tmin(n_low(~nonly_tmin), n_up(~nonly_tmin))));
 
     % graph without trans_plus
     g_wout_tplus = graph(res.adjacencyMat(~nonly_tplus, ~nonly_tplus));
     D_wout_tplus = g_wout_tplus.distances;
-    score_tminus = mean(D_wout_tplus(n_low, n_up), 2);
+    score_tminus = min(min(D_wout_tplus(n_low(~nonly_tplus), n_up(~nonly_tplus))));
 
-    score = min(abs(score_tminus - score_tplus));
+    score = abs(score_tminus - score_tplus);
 end
