@@ -33,3 +33,5 @@ done
 # Then run 
 # module load matlab
 # matlab
+# 
+# run('commands_to_run.m')

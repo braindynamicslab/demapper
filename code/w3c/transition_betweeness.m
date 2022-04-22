@@ -27,12 +27,12 @@ function score = transition_betweeness(mapper_path, tr_names)
 
     % graph without trans_min
     g_wout_tmin = graph(res.adjacencyMat(~nonly_tmin, ~nonly_tmin));
-    D_wout_tmin = g_wout_tmin.distances;
+    D_wout_tmin = g_wout_tmin.distances('Method', 'unweighted');
     score_tplus = min(min(D_wout_tmin(n_low(~nonly_tmin), n_up(~nonly_tmin))));
 
     % graph without trans_plus
     g_wout_tplus = graph(res.adjacencyMat(~nonly_tplus, ~nonly_tplus));
-    D_wout_tplus = g_wout_tplus.distances;
+    D_wout_tplus = g_wout_tplus.distances('Method', 'unweighted');
     score_tminus = min(min(D_wout_tplus(n_low(~nonly_tplus), n_up(~nonly_tplus))));
 
     score = abs(score_tminus - score_tplus);

@@ -85,28 +85,29 @@ echo """
 
 
 # subsampled
-python3 neupipe/mapper.py ss_w3c \
+python3 neupipe/mapper.py w3c_subsampled \
     /scratch/groups/saggar/demapper-w3c/data_subsampled \
     --data-json-path W3C_ids_ss.json \
     --output-path /scratch/groups/saggar/demapper-w3c/ \
-    --project-dir $GROUP_SCRATCH/dh/pipeline/neupipe/projects/ss_w3c/ \
+    --project-dir $GROUP_SCRATCH/dh/pipeline/neupipe/projects/w3c_subsampled/ \
     --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
     --extra-args has_TR=True,RepetitionTime=0.72
 
 # change in run_mapper.sbatch so that the cohort file points to the correct file:
-vim /scratch/groups/saggar/dh/pipeline/neupipe/projects/ss_w3c//run_mapper.sbatch
+vim /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_subsampled//run_mapper.sbatch
 
 # Point to:
 /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_short.csv
 
 # start the mappers
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/ss_w3c/run_mapper.sbatch \
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_subsampled/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
     --rerun_uncomputed
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/ss_w3c/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
-    --rerun_uncomputed
+# Compute stats
+python3 neupipe/tools/cache.py compute_stats \
+    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_short.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv1.json/
 
 
 ### Data with noise
@@ -124,15 +125,15 @@ sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_wnoise/
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
     --rerun_uncomputed
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_wnoise//run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
-    --rerun_uncomputed
-
+# Compute stats
+python3 neupipe/tools/cache.py compute_stats \
+    --cohort_path /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_wnoise/cohort_mapper.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv2.json/
 
 ### Data with high TR
 
 
-python3 neupipe/mapper.py w3c_wnoise \
+python3 neupipe/mapper.py w3c_hightr \
     /scratch/groups/saggar/demapper-w3c/data_hightr \
     --data-json-path W3C_ids_hightr.json \
     --output-path /scratch/groups/saggar/demapper-w3c/hightr_results/ \
