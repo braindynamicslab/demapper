@@ -25,7 +25,7 @@ function score = circleloss_score(mapper_path, tr_names)
         return;
     end
     
-    g = graph(res.adjacencyMat); D = g.distances;
+    g = graph(res.adjacencyMat); D = g.distances('Method', 'unweighted');
     
     score_tmin = min(abs(noninf_mean(D(nonly_tmin, n_low)) - noninf_mean(D(nonly_tmin, n_up))));
     score_tplus = min(abs(noninf_mean(D(nonly_tplus, n_low)) - noninf_mean(D(nonly_tplus, n_up))));
