@@ -35,3 +35,42 @@ done
 # matlab
 # 
 # run('commands_to_run.m')
+
+
+# Copy scores after done:
+cd $GROUP_SCRATCH/demapper-w3c
+cp analysis/mappers_w3cv1.json/scores-all.csv scores/scores-ss_w3cv1-all.csv
+cp wnoise_results/analysis/mappers_w3cv1.json/scores-all.csv scores/scores-wnoise_w3cv1-all.csv
+cp hightr_results/analysis/mappers_w3cv1.json/scores-all.csv scores/scores-hightr_w3cv1-all.csv
+
+cp analysis/mappers_w3cv2.json/scores-all.csv scores/scores-ss_w3cv2-all.csv
+cp wnoise_results/analysis/mappers_w3cv2.json/scores-all.csv scores/scores-wnoise_w3cv2-all.csv
+cp hightr_results/analysis/mappers_w3cv2.json/scores-all.csv scores/scores-hightr_w3cv2-all.csv
+
+
+cp analysis/mappers_w3cv1.json/scores.csv scores/scores-ss_w3cv1.csv
+cp wnoise_results/analysis/mappers_w3cv1.json/scores.csv scores/scores-wnoise_w3cv1.csv
+cp hightr_results/analysis/mappers_w3cv1.json/scores.csv scores/scores-hightr_w3cv1.csv
+
+cp analysis/mappers_w3cv2.json/scores.csv scores/scores-ss_w3cv2.csv
+cp wnoise_results/analysis/mappers_w3cv2.json/scores.csv scores/scores-wnoise_w3cv2.csv
+cp hightr_results/analysis/mappers_w3cv2.json/scores.csv scores/scores-hightr_w3cv2.csv
+
+# Local download all scores
+
+
+scp "hasegan@login.sherlock.stanford.edu:/scratch/groups/saggar/demapper-w3c/scores/*" scores/
+
+cp scores/scores-ss_w3cv1-all.csv w3c_ss/analysis/mappers_w3cv1.json/scores-all.csv
+cp scores/scores-wnoise_w3cv1-all.csv w3c_wnoise/analysis/mappers_w3cv1.json/scores-all.csv
+cp scores/scores-hightr_w3cv1-all.csv w3c_hightr/analysis/mappers_w3cv1.json/scores-all.csv
+cp scores/scores-ss_w3cv1.csv w3c_ss/analysis/mappers_w3cv1.json/scores.csv
+cp scores/scores-wnoise_w3cv1.csv w3c_wnoise/analysis/mappers_w3cv1.json/scores.csv
+cp scores/scores-hightr_w3cv1.csv w3c_hightr/analysis/mappers_w3cv1.json/scores.csv
+
+cp scores/scores-ss_w3cv2-all.csv w3c_ss/analysis/mappers_w3cv2.json/scores-all.csv
+cp scores/scores-wnoise_w3cv2-all.csv w3c_wnoise/analysis/mappers_w3cv2.json/scores-all.csv
+cp scores/scores-hightr_w3cv2-all.csv w3c_hightr/analysis/mappers_w3cv2.json/scores-all.csv
+cp scores/scores-ss_w3cv2.csv w3c_ss/analysis/mappers_w3cv2.json/scores.csv
+cp scores/scores-wnoise_w3cv2.csv w3c_wnoise/analysis/mappers_w3cv2.json/scores.csv
+cp scores/scores-hightr_w3cv2.csv w3c_hightr/analysis/mappers_w3cv2.json/scores.csv
