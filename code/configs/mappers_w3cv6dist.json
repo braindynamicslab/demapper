@@ -1,0 +1,28 @@
+{
+  "preprocess": [
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "CustomMapper",
+    "name": "CustomNeuMapper",
+    "preprocess_type": ["none", "PCA"],
+    "preprocess_varexpl": 99.9,
+    "dist_type": ["cityblock", "euclidean", "chebychev", "correlation", "cosine"],
+    "embed_type": "none",
+    "rknn_type": "wtd-pen",
+    "rknnparam": [16, 32, 48],
+    "binning_type": "cball",
+    "binning_resolution": [100, 200, 300],
+    "binning_gain": [35, 50, 65],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": [10, 20],
+    "finalgraph_type": "full"
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "plot_task", "args": { "name": "G", "path": "/scratch/groups/saggar/demapper-w3c/data/task_info.csv" } },
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp" }
+  ]
+}
