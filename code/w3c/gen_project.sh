@@ -97,11 +97,11 @@ python3 neupipe/mapper.py w3c_subsampled \
 vim /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_subsampled//run_mapper.sbatch
 
 # Point to:
-/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_short.csv
+/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv
 
 # start the mappers
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_subsampled/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
+sbatch -p saggar /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_subsampled/run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv4.json \
     --rerun_uncomputed
 
 # Compute stats
