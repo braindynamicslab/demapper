@@ -16,16 +16,16 @@ python3 neupipe/mapper.py w3c \
     /scratch/groups/saggar/demapper-w3c/data \
     --data-json-path W3C_ids.json \
     --output-path /scratch/groups/saggar/demapper-w3c/ \
-    --project-dir $GROUP_SCRATCH/dh/pipeline/neupipe/projects/w3c/ \
+    --project-dir $GROUP_SCRATCH/dh/pipeline/projects/w3c/ \
     --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
     --extra-args has_TR=True,RepetitionTime=0.72
 
 # Start the job on all configs
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c/run_mapper.sbatch \
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
     --rerun_uncomputed
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c/run_mapper.sbatch \
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
     --rerun_uncomputed
 
@@ -89,25 +89,31 @@ python3 neupipe/mapper.py w3c_subsampled \
     /scratch/groups/saggar/demapper-w3c/data_subsampled \
     --data-json-path W3C_ids_ss.json \
     --output-path /scratch/groups/saggar/demapper-w3c/ \
-    --project-dir $GROUP_SCRATCH/dh/pipeline/neupipe/projects/w3c_subsampled/ \
+    --project-dir $GROUP_SCRATCH/dh/pipeline/projects/w3c_subsampled/ \
     --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
     --extra-args has_TR=True,RepetitionTime=0.72
 
 # change in run_mapper.sbatch so that the cohort file points to the correct file:
-vim /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_subsampled//run_mapper.sbatch
+vim /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled//run_mapper.sbatch
 
 # Point to:
 /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv
 
 # start the mappers
-sbatch -p saggar /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_subsampled/run_mapper.sbatch \
+sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv4.json \
+    --rerun_uncomputed
+
+# might need highmem for some configs:
+sbatch -p saggar \
+    /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-highmem.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv4.json \
     --rerun_uncomputed
 
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
-    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_short.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv1.json/
+    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv3.json/
 
 
 ### Data with noise
@@ -116,18 +122,18 @@ python3 neupipe/mapper.py w3c_wnoise \
     /scratch/groups/saggar/demapper-w3c/data_wnoise \
     --data-json-path W3C_ids_wnoise.json \
     --output-path /scratch/groups/saggar/demapper-w3c/wnoise_results/ \
-    --project-dir $GROUP_SCRATCH/dh/pipeline/neupipe/projects/w3c_wnoise/ \
+    --project-dir $GROUP_SCRATCH/dh/pipeline/projects/w3c_wnoise/ \
     --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
     --extra-args has_TR=True,RepetitionTime=0.72
 
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_wnoise//run_mapper.sbatch \
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
     --rerun_uncomputed
 
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
-    --cohort_path /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_wnoise/cohort_mapper.csv \
+    --cohort_path /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/cohort_mapper.csv \
     --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv2.json/
 
 ### Data with high TR
@@ -137,27 +143,27 @@ python3 neupipe/mapper.py w3c_hightr \
     /scratch/groups/saggar/demapper-w3c/data_hightr \
     --data-json-path W3C_ids_hightr.json \
     --output-path /scratch/groups/saggar/demapper-w3c/hightr_results/ \
-    --project-dir $GROUP_SCRATCH/dh/pipeline/neupipe/projects/w3c_hightr/ \
+    --project-dir $GROUP_SCRATCH/dh/pipeline/projects/w3c_hightr/ \
     --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
     --extra-args has_TR=True,RepetitionTime=0.72
 
 
 # change in run_mapper.sbatch so that the cohort file points to the correct file:
-vim /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_hightr/run_mapper.sbatch
+vim /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch
 
 # Point to:
 /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_hightr/run_mapper.sbatch \
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
     --rerun_uncomputed
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_hightr/run_mapper.sbatch \
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
     --rerun_uncomputed
 
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/neupipe/projects/w3c_hightr/run_mapper.sbatch \
+sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
     --rerun_uncomputed --rerun_analysis plot_task
 

@@ -5,13 +5,13 @@
   "mappers": [{
     "type": "BDLMapper",
     "k": [5, 10, 20, 30, 40, 50, 60, 70, 80, 100],
-    "resolution": [10, 15, 20, 25, 30, 35, 40, 50, 60],
-    "gain": [50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
+    "resolution": [10, 15, 20, 25, 30, 35, 40, 50],
+    "gain": [50, 55, 60, 65, 70, 75, 80, 85, 90]
   }],
   "analyses": [
     { "type": "plot_graph" },
     { "type": "plot_task", "args": { "name": "G", "path": "/scratch/groups/saggar/demapper-w3c/data/task_info.csv" } },
     { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
-    { "type": "compute_temp" }
+    { "type": "compute_temp", "args": { "skip_map": true } }
   ]
 }
