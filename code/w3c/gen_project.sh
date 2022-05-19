@@ -127,14 +127,14 @@ python3 neupipe/mapper.py w3c_wnoise \
     --extra-args has_TR=True,RepetitionTime=0.72
 
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
+sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_mapper-highmem.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv3.json \
     --rerun_uncomputed
 
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/cohort_mapper.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv2.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv3.json/
 
 ### Data with high TR
 
@@ -185,5 +185,5 @@ python3 code/combine.py /scratch/groups/saggar/demapper-w3c/hightr_results/mappe
 cd /scratch/groups/saggar/dh/pipeline
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv2.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv3.json/
 

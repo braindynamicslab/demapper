@@ -1,0 +1,78 @@
+{
+  "preprocess": [
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "CustomMapper",
+    "name": "DimReducMapper",
+    "preprocess_type": "none",
+    "dist_type": ["euclidean", "chebychev", "cosine"],
+    "embed_type": ["CMDS", "PCA", "DiffusionMaps", "Isomap"],
+    "embed_dim": [2, 3],
+    "embed_kparam": 32,
+    "rknn_type": "wtd-pen",
+    "rknnparam": [24, 32],
+    "binning_type": "Nd",
+    "binning_resolution": [10, 20],
+    "binning_gain": [60, 75],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }, {
+    "type": "CustomMapper",
+    "name": "DimReducTSNEMapper",
+    "preprocess_type": "none",
+    "dist_type": ["euclidean", "chebychev", "cosine"],
+    "embed_type": ["tSNE"],
+    "embed_dim": [2, 3],
+    "embed_perplexity": [5, 20, 50],
+    "rknn_type": "wtd-pen",
+    "rknnparam": [24, 32],
+    "binning_type": "Nd",
+    "binning_resolution": [10, 20],
+    "binning_gain": [60, 75],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }, {
+    "type": "CustomMapper",
+    "name": "DimReducMapperNoKnn",
+    "preprocess_type": "none",
+    "dist_type": ["euclidean", "chebychev", "cosine"],
+    "embed_type": ["CMDS", "PCA", "DiffusionMaps", "Isomap"],
+    "embed_dim": [2, 3],
+    "embed_kparam": 32,
+    "rknn_type": "none",
+    "binning_type": "Nd",
+    "binning_resolution": [10, 20],
+    "binning_gain": [60, 75],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }, {
+    "type": "CustomMapper",
+    "name": "DimReducTSNEMapperNoKnn",
+    "preprocess_type": "none",
+    "dist_type": ["euclidean", "chebychev", "cosine"],
+    "embed_type": ["tSNE"],
+    "embed_dim": [2, 3],
+    "embed_perplexity": [5, 20, 50],
+    "rknn_type": "none",
+    "binning_type": "Nd",
+    "binning_resolution": [10, 20],
+    "binning_gain": [60, 75],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "plot_task", "args": { "name": "G", "path": "/scratch/groups/saggar/demapper-w3c/data/task_info.csv" } },
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp", "args": { "skip_mat": true }  }
+  ]
+}
