@@ -107,7 +107,12 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_
 # might need highmem for some configs:
 sbatch -p saggar \
     /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-highmem.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv4.json \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv7embed.json \
+    --rerun_uncomputed
+
+sbatch -p normal \
+    /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv7embed.json \
     --rerun_uncomputed
 
 # Compute stats
