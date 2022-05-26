@@ -1,0 +1,17 @@
+{
+  "preprocess": [
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "BDLMapper",
+    "k": [20, 30],
+    "resolution": [10, 20, 30, 40, 50],
+    "gain": [50, 60, 70, 80, 90]
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "plot_task", "args": { "name": "G", "path": "/scratch/groups/saggar/demapper-w3c/data/task_info.csv", "no_legend": true } },
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp", "args": { "skip_mat": true } }
+  ]
+}
