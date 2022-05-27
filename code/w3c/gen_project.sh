@@ -31,17 +31,6 @@ sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c/run_mapper.sbat
 
 
 
-# `sdev` and then run the following:
-module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv2.json/"
-FN_TIMING="/scratch/groups/saggar/demapper-w3c/data/task_info.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv2.json/"
-STAT_TYPE="degrees_TRs"
-CHANGE_POINTS=7
-HAS_INSTRUCTIONS=0;
-ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; stat_type='${STAT_TYPE}';"
-ARGS="$ARGS HAS_INSTRUCTIONS=${HAS_INSTRUCTIONS}; CHANGE_POINTS=${CHANGE_POINTS};"
-matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
 
 # Or run the circle test:
 module load matlab
@@ -121,7 +110,25 @@ python3 neupipe/tools/cache.py compute_stats \
     --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv3.json/
 
 
-### Data with noise
+
+## Regenerate plots without the legend
+cd $HOME/demapper/code/configs/
+mv mappers_w3cv3.json mappers_w3cv3.json-backup
+cp mappers_w3cv3_reg.json mappers_w3cv3.json
+
+
+# then run:
+sbatch -p saggar \
+    /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv3.json \
+    --rerun_analysis plot_task
+
+# Fix back: 
+mv $HOME/demapper/code/configs/mappers_w3cv3.json-backup $HOME/demapper/code/configs/mappers_w3cv3.json
+
+##############################################
+####################### Data with noise ######
+##############################################
 
 python3 neupipe/mapper.py w3c_wnoise \
     /scratch/groups/saggar/demapper-w3c/data_wnoise \
