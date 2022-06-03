@@ -96,18 +96,18 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_
 # might need highmem for some configs:
 sbatch -p saggar \
     /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-highmem.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv7embed.json \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv4_euc.json \
     --rerun_uncomputed
 
-sbatch -p normal \
-    /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper.sbatch \
+sbatch -p bigmem \
+    /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-highmem.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv7embed.json \
     --rerun_uncomputed
 
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv3.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv7embed.json/
 
 
 
@@ -143,6 +143,10 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_map
     /home/users/hasegan/demapper/code/configs/mappers_w3cv3.json \
     --rerun_uncomputed
 
+sbatch -p normal /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv4_euc.json \
+    --rerun_uncomputed
+
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/cohort_mapper.csv \
@@ -168,6 +172,10 @@ vim /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch
 
 sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
+    --rerun_uncomputed
+
+sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper-highmem.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv4_euc.json \
     --rerun_uncomputed
 
 sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch \
