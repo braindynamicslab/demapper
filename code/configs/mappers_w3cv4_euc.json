@@ -3,7 +3,6 @@
       { "type": "zscore" }
   ],
   "mappers": [{
-
     "type": "CustomMapper",
     "name": "EucNeuMapper",
     "preprocess_type": "none",
