@@ -109,6 +109,10 @@ python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv \
     --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv7embed.json/
 
+python3 neupipe/tools/cache.py compute_stats \
+    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc.json/
+
 
 
 ## Regenerate plots without the legend
@@ -150,7 +154,7 @@ sbatch -p normal /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_map
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/cohort_mapper.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv3.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv4_euc.json/
 
 ### Data with high TR
 
@@ -205,5 +209,5 @@ python3 code/combine.py /scratch/groups/saggar/demapper-w3c/hightr_results/mappe
 cd /scratch/groups/saggar/dh/pipeline
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv3.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv4_euc.json/
 
