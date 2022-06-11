@@ -113,7 +113,8 @@ for mid = 1:length(all_mappers)
         all_degs(sbjid, :) = process(mapper_path, stat_type);
     end
 
-    avg_degs = normalize(mean(all_degs, 1), 'range');
+%     avg_degs = normalize(mean(all_degs, 1), 'range');
+    avg_degs = mean(all_degs, 1);
     output_path = fullfile(stat_outdir, [mapper_name, '.png']);
     plot_degs(avg_degs, timing_labels, timing_changes, mapper_name, output_path);
 
@@ -143,12 +144,12 @@ function degs = process(mapper_path, stat_type)
             
             K = res.memberMat' * ((res.adjacencyMat > 0) + eye(size(res.adjacencyMat)));
             degs = sum(K, 2)';
-%             degs = normalize(degs, 'Range');
+            degs = normalize(degs, 'Range');
         case {'betweenness_centrality_TRs_avg', 'betweenness_centrality_TRs_max', ...
                 'core_periphery_TRs_avg', 'core_periphery_TRs_max', 'degrees_TRs'}
             datapath = fullfile(mapper_path, ['stats_', stat_type, '.1D']);
             degs = read_1d(datapath);
-%             degs = normalize(degs, 'Range');
+            degs = normalize(degs, 'Range');
         otherwise
             error('MapperToolbox:UnrecognizedStatType', ...
                 'Please set up a correct value for `stat_type`');
