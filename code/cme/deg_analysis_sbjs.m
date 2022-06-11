@@ -141,7 +141,7 @@ function degs = process(mapper_path, stat_type)
             datapath = fullfile(mapper_path, 'res.mat');
             res = load(datapath).res;
             
-            K = res.memberMat' * (res.adjacencyMat > 0);
+            K = res.memberMat' * ((res.adjacencyMat > 0) + eye(size(res.adjacencyMat)));
             degs = sum(K, 2)';
 %             degs = normalize(degs, 'Range');
         case {'betweenness_centrality_TRs_avg', 'betweenness_centrality_TRs_max', ...
