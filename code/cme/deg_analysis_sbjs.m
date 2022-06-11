@@ -113,8 +113,8 @@ for mid = 1:length(all_mappers)
         all_degs(sbjid, :) = process(mapper_path, stat_type);
     end
 
-%     avg_degs = normalize(mean(all_degs, 1), 'range');
-    avg_degs = mean(all_degs, 1);
+    avg_degs = normalize(mean(all_degs, 1), 'range');
+%     avg_degs = mean(all_degs, 1);
     output_path = fullfile(stat_outdir, [mapper_name, '.png']);
     plot_degs(avg_degs, timing_labels, timing_changes, mapper_name, output_path);
 
