@@ -20,6 +20,21 @@
     "clustering_type": "linkage_histo",
     "clustering_histo_bins": 10,
     "finalgraph_type": "full"
+  },{
+    "type": "CustomMapper",
+    "name": "BDLMapperMHNoKnn",
+    "preprocess_type": "none",
+    "dist_type": "cityblock",
+    "embed_type": "CMDS",
+    "embed_dim": 2,
+    "rknn_type": "none",
+    "binning_type": "Nd",
+    "binning_resolution": [10, 20, 30],
+    "binning_gain": [30, 40, 50, 70, 80],
+    "binning_nsides": [3, 4],
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
   }],
   "analyses": [
     { "type": "plot_graph" },
