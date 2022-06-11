@@ -1,9 +1,9 @@
 
 # `sdev` and then run the following:
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev5.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev5MH.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev5.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev5MH.json/"
 STAT_TYPE="degrees_TRs"
 CHANGE_POINTS=7
 HAS_INSTRUCTIONS=1;
@@ -32,4 +32,4 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbat
     /home/users/hasegan/demapper/code/configs/mappers_cmev4_euc.json
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_cmev5.json
+    /home/users/hasegan/demapper/code/configs/mappers_cmev5MH.json --rerun_uncomputed 
