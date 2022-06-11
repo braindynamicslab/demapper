@@ -15,7 +15,7 @@
     "rknnparam": [8, 16, 32],
     "binning_type": "Nd",
     "binning_resolution": [20, 30],
-    "binning_gain": [30, 50, 70],
+    "binning_gain": [30, 40, 50, 70],
     "binning_nsides": [3, 4],
     "clustering_type": "linkage_histo",
     "clustering_histo_bins": 10,
