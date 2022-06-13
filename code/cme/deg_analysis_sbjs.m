@@ -114,7 +114,7 @@ for mid = 1:length(all_mappers)
             all_TCMs(sbjid, :, :) = process(mapper_path, stat_type);
         end
         avg_tcms = mean(all_TCMs, 1);
-        avg_degs = normalize(sum(avg_tcms, 2), 'range');
+        avg_degs = reshape(normalize(sum(avg_tcms, 2), 'range'), length(timing_arr), 1);
     else
         all_degs = zeros(length(sbjs), length(timing_arr));
         for sbjid = 1:length(sbjs)
