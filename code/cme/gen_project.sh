@@ -4,7 +4,7 @@ module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev5MH.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev5MH.json/"
-STAT_TYPE="degrees_TRs" # "compute_degrees"
+STAT_TYPE="compute_degrees_from_TCM" # "compute_degrees"
 CHANGE_POINTS=7
 HAS_INSTRUCTIONS=1;
 ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}'; stat_type='${STAT_TYPE}';"
