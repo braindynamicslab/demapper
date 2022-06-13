@@ -105,15 +105,27 @@ for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
     disp(mapper_name)
 
-    all_degs = zeros(length(sbjs), length(timing_arr));
-    for sbjid = 1:length(sbjs)
-        sbj = cell2mat(sbjs(sbjid));
-
-        mapper_path = fullfile(datafolder, sbj, mapper_name);
-        all_degs(sbjid, :) = process(mapper_path, stat_type);
+    if strcmp(stat_type, 'compute_degrees_from_TCM')
+        all_TCMs = zeros(length(sbjs), length(timing_arr), length(timing_arr));
+        for sbjid = 1:length(sbjs)
+            sbj = cell2mat(sbjs(sbjid));
+    
+            mapper_path = fullfile(datafolder, sbj, mapper_name);
+            all_TCMs(sbjid, :, :) = process(mapper_path, stat_type);
+        end
+        avg_tcms = mean(all_TCMS, 1);
+        avg_degs = normalize(sum(avg_tcms, 2)', 'range');
+    else
+        all_degs = zeros(length(sbjs), length(timing_arr));
+        for sbjid = 1:length(sbjs)
+            sbj = cell2mat(sbjs(sbjid));
+    
+            mapper_path = fullfile(datafolder, sbj, mapper_name);
+            all_degs(sbjid, :) = process(mapper_path, stat_type);
+        end
+        avg_degs = normalize(mean(all_degs, 1), 'range');
     end
 
-    avg_degs = normalize(mean(all_degs, 1), 'range');
 %     avg_degs = mean(all_degs, 1);
     output_path = fullfile(stat_outdir, [mapper_name, '.png']);
     plot_degs(avg_degs, timing_labels, timing_changes, mapper_name, output_path);
@@ -145,6 +157,11 @@ function degs = process(mapper_path, stat_type)
             K = res.memberMat' * ((res.adjacencyMat > 0) + eye(size(res.adjacencyMat)));
             degs = sum(K, 2)';
             degs = normalize(degs, 'Range');
+        case 'compute_degrees_from_TCM'
+            datapath = fullfile(mapper_path, 'res.mat');
+            res = load(datapath).res;
+            
+            degs = get_similarity_mat(res.adjacencyMat, res.memberMat);
         case {'betweenness_centrality_TRs_avg', 'betweenness_centrality_TRs_max', ...
                 'core_periphery_TRs_avg', 'core_periphery_TRs_max', 'degrees_TRs'}
             datapath = fullfile(mapper_path, ['stats_', stat_type, '.1D']);
