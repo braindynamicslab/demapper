@@ -113,7 +113,7 @@ for mid = 1:length(all_mappers)
             mapper_path = fullfile(datafolder, sbj, mapper_name);
             all_TCMs(sbjid, :, :) = process(mapper_path, stat_type);
         end
-        avg_tcms = mean(all_TCMS, 1);
+        avg_tcms = mean(all_TCMs, 1);
         avg_degs = normalize(sum(avg_tcms, 2)', 'range');
     else
         all_degs = zeros(length(sbjs), length(timing_arr));
