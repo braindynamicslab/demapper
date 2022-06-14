@@ -1,9 +1,9 @@
 
 # `sdev` and then run the following:
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev5MH.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev5.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev5MH.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev5.json/"
 STAT_TYPE="compute_degrees_from_TCM" # "compute_degrees"
 CHANGE_POINTS=7
 HAS_INSTRUCTIONS=1;
