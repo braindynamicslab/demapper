@@ -33,3 +33,4 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbat
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_cmev5MH.json --rerun_uncomputed 
+

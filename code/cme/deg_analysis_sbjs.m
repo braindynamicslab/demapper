@@ -48,8 +48,6 @@ if ~exist('HAS_INSTRUCTIONS', 'var')
     HAS_INSTRUCTIONS = 1;
 end
 
-% CHANGE_POINTS = 7;
-
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
 timing_table.task_name = string(timing_table.task_name);
 timing_labels = timing_table.task_name;
@@ -99,7 +97,7 @@ if ~exist(stat_outdir, 'dir')
 end
 
 chpts_errors = zeros(size(all_mappers));
-chpts_residuals = zeros(size(all_mappers));
+chpts_count = zeros(size(all_mappers));
 fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
@@ -127,21 +125,21 @@ for mid = 1:length(all_mappers)
     end
 
 %     avg_degs = mean(all_degs, 1);
-    output_path = fullfile(stat_outdir, [mapper_name, '.png']);
-    plot_degs(avg_degs, timing_labels, timing_changes, mapper_name, output_path);
-
     stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
     write_1d(avg_degs, stat_output_path);
 
     chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
-    [total_err, residual] = chgs_dist(avg_degs, chgs, target_chgs, HAS_INSTRUCTIONS);
-    chpts_errors(mid) = total_err / CHANGE_POINTS;
-    chpts_residuals(mid) = residual;
+    avg_err = chgs_dist(chgs, target_chgs, HAS_INSTRUCTIONS);
+    chpts_errors(mid) = avg_err;
+    chpts_count(mid) = length(chgs);
+
+    output_path = fullfile(stat_outdir, [mapper_name, '.png']);
+    plot_degs(avg_degs, timing_labels, timing_changes, chgs, mapper_name, output_path);
 end
 disp('...done')
 
-varNames = ["Mapper", "ChangePointsIndicesError", "ChangePointsResiduals"];
-mappers_table = table(all_mappers', chpts_errors', chpts_residuals', ...
+varNames = ["Mapper", "ChangePointsIndicesError", "ChangePointsCount"];
+mappers_table = table(all_mappers', chpts_errors', chpts_count', ...
     'VariableNames', varNames);
 output_path = fullfile(stat_outdir, ['combined-', stat_type, '.csv']);
 writetable(mappers_table, output_path);
@@ -173,7 +171,7 @@ function degs = process(mapper_path, stat_type)
     end
 end
 
-function plot_degs(degs, timing_labels, timing_changes, mapper_name, output_path)
+function plot_degs(degs, timing_labels, timing_changes, chgs, mapper_name, output_path)
     f = figure;
     f.Position = [f.Position(1:2) 2000 400];
     hold on;
@@ -203,6 +201,24 @@ function plot_degs(degs, timing_labels, timing_changes, mapper_name, output_path
         avg_deg = mean(degs(1, ch1:ch2));
         plot(ch1:ch2, repmat(avg_deg, ch2-ch1+1, 1), 'black');
     end
+
+    % plot the found changes
+    for ch=chgs
+        xline(ch, '--m')
+    end
+    for i=0:length(chgs)
+        x1 = 1;
+        x2 = length(degs);
+        if i > 0
+            x1 = chgs(i);
+        end
+        if i < length(chgs)
+            x2 = chgs(i+1);
+        end
+
+        vs = mean(degs(x1:x2));
+        plot([x1,x2], [vs, vs], '--m')
+    end
     
     plot(1:length(degs), degs, 'blue')
     xlim([1,length(degs) * 1.01])
@@ -212,36 +228,25 @@ function plot_degs(degs, timing_labels, timing_changes, mapper_name, output_path
     close(f);
 end
 
-function [total_err, residual] = chgs_dist(stat, chgs, target_chgs, has_instructions)
+function total_err = chgs_dist(chgs, target_chgs, has_instructions)
     total_err = 0;
-    for i = 1:length(chgs)
+    if has_instructions
+        N = floor(length(target_chgs) / 2);
+    else
+        N = length(target_chgs);
+    end
+    for i = 1:N
         if has_instructions
             ch_start = target_chgs(2*i); ch_end = target_chgs(2*i+1);
         else
             ch_start = target_chgs(i); ch_end = target_chgs(i);
         end
-        chg = chgs(1, i);
-        err = 0;
-        if chg < ch_start
-            err = ch_start - chg;
-        elseif chg > ch_end
-            err = ch_end - chg;
-        end
-        total_err = total_err + abs(err);
+        errs = zeros(size(chgs));
+        errs(chgs < ch_start) = chgs(chgs < ch_start) * (-1) + ch_start;
+        errs(chgs > ch_end) = chgs(chgs > ch_end) - ch_end;
+        total_err = total_err + min(errs);
     end
-    residuals = zeros(length(chgs)+1, 1);
-    target_chgs = [1 target_chgs length(stat)];
-    chgs = [1 chgs length(stat)];
-    for i = 1:length(residuals)
-        if has_instructions
-            true_mean = mean(stat( target_chgs(2*i) : target_chgs(2*i+1) ));
-        else
-            true_mean = mean(stat( target_chgs(i) : target_chgs(i+1) ));
-        end
-        pred_mean = mean(stat( chgs(i) : chgs(i+1) ));
-        residuals(i) = abs(true_mean - pred_mean);
-    end
-    residual = mean(residuals, "all");
+    total_err = total_err / N;
 end
 
 function data = read_1d(data_path)
