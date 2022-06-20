@@ -40,7 +40,7 @@ compute_temp(res1, outdir1, true)
 
 
 %% Run mapper with binarized
-opts.rknn_type = 'bin-pen';
+opts.prelens_type = 'bin-pen';
 res2 = mapper(data, opts);
 
 outdir2 = '/Users/dh/workspace/BDL/demapper/results/BDLMapperTest-w3c/bin-pen';
@@ -51,7 +51,7 @@ compute_temp(res2, outdir2, true)
 
 
 %% Run mapper with weighted but no inf
-opts.rknn_type = 'wtd-pen-noinf';
+opts.prelens_type = 'wtd-pen-noinf';
 res3 = mapper(data, opts);
 
 outdir3 = '/Users/dh/workspace/BDL/demapper/results/BDLMapperTest-w3c/wtd-pen-noinf';
