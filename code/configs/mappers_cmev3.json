@@ -13,7 +13,7 @@
   "analyses": [
     { "type": "plot_graph" },
     { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
-    { "type": "compute_temp" },
+    { "type": "compute_temp", "args": { "skip_mat": true } },
     { "type": "plot_task", "args": { "name": "CME", "path": "/oak/stanford/groups/saggar/data-cme-shine375/timing.csv" } }
   ]
 }
