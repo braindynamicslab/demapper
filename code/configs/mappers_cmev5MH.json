@@ -27,7 +27,7 @@
     "dist_type": "cityblock",
     "embed_type": "CMDS",
     "embed_dim": 2,
-    "prelens_type": "none",
+    "prelens_type": "dist",
     "binning_type": "Nd",
     "binning_resolution": [10, 20, 30],
     "binning_gain": [30, 40, 50, 70, 80],
