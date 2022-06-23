@@ -1,9 +1,9 @@
 
 # `sdev` and then run the following:
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev4_euc.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev4.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/ch8_mappers_cmev4_euc.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/ch8_mappers_cmev4.json/"
 STAT_TYPE="compute_degrees_from_TCM" # "compute_degrees"
 CHANGE_POINTS=8
 HAS_INSTRUCTIONS=1;
@@ -17,7 +17,7 @@ matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
 
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/dh/pipeline/projects/cme/cohort_mapper.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-cme/mappers_cmev5.json/
+    --mapper_dir /scratch/groups/saggar/demapper-cme/mappers_cmev5MH.json/
 
 sbatch -p normal /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_cmev3.json \
@@ -25,11 +25,11 @@ sbatch -p normal /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbat
 
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_cmev4.json \
+    /home/users/hasegan/demapper/code/configs/mappers_cmev3.json \
     --rerun_uncomputed  --rerun_analysis plot_task
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_cmev4_euc.json
+    /home/users/hasegan/demapper/code/configs/mappers_cmev4_euc.json --rerun_uncomputed 
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_cmev5MH.json --rerun_uncomputed 
