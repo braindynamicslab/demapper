@@ -34,3 +34,9 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbat
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_cmev5MH.json --rerun_uncomputed 
 
+
+
+MAPPERCONF=mappers_cmev4_euc.json
+python3 code/utils/plot_task_grid.py \
+    /scratch/groups/saggar/demapper-cme/${MAPPERCONF} \
+    /scratch/groups/saggar/demapper-cme/analysis/ch8_${MAPPERCONF}/plot_task-grids

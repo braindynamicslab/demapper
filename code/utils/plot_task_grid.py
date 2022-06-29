@@ -16,7 +16,7 @@ def plot_image(img_path, ax):
     return ax
 
 
-def process_mapper(mapper, main_path, res_path, fname):
+def process_mapper(sbjs, mapper, main_path, res_path, fname):
     ncols = 5
     nrows = math.ceil(len(sbjs) / ncols)
     fsize = 20 
@@ -63,7 +63,7 @@ def plot_task_grid(main_path, res_path, fname='plot_task-CME.png'):
   mappers = sorted([m for m in os.listdir(os.path.join(main_path, sbjs[0])) if 'Mapper' in m])
 
   for mapper in tqdm(mappers):
-      process_mapper(mapper, main_path, res_path, fname)
+      process_mapper(sbjs, mapper, main_path, res_path, fname)
 
 
 if __name__ == '__main__':
