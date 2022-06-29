@@ -154,7 +154,7 @@ function degs = process(mapper_path, stat_type)
             
             K = res.memberMat' * ((res.adjacencyMat > 0) + eye(size(res.adjacencyMat)));
             degs = sum(K, 2)';
-            degs = normalize(degs, 'Range');
+            % degs = normalize(degs, 'Range');
         case 'compute_degrees_from_TCM'
             datapath = fullfile(mapper_path, 'res.mat');
             res = load(datapath).res;
@@ -164,7 +164,7 @@ function degs = process(mapper_path, stat_type)
                 'core_periphery_TRs_avg', 'core_periphery_TRs_max', 'degrees_TRs'}
             datapath = fullfile(mapper_path, ['stats_', stat_type, '.1D']);
             degs = read_1d(datapath);
-            degs = normalize(degs, 'Range');
+            % degs = normalize(degs, 'Range');
         otherwise
             error('MapperToolbox:UnrecognizedStatType', ...
                 'Please set up a correct value for `stat_type`');
