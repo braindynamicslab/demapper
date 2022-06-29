@@ -90,7 +90,12 @@ vim /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled//run_mapper.sbatc
 
 # start the mappers
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv4.json \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv6lens2_fast.json \
+    --rerun_uncomputed
+
+# Run on 1sbj only
+sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-1sbj.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv6kval_fast.json \
     --rerun_uncomputed
 
 # might need highmem for some configs:
@@ -106,12 +111,12 @@ sbatch -p bigmem \
 
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
-    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv7embed.json/
+    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_1sbj.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv6kval_fast.json/
 
 python3 neupipe/tools/cache.py compute_stats \
-    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc.json/
+    --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shortest.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv5lens2_fast.json/
 
 
 
@@ -147,14 +152,14 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_map
     /home/users/hasegan/demapper/code/configs/mappers_w3cv3.json \
     --rerun_uncomputed
 
-sbatch -p normal /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv4_euc.json \
+sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv6lens2_fast.json \
     --rerun_uncomputed
 
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/cohort_mapper.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv4_euc.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv5lens2_fast.json/
 
 ### Data with high TR
 
@@ -174,8 +179,8 @@ vim /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch
 # Point to:
 /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv
 
-sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
+sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv6lens2_fast.json \
     --rerun_uncomputed
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper-highmem.sbatch \
@@ -209,5 +214,5 @@ python3 code/combine.py /scratch/groups/saggar/demapper-w3c/hightr_results/mappe
 cd /scratch/groups/saggar/dh/pipeline
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv4_euc.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv5lens2_fast.json/
 
