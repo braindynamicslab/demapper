@@ -17,6 +17,10 @@ def plot_image(img_path, ax):
 
 
 def process_mapper(sbjs, mapper, main_path, res_path, fname):
+    savepath = os.path.join(res_path, '{}-{}'.format(mapper, fname))
+    if os.path.isfile(savepath):
+      return
+
     ncols = 5
     nrows = math.ceil(len(sbjs) / ncols)
     fsize = 20 
@@ -48,7 +52,6 @@ def process_mapper(sbjs, mapper, main_path, res_path, fname):
     # plt.tight_layout()
     fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     # plt.show()
-    savepath = os.path.join(res_path, '{}-{}'.format(mapper, fname))
     plt.savefig(savepath, dpi=100)
     plt.close(fig)
 
