@@ -4,6 +4,7 @@
 datafolder = '/Users/dh/workspace/BDL/demapper/data/cme/';
 fn_timing = '/Users/dh/workspace/BDL/neurolens/data/data-cme-shine375/timing.csv';
 output_dir = '/Users/dh/workspace/BDL/demapper/results/cme/test';
+local = true;
 mod_analysis_sbjs
 
 ## Run the with the following command on Sherlock (on `sdev`)
@@ -43,6 +44,10 @@ end
 sbjsdirs = dir(datafolder);
 sbjs = struct2cell(sbjsdirs); sbjs  = sbjs (1,:);
 sbjs = sbjs(startsWith(sbjs , 'SBJ'));
+if exist('local', 'var') && local
+    sbjs = [sbjs, sbjs]; % This is a hack to replicate the production dataset
+    % where there are more than 1 subject
+end
 
 all_mappers = {};
 
@@ -111,16 +116,19 @@ for mid = 1:length(all_mappers)
 end
 disp('...done')
 
-varNames = ["Mapper", "NrNodes-mean", "NrNodes-std", "CalModNodes", "CalModTRs"];
+varNames = ["Mapper", "NrNodes-mean", "NrNodes-std", ...
+    "CalModNodes-mean", "CalModNodes-std", ...
+    "CalModTRs-mean", "CalModTRs-std"];
 mappers_table = table(all_mappers', mean(nr_nodes, 2), std(nr_nodes, [], 2), ...
-    mean(calmod_nodes, 2), mean(calmod_trs, 2), ...
+    mean(calmod_nodes, 2), std(calmod_nodes, [], 2), ...
+    mean(calmod_trs, 2), std(calmod_trs, [], 2), ...
     'VariableNames', varNames);
 output_path = fullfile(output_dir, 'modularity-avg.csv');
 writetable(mappers_table, output_path);
 
 inds = combvec(1:length(all_mappers), 1:length(sbjs))';
 varNames = ["Mapper", "SBJ", "NrNodes", "CalModNodes", "CalModTRs"];
-mappers_table = table(all_mappers(inds(:, 1))', sbjs(inds(:, 2)), ...
+mappers_table = table(all_mappers(inds(:, 1))', sbjs(inds(:, 2))', ...
     reshape(nr_nodes, numel(nr_nodes), 1), ...
     reshape(calmod_nodes, numel(calmod_nodes), 1), ...
     reshape(calmod_trs, numel(calmod_trs), 1), ...
