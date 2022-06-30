@@ -12,6 +12,7 @@ module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev3.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/mappers_cmev3.json/"
+ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
 matlab -r "${ARGS} run('code/cme/mod_analysis_sbjs.m')"
 
 
@@ -110,12 +111,8 @@ for mid = 1:length(all_mappers)
 end
 disp('...done')
 
-std_nodes = zeros(size(nr_nodes));
-if size(nr_nodes, 2) > 1
-    std_nodes = std(nr_nodes, 2);
-end
 varNames = ["Mapper", "NrNodes-mean", "NrNodes-std", "CalModNodes", "CalModTRs"];
-mappers_table = table(all_mappers', mean(nr_nodes, 2), std_nodes, ...
+mappers_table = table(all_mappers', mean(nr_nodes, 2), std(nr_nodes, [], 2), ...
     mean(calmod_nodes, 2), mean(calmod_trs, 2), ...
     'VariableNames', varNames);
 output_path = fullfile(output_dir, 'modularity-avg.csv');
