@@ -4,9 +4,9 @@ for CHNR in 7 8 10 11
 do
 FILE=commands_to_run_cmev3v4_ch${CHNR}.m
 echo '% starting ' > $FILE
-for CONF in mappers_cmev3_fast.json \
-            mappers_cmev4_fast.json \
-            mappers_cmev4_euc_fast.json mappers_cmev4_euc.json
+for CONF in mappers_cmev3_fast.json mappers_cmev4_fast.json \
+            mappers_cmev4_euc_fast.json mappers_cmev4_euc.json \
+            mappers_cmev5.json mappers_cmev5MH.json
 do
   DATAFOLDER="/scratch/groups/saggar/demapper-cme/${CONF}/"
   FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
