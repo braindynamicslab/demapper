@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CHNR=10
-FILE=commands_to_run_cmev3-v4_ch${CHNR}.m
+FILE=commands_to_run_cmev3v4_ch${CHNR}.m
 
 echo '% starting ' > $FILE
 

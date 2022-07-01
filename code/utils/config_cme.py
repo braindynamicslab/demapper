@@ -2,16 +2,24 @@ import pandas as pd
 import numpy as np
 
 
-DATASETS = {
-    'cmev3': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev3.json',
-    'cmev4': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev4.json',
-    'cmev4euc': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev4_euc.json',
-    'cmev3_fast': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev3_fast.json',
-    'cmev4_fast': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev4_fast.json',
-    'cmev4euc_fast': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev4_euc_fast.json',
-    'cmev5': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev5.json',
-    'cmev5MH': '/Users/dh/workspace/BDL/demapper/results/cme/ch8_mappers_cmev5MH.json',
+def ch_ds(ch):
+    return {
+        'cmev3': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev3.json'.format(ch),
+        'cmev4': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4.json'.format(ch),
+        'cmev4euc': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4_euc.json'.format(ch),
+        'cmev3_fast': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev3_fast.json'.format(ch),
+        'cmev4_fast': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4_fast.json'.format(ch),
+        'cmev4euc_fast': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4_euc_fast.json'.format(ch),
+        'cmev5': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5.json'.format(ch),
+        'cmev5MH': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5MH.json'.format(ch),
+    }
+
+ALL_DATASETS = {
+    'ch8': ch_ds('ch8'),
+    'ch10': ch_ds('ch10'),
+    'ch11': ch_ds('ch11'),
 }
+DATASETS = ALL_DATASETS['ch8']
 
 _FILTERS = {}
 for k in DATASETS.keys():

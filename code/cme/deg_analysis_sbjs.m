@@ -159,7 +159,8 @@ function degs = process(mapper_path, stat_type)
             datapath = fullfile(mapper_path, 'res.mat');
             res = load(datapath).res;
             
-            degs = get_similarity_mat(res.adjacencyMat, res.memberMat);
+            sim_mat = get_similarity_mat(res.adjacencyMat, res.memberMat);
+            degs = normalize(sim_mat, 'Range');
         case {'betweenness_centrality_TRs_avg', 'betweenness_centrality_TRs_max', ...
                 'core_periphery_TRs_avg', 'core_periphery_TRs_max', 'degrees_TRs'}
             datapath = fullfile(mapper_path, ['stats_', stat_type, '.1D']);
