@@ -1,4 +1,14 @@
 
+# run local
+# poolsize=8;
+cohort_csv='/Users/dh/workspace/BDL/demapper/data/cme/cohort_mapper.csv';
+% from: /scratch/groups/saggar/dh/pipeline/projects/cme/cohort_mapper.csv
+config_path='/Users/dh/workspace/BDL/demapper/code/configs/mappers_cmev6kval_fast.json';
+data_root='/Users/dh/workspace/BDL/demapper/data/cme/shine';
+output_dir='/Users/dh/workspace/BDL/demapper/results/cme_mappers/mappers_cmev6kval_fast.json';
+run_main
+
+
 # `sdev` and then run the following:
 module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev4_euc.json/"
@@ -25,7 +35,7 @@ sbatch -p normal /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbat
 
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_cmev4_euc_fast.json \
+    /home/users/hasegan/demapper/code/configs/mappers_cmev6kval_fast.json \
     --rerun_uncomputed 
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
