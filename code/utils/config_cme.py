@@ -15,6 +15,7 @@ def ch_ds(ch):
     }
 
 ALL_DATASETS = {
+    'ch7': ch_ds('ch7'),
     'ch8': ch_ds('ch8'),
     'ch10': ch_ds('ch10'),
     'ch11': ch_ds('ch11'),
@@ -29,9 +30,9 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['EucNeuMapper']
     elif k.startswith('cmev2') or  k.startswith('cmev4'):
         _FILTERS[k] = ['NeuMapper']
-    elif k.startswith('cmev5'):
+    elif k == 'cmev5':
         _FILTERS[k] = ['BDLMapperNS3']
-    elif k.startswith('cmev5MH'):
+    elif k == 'cmev5MH':
         _FILTERS[k] = ['BDLMapperMH_', 'BDLMapperMHNoKnn']
 FILTERS = _FILTERS
 
