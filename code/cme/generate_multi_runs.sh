@@ -1,9 +1,11 @@
 #!/bin/bash
 
+
+FILE=commands_to_run_cmev6_ch${CHNR}.m
+echo '% starting ' > $FILE
+
 for CHNR in 10 7 8 11
 do
-FILE=commands_to_run_cmev3v4_ch${CHNR}.m
-echo '% starting ' > $FILE
 # for CONF in mappers_cmev3_fast.json mappers_cmev4_fast.json \
 #             mappers_cmev4_euc_fast.json mappers_cmev4_euc.json \
 #             mappers_cmev5.json mappers_cmev5MH.json
