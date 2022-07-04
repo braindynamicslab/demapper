@@ -3,7 +3,7 @@
 # poolsize=8;
 cohort_csv='/Users/dh/workspace/BDL/demapper/data/cme/cohort_mapper.csv';
 % from: /scratch/groups/saggar/dh/pipeline/projects/cme/cohort_mapper.csv
-config_path='/Users/dh/workspace/BDL/demapper/code/configs/mappers_cmev6kval_fast.json';
+config_path='/Users/dh/workspace/BDL/demapper/code/configs/mappers_cmev6kval_debug.json';
 data_root='/Users/dh/workspace/BDL/demapper/data/cme/shine';
 output_dir='/Users/dh/workspace/BDL/demapper/results/cme_mappers/mappers_cmev6kval_fast.json';
 run_main
@@ -23,11 +23,9 @@ matlab -r "${ARGS} run('code/cme/deg_analysis_sbjs.m')"
 
 
 
-
-
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/dh/pipeline/projects/cme/cohort_mapper.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-cme/mappers_cmev3_fast.json
+    --mapper_dir /scratch/groups/saggar/demapper-cme/mappers_cmev6kval_fast.json
 
 sbatch -p normal /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_cmev3.json \

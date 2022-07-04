@@ -98,6 +98,7 @@ end
 
 chpts_errors = zeros(size(all_mappers));
 chpts_count = zeros(size(all_mappers));
+missing_items = 0;
 fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
@@ -106,9 +107,14 @@ for mid = 1:length(all_mappers)
     if strcmp(stat_type, 'compute_degrees_from_TCM')
         all_TCMs = zeros(length(sbjs), length(timing_arr), length(timing_arr));
         for sbjid = 1:length(sbjs)
-            sbj = cell2mat(sbjs(sbjid));
-    
+            sbj = cell2mat(sbjs(sbjid));            
+
             mapper_path = fullfile(datafolder, sbj, mapper_name);
+            datapath = fullfile(mapper_path, 'res.mat');
+            if ~isfile(datapath)
+                missing_items = missing_items + 1;
+                continue
+            end
             all_TCMs(sbjid, :, :) = process(mapper_path, stat_type);
         end
         avg_tcms = mean(all_TCMs, 1);
@@ -143,6 +149,10 @@ mappers_table = table(all_mappers', chpts_errors', chpts_count', ...
     'VariableNames', varNames);
 output_path = fullfile(stat_outdir, ['combined-', stat_type, '.csv']);
 writetable(mappers_table, output_path);
+
+if missing_items > 0
+    disp(['Found ', num2str(missing_items), ' missing items!'])
+end
 
 
 %% Helper functions
