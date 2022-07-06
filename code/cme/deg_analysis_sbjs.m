@@ -138,13 +138,16 @@ for mid = 1:length(all_mappers)
     %     avg_degs = mean(all_degs, 1);
         stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
         write_1d(avg_degs, stat_output_path);
+
+        chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
+        plot_degs(avg_degs, timing_labels, timing_changes, chgs, mapper_name, output_path);
     else
         % use the already computed avg_degs
         stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
         avg_degs = read_1d(stat_output_path);
+        chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
     end
 
-    chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
     if isempty(chgs)
         chpts_errors(mid) = nan;
     else
@@ -153,7 +156,6 @@ for mid = 1:length(all_mappers)
     end
     chpts_count(mid) = length(chgs);
 
-    plot_degs(avg_degs, timing_labels, timing_changes, chgs, mapper_name, output_path);
 end
 disp('...done')
 
