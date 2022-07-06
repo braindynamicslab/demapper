@@ -140,6 +140,7 @@ for mid = 1:length(all_mappers)
         write_1d(avg_degs, stat_output_path);
     else
         % use the already computed avg_degs
+        stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
         avg_degs = read_1d(stat_output_path);
     end
 
