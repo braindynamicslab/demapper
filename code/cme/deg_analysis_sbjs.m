@@ -107,40 +107,41 @@ for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
     disp(mapper_name)
     output_path = fullfile(stat_outdir, [mapper_name, '.png']);
-    if RERUN_UNCOMPUTED && isfile(output_path)
-        disp('...skipping')
-        continue
-    end
-
-    if strcmp(stat_type, 'compute_degrees_from_TCM')
-        all_TCMs = zeros(length(sbjs), length(timing_arr), length(timing_arr));
-        for sbjid = 1:length(sbjs)
-            sbj = cell2mat(sbjs(sbjid));            
-
-            mapper_path = fullfile(datafolder, sbj, mapper_name);
-            datapath = fullfile(mapper_path, 'res.mat');
-            if ~isfile(datapath)
-                missing_items = missing_items + 1;
-                continue
-            end
-            all_TCMs(sbjid, :, :) = process(mapper_path, stat_type);
-        end
-        avg_tcms = mean(all_TCMs, 1);
-        avg_degs = reshape(normalize(sum(avg_tcms, 2), 'range'), 1, length(timing_arr));
-    else
-        all_degs = zeros(length(sbjs), length(timing_arr));
-        for sbjid = 1:length(sbjs)
-            sbj = cell2mat(sbjs(sbjid));
+    if ~RERUN_UNCOMPUTED || ~isfile(output_path)
+        % there is no cached file, so compute it
+        if strcmp(stat_type, 'compute_degrees_from_TCM')
+            all_TCMs = zeros(length(sbjs), length(timing_arr), length(timing_arr));
+            for sbjid = 1:length(sbjs)
+                sbj = cell2mat(sbjs(sbjid));            
     
-            mapper_path = fullfile(datafolder, sbj, mapper_name);
-            all_degs(sbjid, :) = process(mapper_path, stat_type);
+                mapper_path = fullfile(datafolder, sbj, mapper_name);
+                datapath = fullfile(mapper_path, 'res.mat');
+                if ~isfile(datapath)
+                    missing_items = missing_items + 1;
+                    continue
+                end
+                all_TCMs(sbjid, :, :) = process(mapper_path, stat_type);
+            end
+            avg_tcms = mean(all_TCMs, 1);
+            avg_degs = reshape(normalize(sum(avg_tcms, 2), 'range'), 1, length(timing_arr));
+        else
+            all_degs = zeros(length(sbjs), length(timing_arr));
+            for sbjid = 1:length(sbjs)
+                sbj = cell2mat(sbjs(sbjid));
+        
+                mapper_path = fullfile(datafolder, sbj, mapper_name);
+                all_degs(sbjid, :) = process(mapper_path, stat_type);
+            end
+            avg_degs = normalize(mean(all_degs, 1), 'range');
         end
-        avg_degs = normalize(mean(all_degs, 1), 'range');
+    
+    %     avg_degs = mean(all_degs, 1);
+        stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
+        write_1d(avg_degs, stat_output_path);
+    else
+        % use the already computed avg_degs
+        avg_degs = read_1d(stat_output_path);
     end
-
-%     avg_degs = mean(all_degs, 1);
-    stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
-    write_1d(avg_degs, stat_output_path);
 
     chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
     if isempty(chgs)
