@@ -12,6 +12,7 @@ def ch_ds(ch):
         'cmev4euc_fast': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4_euc_fast.json'.format(ch),
         'cmev5': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5.json'.format(ch),
         'cmev5MH': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5MH.json'.format(ch),
+        'cmev6kval': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev6kval_fast.json'.format(ch),
     }
 
 ALL_DATASETS = {
@@ -34,6 +35,8 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['BDLMapperNS3']
     elif k == 'cmev5MH':
         _FILTERS[k] = ['BDLMapperMH_', 'BDLMapperMHNoKnn']
+    elif k == 'cmev6kval':
+        _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper', 'DistsGeoNeuMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
@@ -93,6 +96,17 @@ def extract_params_f(df, filter_by):
         df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
         df['NS'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
         param_cols = ['R', 'G', 'NS']
+    elif filter_by in ['DistsGeoBDLMapper', 'DistsGeoNeuMapper']:
+        df['dist'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
+        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['dist', 'K', 'R', 'G']
+    elif filter_by == 'DistsBDLMapper':
+        df['dist'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        param_cols = ['dist', 'R', 'G']
     else:
         raise Exception('Mapper type not recognized')
     return df, param_cols

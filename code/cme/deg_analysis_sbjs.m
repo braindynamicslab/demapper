@@ -47,6 +47,9 @@ end
 if ~exist('HAS_INSTRUCTIONS', 'var')
     HAS_INSTRUCTIONS = 1;
 end
+if ~exist('RERUN_UNCOMPUTED', 'var')
+    RERUN_UNCOMPUTED = 0;
+end
 
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
 timing_table.task_name = string(timing_table.task_name);
@@ -103,6 +106,11 @@ fprintf('Processing %d mappers...\n', length(all_mappers));
 for mid = 1:length(all_mappers)
     mapper_name = cell2mat(all_mappers(mid));
     disp(mapper_name)
+    output_path = fullfile(stat_outdir, [mapper_name, '.png']);
+    if RERUN_UNCOMPUTED && isfile(output_path)
+        disp('...skipping')
+        continue
+    end
 
     if strcmp(stat_type, 'compute_degrees_from_TCM')
         all_TCMs = zeros(length(sbjs), length(timing_arr), length(timing_arr));
@@ -135,11 +143,14 @@ for mid = 1:length(all_mappers)
     write_1d(avg_degs, stat_output_path);
 
     chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
-    avg_err = chgs_dist(chgs, target_chgs, HAS_INSTRUCTIONS);
-    chpts_errors(mid) = avg_err;
+    if isempty(chgs)
+        chpts_errors(mid) = nan;
+    else
+        avg_err = chgs_dist(chgs, target_chgs, HAS_INSTRUCTIONS);
+        chpts_errors(mid) = avg_err;
+    end
     chpts_count(mid) = length(chgs);
 
-    output_path = fullfile(stat_outdir, [mapper_name, '.png']);
     plot_degs(avg_degs, timing_labels, timing_changes, chgs, mapper_name, output_path);
 end
 disp('...done')

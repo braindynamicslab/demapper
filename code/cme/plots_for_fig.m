@@ -39,11 +39,14 @@ avg_degs = read_1d([res_path, '/avgstat_BDLMapper_16_25_60.1D']);
 CHANGE_POINTS = 10;
 chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
 output_path = [res_path, '/change-degs.png'];
-plot_degs(avg_degs, timing_labels, timing_changes, chgs, output_path);
+
+%     p_chgs = 0:length(chgs);
+p_chgs = [0, 1, 3, 5, 7, 8, 9, 10];
+plot_degs(avg_degs, timing_labels, timing_changes, chgs, p_chgs, output_path);
 
 
 %% Helper functions
-function plot_degs(degs, timing_labels, timing_changes, chgs, output_path)
+function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_path)
     f = figure;
     f.Position = [f.Position(1:2) 2000 400];
     hold on;
@@ -70,15 +73,15 @@ function plot_degs(degs, timing_labels, timing_changes, chgs, output_path)
     
         patch([ch1 ch2 ch2 ch1], [0 0, 1, 1], col, 'FaceAlpha', .2)
     
-        avg_deg = mean(degs(1, ch1:ch2));
-        plot(ch1:ch2, repmat(avg_deg, ch2-ch1+1, 1), 'black');
+%         avg_deg = mean(degs(1, ch1:ch2));
+%         plot(ch1:ch2, repmat(avg_deg, ch2-ch1+1, 1), 'black');
     end
 
     % plot the found changes
-    for ch=chgs
-        xline(ch, '--m')
-    end
-    for i=0:length(chgs)
+%     for ch=p_chgs
+%         xline(ch, '--m')
+%     end
+    for i=p_chgs
         x1 = 1;
         x2 = length(degs);
         if i > 0
@@ -89,15 +92,15 @@ function plot_degs(degs, timing_labels, timing_changes, chgs, output_path)
         end
 
         vs = mean(degs(x1:x2));
-        plot([x1,x2], [vs, vs], '--m')
+        plot([x1,x2], [vs, vs], '--r', 'LineWidth', 2)
     end
     
     plot(1:length(degs), degs, 'black')
     xlim([1,length(degs) * 1.01])
 %     title(['TR Degrees for ', mapper_name], 'Interpreter', 'none')
 
-%     saveas(f, output_path);
-%     close(f);
+    saveas(f, output_path);
+    close(f);
 end
 
 function data = read_1d(data_path)
