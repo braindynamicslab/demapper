@@ -29,28 +29,28 @@ if exist('poolsize', 'var')
     parForArg = poolsize;
 end
 
-
 header = {'mapper1', 'mapper2', 'L1', 'L2'};
 writecell(header, output_path);
 
-m1 = 1:length(mappers1);
-m2 = 1:length(mappers2);
-mcomb = combvec(m1, m2);
-parfor (idx = 1:length(mcomb), parForArg)
-    mapper1 = mappers1{mcomb(1, idx)};
-    mapper2 = mappers2{mcomb(2, idx)};
+parfor (idx1 = 1:length(mappers1), parForArg)
+    mapper1 = mappers1{idx1};
     path1 = fullfile(mappers_path_1, mapper1, mpath);
-    path2 = fullfile(mappers_path_2, mapper2, mpath);
-    
     tcm1 = rescale(read_1d(path1));
-    tcm2 = rescale(read_1d(path2));
     mask = tril(ones(size(tcm1)), -1);
-    vals1 = tcm1(logical(mask)); vals2 = tcm2(logical(mask));
-    L1 = sum(abs(vals1 - vals2));
-    L2 = sqrt(sum((vals1 - vals2) .^ 2));
+    vals1 = tcm1(logical(mask)); 
 
-    M = {mapper1, mapper2, num2str(L1), num2str(L2)};
-    writecell(M, output_path, 'WriteMode', 'append');
+    for idx2 = 1:length(mappers2)
+        mapper2 = mappers2{idx2};
+        path2 = fullfile(mappers_path_2, mapper2, mpath);
+        
+        tcm2 = rescale(read_1d(path2));
+        vals2 = tcm2(logical(mask));
+        L1 = sum(abs(vals1 - vals2));
+        L2 = sqrt(sum((vals1 - vals2) .^ 2));
+    
+        M = {mapper1, mapper2, num2str(L1), num2str(L2)};
+        writecell(M, output_path, 'WriteMode', 'append');
+    end
 end
 
 %% Helper functions
