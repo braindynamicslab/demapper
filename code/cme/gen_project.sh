@@ -1,4 +1,6 @@
 
+
+
 # run local
 # poolsize=8;
 cohort_csv='/Users/dh/workspace/BDL/demapper/data/cme/cohort_mapper.csv';
@@ -48,3 +50,19 @@ MAPPERCONF=mappers_cmev4_euc.json
 python3 code/utils/plot_task_grid.py \
     /scratch/groups/saggar/demapper-cme/${MAPPERCONF} \
     /scratch/groups/saggar/demapper-cme/analysis/ch8_${MAPPERCONF}/plot_task-grids
+
+
+
+# RERUN_UNCOMPUTED
+RERUN_UNCOMPUTED=1;
+datafolder='/scratch/groups/saggar/demapper-cme/mappers_cmev6kval_fast.json/';
+fn_timing='/oak/stanford/groups/saggar/data-cme-shine375/timing.csv';
+output_dir='/scratch/groups/saggar/demapper-cme/analysis/ch7_mappers_cmev6kval_fast.json/';
+stat_type='compute_degrees_from_TCM'; HAS_INSTRUCTIONS=1; CHANGE_POINTS=7;
+run('code/cme/deg_analysis_sbjs.m')
+
+MAPPER_NAME=ch7_mappers_cmev6kval_fast.json
+mkdir $MAPPER_NAME
+pushd $MAPPER_NAME
+scp hasegan@login.sherlock.stanford.edu:/scratch/groups/saggar/demapper-cme/analysis/${MAPPER_NAME}/compute_degrees_from_TCM/combined-compute_degrees_from_TCM.csv .
+popd 
