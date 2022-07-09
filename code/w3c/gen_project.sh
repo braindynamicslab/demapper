@@ -45,9 +45,17 @@ module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv1.json/"
 FN_TIMING="/scratch/groups/saggar/demapper-w3c/data/task_info.csv"
 OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/wnoise_results/analysis/mappers_w3cv1.json/"
-
 ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
 matlab -r "${ARGS} run('code/w3c/circle_test.m')"
+
+
+module load matlab
+CONF=mappers_w3cv8embed_fast.json
+DATAFOLDER="/scratch/groups/saggar/demapper-w3c/${CONF}/"
+COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_1sbj.csv"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/${CONF}/"
+ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
+matlab -r "${ARGS} run('code/w3c/circle_test_multitiming.m')"
 
 
 ## Within a shell, combine the stats:
@@ -95,7 +103,7 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_
 
 # Run on 1sbj only
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-1sbj.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv6kval_fast.json \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv8embed_notsofast.json \
     --rerun_uncomputed
 
 # might need highmem for some configs:
@@ -112,7 +120,7 @@ sbatch -p bigmem \
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_1sbj.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv6kval_fast.json/
+    --mapper_dir /scratch/groups/saggar/demapper-w3c/mappers_w3cv8embed_fast.json/
 
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shortest.csv \

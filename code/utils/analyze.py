@@ -71,7 +71,7 @@ def extract_dataset(stats_path, results_path, filter_by, parseparams_f, has_sbj=
         if colname in df.columns:
             if len(df[df[colname] < MAX_INT][colname]) == 0:
                 raise Exception('There are no valid values for {}'.format(colname))
-            new_max_loss = max(df[df[colname] < MAX_INT][colname]) * 1.5
+            new_max_loss = (max(df[df[colname] < MAX_INT][colname]) + 1) * 2.0
             max_values[colname] = new_max_loss
             df[colname] = df.apply(lambda x: x[colname] if x[colname] != MAX_INT else new_max_loss, axis=1)
 

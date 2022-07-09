@@ -19,8 +19,8 @@ timing_changes = find([timing_arr(2:end) - timing_arr(1:end-1); 1]);
 target_chgs = findchangepts(timing_arr', 'MaxNumChanges', 15);
 
 % Load Data
-res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_fast.json/BDLMapper_16_25_60';
-res = load([res_path, '/res.mat']).res;
+% res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_fast.json/BDLMapper_16_25_60';
+% res = load([res_path, '/res.mat']).res;
 
 %%  % Plot Mapper stuff
 % plot_task(res, timing_table, [res_path, '/plot_task.png'])
@@ -35,13 +35,19 @@ res = load([res_path, '/res.mat']).res;
 % saveas(f, TCM_output_path);
 % close(f);
 
-avg_degs = read_1d([res_path, '/avgstat_BDLMapper_16_25_60.1D']);
+% avg_degs = read_1d([res_path, '/avgstat_BDLMapper_16_25_60.1D']);
+% p_chgs = [0, 1, 3, 5, 7, 8, 9, 10];
+
+res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev6kval_disp.json';
+avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_DistsGeoBDLMapper_correlation_8_10_40.1D']);
+% p_chgs = [0, 1, 3, 5, 7, 8, 9, 10];
+p_chgs = 0:9;
+
+% Same code:
 CHANGE_POINTS = 10;
 chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
 output_path = [res_path, '/change-degs.png'];
 
-%     p_chgs = 0:length(chgs);
-p_chgs = [0, 1, 3, 5, 7, 8, 9, 10];
 plot_degs(avg_degs, timing_labels, timing_changes, chgs, p_chgs, output_path);
 
 

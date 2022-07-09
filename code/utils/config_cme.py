@@ -13,6 +13,7 @@ def ch_ds(ch):
         'cmev5': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5.json'.format(ch),
         'cmev5MH': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5MH.json'.format(ch),
         'cmev6kval': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev6kval_fast.json'.format(ch),
+        'cmev7kval': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev7kval_fast.json'.format(ch),
     }
 
 ALL_DATASETS = {
@@ -37,6 +38,8 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['BDLMapperMH_', 'BDLMapperMHNoKnn']
     elif k == 'cmev6kval':
         _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper', 'DistsGeoNeuMapper']
+    elif k == 'cmev7kval':
+        _FILTERS[k] = ['DistsGeoNeuMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):

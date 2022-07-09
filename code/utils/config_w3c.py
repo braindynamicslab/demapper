@@ -1,42 +1,47 @@
+import os
 import pandas as pd
 import numpy as np
 
+
+BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
+
 DATASETS = {
-    'ss_w3cv1': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv1.json/',
-    'ss_w3cv2': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv2.json/',
-    'ss_w3cv3': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv3.json/',
-    'ss_w3cv4': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv4.json/',
-    'ss_w3cv4euc': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv4_euc.json/',
-    'ss_w3cv5': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv5fixed.json/',
-    'ss_w3cv6': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv6fixed.json/',
-    'ss_w3cv5lens': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv5lens.json/',
-    'ss_w3cv5lens_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv5lens_fast.json/',
-    'ss_w3cv5lens2_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv5lens2_fast.json/',
-    'ss_w3cv5kval_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv5kval_fast.json/',
-    'ss_w3cv6lens_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv6lens_fast.json/',
-    'ss_w3cv6lens2_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv6lens2_fast.json/',
-    'ss_w3cv6kval_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_ss/analysis/mappers_w3cv6kval_fast.json/',
-    'wnoise_w3cv1': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv1.json/',
-    'wnoise_w3cv2': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv2.json/',
-    'wnoise_w3cv4': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv4.json/',
-    'wnoise_w3cv4euc': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv4_euc.json/',
-    'wnoise_w3cv5': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv5dist.json/',
-    'wnoise_w3cv6': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv6dist.json/',
-    'wnoise_w3cv5lens_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv5lens_fast.json/',
-    'wnoise_w3cv6lens_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv6lens_fast.json/',
-    'wnoise_w3cv5lens2_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv5lens2_fast.json/',
-    'wnoise_w3cv6lens2_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_wnoise/analysis/mappers_w3cv6lens2_fast.json/',
-    'hightr_w3cv1': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv1.json/',
-    'hightr_w3cv2': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv2.json/',
-    'hightr_w3cv3': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv3.json/',
-    'hightr_w3cv4': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv4.json/',
-    'hightr_w3cv4euc': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv4_euc.json/',
-    'hightr_w3cv5': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv5dist.json/',
-    'hightr_w3cv6': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv6dist.json/',
-    'hightr_w3cv5lens_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv5lens_fast.json/',
-    'hightr_w3cv6lens_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv6lens_fast.json/',
-    'hightr_w3cv5lens2_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv5lens2_fast.json/',
-    'hightr_w3cv6lens2_fast': '/Users/dh/workspace/BDL/demapper/results/w3c_hightr/analysis/mappers_w3cv6lens2_fast.json/',
+    'ss_w3cv1': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv1.json/',
+    'ss_w3cv2': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv2.json/',
+    'ss_w3cv3': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv3.json/',
+    'ss_w3cv4': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv4.json/',
+    'ss_w3cv4euc': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv4_euc.json/',
+    'ss_w3cv5': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv5fixed.json/',
+    'ss_w3cv6': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv6fixed.json/',
+    'ss_w3cv5lens': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv5lens.json/',
+    'ss_w3cv5lens_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv5lens_fast.json/',
+    'ss_w3cv5lens2_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv5lens2_fast.json/',
+    'ss_w3cv5kval_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv5kval_fast.json/',
+    'ss_w3cv6lens_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv6lens_fast.json/',
+    'ss_w3cv6lens2_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv6lens2_fast.json/',
+    'ss_w3cv6kval_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv6kval_fast.json/',
+    'ss_w3cv8embed_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv8embed_fast.json/',
+    'wnoise_w3cv1': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv1.json/',
+    'wnoise_w3cv2': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv2.json/',
+    'wnoise_w3cv4': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv4.json/',
+    'wnoise_w3cv4euc': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv4_euc.json/',
+    'wnoise_w3cv5': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv5dist.json/',
+    'wnoise_w3cv6': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv6dist.json/',
+    'wnoise_w3cv5lens_fast': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv5lens_fast.json/',
+    'wnoise_w3cv6lens_fast': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv6lens_fast.json/',
+    'wnoise_w3cv5lens2_fast': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv5lens2_fast.json/',
+    'wnoise_w3cv6lens2_fast': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv6lens2_fast.json/',
+    'hightr_w3cv1': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv1.json/',
+    'hightr_w3cv2': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv2.json/',
+    'hightr_w3cv3': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv3.json/',
+    'hightr_w3cv4': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv4.json/',
+    'hightr_w3cv4euc': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv4_euc.json/',
+    'hightr_w3cv5': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv5dist.json/',
+    'hightr_w3cv6': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv6dist.json/',
+    'hightr_w3cv5lens_fast': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv5lens_fast.json/',
+    'hightr_w3cv6lens_fast': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv6lens_fast.json/',
+    'hightr_w3cv5lens2_fast': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv5lens2_fast.json/',
+    'hightr_w3cv6lens2_fast': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv6lens2_fast.json/',
 }
 
 _FILTERS = {}
@@ -57,6 +62,8 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['DistsGeoNeuMapper']
     if k.endswith('w3cv6'):
         _FILTERS[k] = ['CustomNeuMapper']
+    if 'w3cv8embed' in k:
+        _FILTERS[k] = ['EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'EmbedBDLMapperDist', 'tSNEBDLMapperDist', 'EmbedBDLMapperPrep', 'tSNEBDLMapperPrep']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
@@ -105,6 +112,32 @@ def extract_params_f(df, filter_by):
         df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
         df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
         param_cols = ['dist', 'R', 'G']
+    elif filter_by == 'EmbedBDLMapperWtd':
+        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        df['embed'] = df.apply(lambda x: x['Mapper'].split('_')[2], axis=1)
+        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
+        param_cols = ['K', 'embed', 'edim', 'R', 'G']
+    elif filter_by == 'tSNEBDLMapperWtd':
+        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        df['perplexity'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
+        param_cols = ['K', 'perplexity', 'edim', 'R', 'G']
+    elif filter_by == 'EmbedBDLMapperDist' or filter_by == 'EmbedBDLMapperPrep':
+        df['embed'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
+        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['embed', 'edim', 'R', 'G']
+    elif filter_by == 'tSNEBDLMapperDist' or filter_by == 'tSNEBDLMapperPrep':
+        df['perplexity'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['perplexity', 'edim', 'R', 'G']
     else:
         raise Exception('Mapper type not recognized')
     return df, param_cols

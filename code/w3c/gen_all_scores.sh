@@ -8,12 +8,12 @@ echo '% starting ' > $FILE
 for CONF in mappers_w3cv3.json mappers_w3cv4.json mappers_w3cv5dist.json mappers_w3cv6dist.json
 do
 
-  # DATAFOLDER="/scratch/groups/saggar/demapper-w3c/${CONF}/"
-  # COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_short.csv"
-  # OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/${CONF}/"
-  # ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
-  # echo "clear" >> $FILE
-  # echo "${ARGS} run('code/w3c/circle_test_multitiming.m')" >> $FILE
+  DATAFOLDER="/scratch/groups/saggar/demapper-w3c/${CONF}/"
+  COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_short.csv"
+  OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/${CONF}/"
+  ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
+  echo "clear" >> $FILE
+  echo "${ARGS} run('code/w3c/circle_test_multitiming.m')" >> $FILE
 
 
   # DATAFOLDER="/scratch/groups/saggar/demapper-w3c/wnoise_results/${CONF}/"
