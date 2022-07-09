@@ -8,12 +8,12 @@ output_path = '/Users/dh/workspace/BDL/demapper/results/cme_mappers/res.csv';
 ## Run the with the following command on Sherlock (on `sdev`)
 
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-w3c/mappers_w3cv5kval_fast.json/"
-COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_1sbj.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/analysis/mappers_w3cv5kval_fast.json/"
-
-ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
-matlab -r "${ARGS} run('code/w3c/circle_test_multitiming.m')"
+ARGS=""
+ARGS="$ARGS mappers_path_1='/scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc_fast.json/SBJ99';"
+ARGS="$ARGS mappers_path_2='/scratch/groups/saggar/demapper-w3c/mappers_w3cv3_fast.json/SBJ99';"
+ARGS="$ARGS output_path='/scratch/groups/saggar/demapper-w3c/analysis/v3_vs_v4_fast_TCM_sim.csv';"
+ARGS="$ARGS poolsize=8;"
+matlab -r "${ARGS} run('code/w3c/TCMs_similarity.m')"
 
 %}
 
@@ -30,7 +30,7 @@ if exist('poolsize', 'var')
 end
 
 
-header = ['mapper1', 'mapper2', 'L1', 'L2'];
+header = {'mapper1', 'mapper2', 'L1', 'L2'};
 writecell(header, output_path);
 
 m1 = 1:length(mappers1);
@@ -49,7 +49,7 @@ parfor (idx = 1:length(mcomb), parForArg)
     L1 = sum(abs(vals1 - vals2));
     L2 = sqrt(sum((vals1 - vals2) .^ 2));
 
-    M = [mapper1, mapper2, L1, L2];
+    M = {mapper1, mapper2, num2str(L1), num2str(L2)};
     writecell(M, output_path, 'WriteMode', 'append');
 end
 
