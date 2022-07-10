@@ -1,0 +1,25 @@
+{
+  "preprocess": [
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "CustomMapper",
+    "name": "EucNeuMapper",
+    "preprocess_type": "none",
+    "dist_type": "euclidean",
+    "embed_type": "none",
+    "prelens_type": "wtd-pen",
+    "prelens_rknnparam": [4, 6, 12, 16, 32, 48, 64, 96],
+    "binning_type": "cball",
+    "binning_resolution": [10, 25, 50, 100, 200, 400, 500, 700, 800, 900, 1000, 1200, 1400, 1500, 1600],
+    "binning_gain": [30, 40, 50, 60, 70, 80],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }],
+  "analyses": [
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp" }
+  ]
+}
