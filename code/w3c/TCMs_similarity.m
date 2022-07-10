@@ -9,8 +9,10 @@ output_path = '/Users/dh/workspace/BDL/demapper/results/cme_mappers/res.csv';
 
 module load matlab
 ARGS=""
-ARGS="$ARGS mappers_path_1='/scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc_fast.json/SBJ99';"
-ARGS="$ARGS mappers_path_2='/scratch/groups/saggar/demapper-w3c/mappers_w3cv3_fast.json/SBJ99';"
+ARGS="$ARGS mappers_path_1='/scratch/groups/saggar/demapper-w3c/mappers_w3cv3_fast.json/SBJ99';"
+ARGS="$ARGS mappers_sel_1='/scratch/groups/saggar/demapper-w3c/mappers_w3cv3_fast.json/fewer_mappers.txt';"
+ARGS="$ARGS mappers_path_2='/scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc_fast.json/SBJ99';"
+ARGS="$ARGS mappers_sel_2='/scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc_fast.json/fewer_mappers.txt';"
 ARGS="$ARGS output_path='/scratch/groups/saggar/demapper-w3c/analysis/v3_vs_v4_fast_TCM_sim.csv';"
 ARGS="$ARGS poolsize=8;"
 matlab -r "${ARGS} run('code/w3c/TCMs_similarity.m')"
@@ -21,6 +23,12 @@ mpath = 'compute_temp-TCM-mat.1D';
 
 mappers1 = get_mappers(mappers_path_1);
 mappers2 = get_mappers(mappers_path_2);
+if exist('mappers_sel_1', 'var')
+    mappers1 = read_list(mappers_sel_1)';
+end
+if exist('mappers_sel_2', 'var')
+    mappers2 = read_list(mappers_sel_2)';
+end
 
 parForArg = 0;
 if exist('poolsize', 'var')
@@ -65,4 +73,9 @@ function mappers = get_mappers(mappers_path)
     names = struct2cell(mappers_dirs); names = names(1,:);
     mappers_ids = cellfun(@(s) ~isempty(s), strfind(names, 'Mapper'));
     mappers = names(mappers_ids);
+end
+
+function names = read_list(path)
+data_opts = delimitedTextImportOptions('Delimiter', ' ');
+names = readmatrix(path, data_opts);
 end
