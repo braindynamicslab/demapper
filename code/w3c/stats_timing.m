@@ -8,8 +8,8 @@ output_path = '/Users/dh/workspace/BDL/demapper/results/cme_mappers/res.csv';
 
 module load matlab
 ARGS=""
-ARGS="$ARGS mappers_path='/scratch/groups/saggar/demapper-w3c/mappers_w3cv3_fast.json/SBJ99';"
-ARGS="$ARGS output_path='/scratch/groups/saggar/demapper-w3c/analysis/v3_stats.csv';"
+ARGS="$ARGS mappers_path='/scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc_fast.json/SBJ99';"
+ARGS="$ARGS output_path='/scratch/groups/saggar/demapper-w3c/analysis/stats_timing_v4.csv';"
 ARGS="$ARGS poolsize=32;"
 matlab -r "${ARGS} run('code/w3c/stats_timing.m')"
 
@@ -30,7 +30,7 @@ writecell(header, output_path);
 
 parfor (idx1 = 1:length(mappers), parForArg)
     mapper = mappers{idx1};
-    path = fullfile(mappers_path, mapper1, mpath);
+    path = fullfile(mappers_path, mapper, mpath);
     res = load(path).res;
     timing = res.processing_time;
     nodes = size(res.memberMat, 1);
