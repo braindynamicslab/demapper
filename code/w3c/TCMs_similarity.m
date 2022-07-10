@@ -17,6 +17,8 @@ ARGS="$ARGS output_path='/scratch/groups/saggar/demapper-w3c/analysis/v3_vs_v4_f
 ARGS="$ARGS poolsize=8;"
 matlab -r "${ARGS} run('code/w3c/TCMs_similarity.m')"
 
+ARGS="$ARGS compute_half=1;"
+
 %}
 
 mpath = 'compute_temp-TCM-mat.1D';
