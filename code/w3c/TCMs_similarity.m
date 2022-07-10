@@ -29,6 +29,11 @@ end
 if exist('mappers_sel_2', 'var')
     mappers2 = read_list(mappers_sel_2)';
 end
+if exist('compute_half', 'var')
+    compute_half = 1;
+else
+    compute_half = 0;
+end
 
 parForArg = 0;
 if exist('poolsize', 'var')
@@ -48,6 +53,11 @@ parfor (idx1 = 1:length(mappers1), parForArg)
     vals1 = tcm1(logical(mask)); 
 
     for idx2 = 1:length(mappers2)
+        if compute_half
+            if idx1 <= idx2
+                continue
+            end
+        end
         mapper2 = mappers2{idx2};
         path2 = fullfile(mappers_path_2, mapper2, mpath);
         
