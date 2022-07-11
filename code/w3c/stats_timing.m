@@ -9,8 +9,7 @@ output_path = '/Users/dh/workspace/BDL/demapper/results/cme_mappers/res.csv';
 module load matlab
 ARGS=""
 ARGS="$ARGS mappers_path='/scratch/groups/saggar/demapper-w3c/mappers_w3cv4_euc_fast.json/SBJ99';"
-ARGS="$ARGS output_path='/scratch/groups/saggar/demapper-w3c/analysis/stats_timing_v4.csv';"
-ARGS="$ARGS poolsize=32;"
+ARGS="$ARGS output_path='/scratch/groups/saggar/demapper-w3c/analysis/stats_timing_v4_fast.csv';"
 matlab -r "${ARGS} run('code/w3c/stats_timing.m')"
 
 %}

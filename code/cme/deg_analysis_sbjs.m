@@ -109,7 +109,7 @@ for mid = 1:length(all_mappers)
     output_path = fullfile(stat_outdir, [mapper_name, '.png']);
     if ~RERUN_UNCOMPUTED || ~isfile(output_path)
         % there is no cached file, so compute it
-        if strcmp(stat_type, 'compute_degrees_from_TCM')
+        if strcmp(stat_type, 'compute_degrees_from_TCM') || strcmp(stat_type, 'compute_degrees_from_rTCM')
             all_TCMs = zeros(length(sbjs), length(timing_arr), length(timing_arr));
             for sbjid = 1:length(sbjs)
                 sbj = cell2mat(sbjs(sbjid));            
@@ -186,6 +186,12 @@ function degs = process(mapper_path, stat_type)
             
             sim_mat = get_similarity_mat(res.adjacencyMat, res.memberMat);
             degs = normalize(sim_mat, 'Range');
+        case 'compute_degrees_from_rTCM'
+            datapath = fullfile(mapper_path, 'res.mat');
+            res = load(datapath).res;
+            
+            sim_mat = get_similarity_mat(res.adjacencyMat, res.memberMat);
+            degs = rescale(sim_mat);
         case {'betweenness_centrality_TRs_avg', 'betweenness_centrality_TRs_max', ...
                 'core_periphery_TRs_avg', 'core_periphery_TRs_max', 'degrees_TRs'}
             datapath = fullfile(mapper_path, ['stats_', stat_type, '.1D']);
