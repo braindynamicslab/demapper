@@ -3,10 +3,21 @@
       { "type": "zscore" }
   ],
   "mappers": [{
-    "type": "NeuMapper",
-    "k": [20, 30],
-    "resolution": [50, 100, 200, 300],
-    "gain": [30, 40, 50, 60, 70]
+
+    "type": "CustomMapper",
+    "name": "EucNeuMapper",
+    "preprocess_type": "none",
+    "dist_type": "euclidean",
+    "embed_type": "none",
+    "prelens_type": "wtd-pen",
+    "prelens_rknnparam": [20, 30],
+    "binning_type": "cball",
+    "binning_resolution": [50, 100, 200, 300],
+    "binning_gain": [30, 40, 50, 60, 70],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
   }],
   "analyses": [
     { "type": "plot_graph" },
