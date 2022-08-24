@@ -8,7 +8,7 @@
     "type": "BDLMapper",
     "k": [8, 12, 20],
     "resolution": [10, 20, 30, 40],
-    "gain": [20, 30, 50, 70, 90]
+    "gain": [20, 30, 40, 50, 60, 70, 90]
   }],
   "analyses": [
     { "type": "plot_graph" },

@@ -103,7 +103,7 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_
 
 # Run on 1sbj only
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-1sbj.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv4_euc_time.json \
+    /home/users/hasegan/demapper/code/configs/mappers_w3cv4_reg.json \
     --rerun_uncomputed
 
 # might need highmem for some configs:
