@@ -17,6 +17,13 @@
     { "type": "plot_task", "args": {
         "name": "CME",
         "path": "/oak/stanford/groups/saggar/data-cme-shine375/timing.csv",
-        "no_legend": true } }
+        "no_legend": true,
+        "cmap": [[0.0430, 0.3750, 0.6133],
+                 [0.0352, 0.8828, 0.2383],
+                 [0.9531, 0.8398, 0.1641],
+                 [0.8984, 0.4805, 0.0625],
+                 [0.6914, 0.1250, 0.1016]]
+      }
+    }
   ]
 }
