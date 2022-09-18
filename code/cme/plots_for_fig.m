@@ -6,7 +6,8 @@ codefolder  = [basefolder,'/code'];
 addpath(genpath(codefolder));
 
 % Get the timing
-fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/input/timing.csv';
+% fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/input/timing.csv';
+fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
 timing_table.task_name = string(timing_table.task_name);
 timing_labels = timing_table.task_name;
@@ -38,15 +39,20 @@ target_chgs = findchangepts(timing_arr', 'MaxNumChanges', 15);
 % avg_degs = read_1d([res_path, '/avgstat_BDLMapper_16_25_60.1D']);
 % p_chgs = [0, 1, 3, 5, 7, 8, 9, 10];
 
-res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev6kval_disp.json';
-avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_DistsGeoBDLMapper_correlation_8_10_40.1D']);
-% p_chgs = [0, 1, 3, 5, 7, 8, 9, 10];
-p_chgs = 0:9;
+% res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev6kval_disp.json';
+% avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_DistsGeoBDLMapper_correlation_8_10_40.1D']);
+% % p_chgs = [0, 1, 3, 5, 7, 8, 9, 10];
+% p_chgs = 0:9;
+
+% TODO: Get the correct path for figure 4
+res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3.json';
+avg_degs = read_1d([res_path, '/degrees_TRs/avgstat_BDLMapper_12_30_58.1D']);
+p_chgs = 0:9; % TODO
 
 % Same code:
 CHANGE_POINTS = 10;
 chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
-output_path = [res_path, '/change-degs.png'];
+output_path = [res_path, '/change-degs_BDLMapper_12_30_58.png'];
 
 plot_degs(avg_degs, timing_labels, timing_changes, chgs, p_chgs, output_path);
 
@@ -68,16 +74,16 @@ function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_pat
             case 'instruction'
                 continue
             case 'rest'
-                col = 'yellow';
+                col = [0.0352, 0.8828, 0.2383]; % 'g'; % green
             case 'math'
-                col = [1.0 .1 1.0];
+                col = [0.6914, 0.1250, 0.1016]; % 'r'; % red
             case 'memory'
-                col = 'green';
+                col = [0.9531, 0.8398, 0.1641]; % 'yellow';
             case 'video'
-                col = [0 .3 1];
+                col = [0.8984, 0.4805, 0.0625]; % orange
         end
     
-        patch([ch1 ch2 ch2 ch1], [0 0, 1, 1], col, 'FaceAlpha', .2)
+        patch([ch1 ch2 ch2 ch1], [0 0, 1, 1], col, 'FaceAlpha', .5)
     
 %         avg_deg = mean(degs(1, ch1:ch2));
 %         plot(ch1:ch2, repmat(avg_deg, ch2-ch1+1, 1), 'black');
@@ -98,7 +104,7 @@ function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_pat
         end
 
         vs = mean(degs(x1:x2));
-        plot([x1,x2], [vs, vs], '--r', 'LineWidth', 2)
+        plot([x1,x2], [vs, vs], '--b', 'LineWidth', 2)
     end
     
     plot(1:length(degs), degs, 'black')

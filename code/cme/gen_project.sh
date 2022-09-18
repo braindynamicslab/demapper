@@ -50,11 +50,6 @@ python3 neupipe/tools/cache.py compute_stats \
 
 
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_cmev3_disp.json \
-     --rerun_uncomputed --rerun_analysis plot_task
-
-
-sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_cmev6kval_disp.json \
     --rerun_uncomputed 
 
@@ -70,7 +65,9 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbat
 
 sbatch /home/users/hasegan/projects/cme/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_cmev3_disp.json \
-    --rerun_uncomputed
+     --rerun_analysis plot_task
+
+     --rerun_uncomputed 
 
 # cache
 python3 neupipe/tools/cache.py compute_stats \

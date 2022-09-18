@@ -224,3 +224,20 @@ python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv \
     --mapper_dir /scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv5lens2_fast.json/
 
+
+
+## Regenrated for figure 4, in matlab, run code:
+
+fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
+stat_in_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3.json/degrees_TRs/avgstat_BDLMapper_12_30_58.1D';
+CHANGE_POINTS = 10;
+mapper_name = 'BDLMapper_12_30_58';
+output_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3.json/TRs_degs-BDLMapper_12_30_58.png';
+
+avg_degs = read_1d(stat_in_path);
+
+plot_degs(avg_degs, timing_labels, timing_changes, chgs, mapper_name, output_path);
+
+
+
+

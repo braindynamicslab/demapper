@@ -2,7 +2,7 @@
 ## Run command locally:
 
 datafolder = '/Users/dh/workspace/BDL/demapper/data/cme/';
-fn_timing = '/Users/dh/workspace/BDL/neurolens/data/data-cme-shine375/timing.csv';
+fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
 output_dir = '/Users/dh/workspace/BDL/demapper/results/cme/test';
 stat_type = 'compute_degrees';
 CHANGE_POINTS = 7;
