@@ -45,9 +45,9 @@ target_chgs = findchangepts(timing_arr', 'MaxNumChanges', 15);
 % p_chgs = 0:9;
 
 % TODO: Get the correct path for figure 4
-res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3.json';
-avg_degs = read_1d([res_path, '/degrees_TRs/avgstat_BDLMapper_12_30_58.1D']);
-p_chgs = 0:9; % TODO
+res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_disp.json';
+avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_BDLMapper_12_30_60.1D']);
+p_chgs = [0, 1, 2, 4, 6, 7, 8, 10];
 
 % Same code:
 CHANGE_POINTS = 10;
@@ -83,7 +83,7 @@ function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_pat
                 col = [0.8984, 0.4805, 0.0625]; % orange
         end
     
-        patch([ch1 ch2 ch2 ch1], [0 0, 1, 1], col, 'FaceAlpha', .5)
+        patch([ch1 ch2 ch2 ch1], [0 0, 1, 1], col, 'FaceAlpha', .25)
     
 %         avg_deg = mean(degs(1, ch1:ch2));
 %         plot(ch1:ch2, repmat(avg_deg, ch2-ch1+1, 1), 'black');
