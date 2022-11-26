@@ -1,6 +1,7 @@
 
 
 FILE=commands_to_run_v3to6_hightr.m
+FILE=commands_to_run_w3cv5lens2_ss2.m
 
 echo '% starting ' > $FILE
 
@@ -15,13 +16,20 @@ do
   echo "clear" >> $FILE
   echo "${ARGS} run('code/w3c/circle_test_multitiming.m')" >> $FILE
 
+  DATAFOLDER="/scratch/groups/saggar/demapper-w3c/ss2_results/${CONF}/"
+  COHORT_PATH="$HOME/projects/w3c_ss2/cohort_mapper.csv"
+  OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/ss2_results/analysis/${CONF}/"
+  ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
+  echo "clear" >> $FILE
+  echo "${ARGS} run('code/w3c/circle_test_multitiming.m')" >> $FILE
 
-  # DATAFOLDER="/scratch/groups/saggar/demapper-w3c/wnoise_results/${CONF}/"
-  # FN_TIMING="/scratch/groups/saggar/demapper-w3c/data/task_info.csv"
-  # OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/wnoise_results/analysis/${CONF}/"
-  # ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
-  # echo "clear" >> $FILE
-  # echo "${ARGS} run('code/w3c/circle_test.m')" >> $FILE
+
+  DATAFOLDER="/scratch/groups/saggar/demapper-w3c/wnoise2_results/${CONF}/"
+  FN_TIMING="/oak/stanford/groups/saggar/demapper/data/w3c/data_subsampled/task_info_99.csv"
+  OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/wnoise2_results/analysis/${CONF}/"
+  ARGS="datafolder='${DATAFOLDER}'; fn_timing='${FN_TIMING}'; output_dir='${OUTPUT_DIR}';"
+  echo "clear" >> $FILE
+  echo "${ARGS} run('code/w3c/circle_test.m')" >> $FILE
 
 
   DATAFOLDER="/scratch/groups/saggar/demapper-w3c/hightr_results/${CONF}/"

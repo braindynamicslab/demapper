@@ -2,10 +2,10 @@
 # Generate the cohort file based on this json
 echo """
 {
-      "id0": "SBJ99",
-      "id1": "", "id2": "",
-      "path": "w3c_simulated_bold.npy",
-      "TR": 0.72
+      \"id0\": \"SBJ99\",
+      \"id1\": \"\", \"id2\": \"\",
+      \"path\": \"{{id0}}_bold.npy\",
+      \"TR\": 0.72
 }""" > W3C_ids.json
 
 
@@ -20,6 +20,17 @@ python3 neupipe/mapper.py w3c \
     --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
     --extra-args has_TR=True,RepetitionTime=0.72
 
+# Generate the project with the new data location
+cd $HOME/
+# python3 neupipe/mapper.py w3c \
+neupipe mapper w3c_1sbj \
+    /oak/stanford/groups/saggar/demapper/data/w3c/data_subsampled/\
+    --data-json-path W3C_ids.json \
+    --output-path /scratch/groups/saggar/demapper-w3c/1sbj_results \
+    --project-dir $HOME/projects/w3c_1sbj/ \
+    --mappertoolbox-dir /home/groups/saggar/repos/mappertoolbox-matlab/ \
+    --extra-args has_TR=True,RepetitionTime=0.72
+
 # Start the job on all configs
 sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv1.json \
@@ -27,6 +38,10 @@ sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c/run_mapper.sbat
 
 sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c/run_mapper.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv2.json \
+    --rerun_uncomputed
+
+sbatch -p saggar $HOME/projects/w3c_1sbj/run_mapper.sbatch \
+    $HOME/demapper/code/configs/mappers_w3cv5lens2_disp.json \
     --rerun_uncomputed
 
 
@@ -70,7 +85,10 @@ python3 code/combine.py /scratch/groups/saggar/demapper-w3c/wnoise_results/mappe
     /scratch/groups/saggar/demapper-w3c/wnoise_results/analysis/mappers_w3cv2.json/
 
 
-# Subsampled data
+##############################################
+####################### Subsampled Data ######
+##############################################
+
 
 echo """
 {
@@ -79,6 +97,16 @@ echo """
       \"path\": \"{{id0}}_bold.npy\",
       \"TR\": 0.72
 }""" > W3C_ids_ss.json
+
+
+echo """
+{
+      \"id0\": [\"SBJ-50-00\", \"SBJ-50-25\", \"SBJ-50-50\", \"SBJ-60-00\", \"SBJ-60-20\", \"SBJ-60-40\", \"SBJ-70-00\", \"SBJ-70-15\", \"SBJ-70-30\", \"SBJ-80-00\", \"SBJ-80-10\", \"SBJ-80-20\", \"SBJ-90-00\", \"SBJ-90-05\", \"SBJ-90-10\", \"SBJ-99-00\"],
+      \"id1\": \"\", \"id2\": \"\",
+      \"path\": \"{{id0}}_bold.npy\",
+      \"task_path_G\": \"/oak/stanford/groups/saggar/demapper/data/w3c/data_ss2/task_info_{{id0}}.csv\",
+      \"TR\": 0.72
+}""" > W3C_ids_ss2.json
 
 
 # subsampled
@@ -90,10 +118,21 @@ python3 neupipe/mapper.py w3c_subsampled \
     --mappertoolbox-dir /scratch/groups/saggar/dh/mappertoolbox-matlab/ \
     --extra-args has_TR=True,RepetitionTime=0.72
 
-# change in run_mapper.sbatch so that the cohort file points to the correct file:
-vim /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled//run_mapper.sbatch
 
-# Point to:
+# subsampled 2
+neupipe mapper w3c_ss2 \
+    /oak/stanford/groups/saggar/demapper/data/w3c/data_ss2/\
+    --data-json-path W3C_ids_ss2.json \
+    --output-path /scratch/groups/saggar/demapper-w3c/ss2_results \
+    --project-dir $HOME/projects/w3c_ss2/ \
+    --mappertoolbox-dir /home/groups/saggar/repos/mappertoolbox-matlab/ \
+    --extra-args has_TR=True,RepetitionTime=0.72
+
+
+
+# (deprecated) change in run_mapper.sbatch so that the cohort file points to the correct file:
+vim /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled//run_mapper.sbatch
+# (deprecated) Point to:
 /scratch/groups/saggar/demapper-w3c/data_subsampled/cohort_shorter.csv
 
 # start the mappers
@@ -115,6 +154,11 @@ sbatch -p saggar \
 sbatch -p bigmem \
     /scratch/groups/saggar/dh/pipeline/projects/w3c_subsampled/run_mapper-highmem.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv7embed.json \
+    --rerun_uncomputed
+
+# subsampled 2
+sbatch -p saggar $HOME/projects/w3c_ss2/run_mapper.sbatch \
+    $HOME/demapper/code/configs/mappers_w3cv5lens2_fast.json \
     --rerun_uncomputed
 
 # Compute stats
@@ -147,6 +191,16 @@ mv $HOME/demapper/code/configs/mappers_w3cv3.json-backup $HOME/demapper/code/con
 ####################### Data with noise ######
 ##############################################
 
+
+echo """
+{
+      \"id0\": [\"SBJ\", \"SBJ-A007\", \"SBJ-A014\", \"SBJ-A020\", \"SBJ-A027\", \"SBJ-A033\", \"SBJ-A050\", \"SBJ-A066\", \"SBJ-A083\", \"SBJ-A099\", \"SBJ-A132\", \"SBJ-SNR00.5\", \"SBJ-SNR00.6\", \"SBJ-SNR00.8\", \"SBJ-SNR01.0\", \"SBJ-SNR01.3\", \"SBJ-SNR02.0\", \"SBJ-SNR02.5\", \"SBJ-SNR03.3\", \"SBJ-SNR05.0\", \"SBJ-SNR10.0\"],
+      \"id1\": \"\", \"id2\": \"\",
+      \"path\": \"{{id0}}.npy\",
+      \"TR\": 0.72
+}""" > W3C_ids_wnoise2.json
+
+
 python3 neupipe/mapper.py w3c_wnoise \
     /scratch/groups/saggar/demapper-w3c/data_wnoise \
     --data-json-path W3C_ids_wnoise.json \
@@ -156,21 +210,33 @@ python3 neupipe/mapper.py w3c_wnoise \
     --extra-args has_TR=True,RepetitionTime=0.72
 
 
+# Generate the project with the new data location
+neupipe mapper w3c_wnoise2 \
+    /oak/stanford/groups/saggar/demapper/data/w3c/data_wnoise2/\
+    --data-json-path W3C_ids_wnoise2.json \
+    --output-path /scratch/groups/saggar/demapper-w3c/wnoise2_results \
+    --project-dir $HOME/projects/w3c_wnoise2/ \
+    --mappertoolbox-dir /home/groups/saggar/repos/mappertoolbox-matlab/ \
+    --extra-args has_TR=True,RepetitionTime=0.72
+
+
 sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise//run_mapper-highmem.sbatch \
     /home/users/hasegan/demapper/code/configs/mappers_w3cv3.json \
     --rerun_uncomputed
 
-sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_w3cv6lens2_fast.json \
+sbatch -p saggar $HOME/projects/w3c_wnoise2/run_mapper.sbatch \
+    $HOME/demapper/code/configs/mappers_w3cv5lens2_fast.json \
     --rerun_uncomputed
 
 # Compute stats
 python3 neupipe/tools/cache.py compute_stats \
-    --cohort_path /scratch/groups/saggar/dh/pipeline/projects/w3c_wnoise/cohort_mapper.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-w3c/wnoise_results/mappers_w3cv5lens2_fast.json/
+    --cohort_path $HOME/projects/w3c_wnoise2/cohort_mapper.csv \
+    --mapper_dir $GROUP_SCRATCH/demapper-w3c/wnoise2_results/mappers_w3cv5lens2_fast.json/
 
-### Data with high TR
 
+###########################
+### Data with high TR #####
+###########################
 
 python3 neupipe/mapper.py w3c_hightr \
     /scratch/groups/saggar/demapper-w3c/data_hightr \
