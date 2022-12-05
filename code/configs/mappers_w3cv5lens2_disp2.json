@@ -1,0 +1,43 @@
+{
+  "preprocess": [
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "CustomMapper",
+    "name": "DistsGeoBDLMapper",
+    "preprocess_type": "none",
+    "dist_type": ["euclidean", "cosine"],
+    "embed_type": "CMDS",
+    "embed_dim": 2,
+    "prelens_type": "wtd-pen",
+    "prelens_rknnparam": [4, 6, 24, 32, 96],
+    "binning_type": "Nd",
+    "binning_resolution": [10, 20, 30],
+    "binning_gain": [50, 60, 70, 80, 90],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }, {
+    "type": "CustomMapper",
+    "name": "DistsBDLMapper",
+    "preprocess_type": "none",
+    "dist_type": ["euclidean", "cosine"],
+    "embed_type": "CMDS",
+    "embed_dim": 2,
+    "prelens_type": "dist",
+    "binning_type": "Nd",
+    "binning_resolution": [10, 20, 30],
+    "binning_gain": [50, 60, 70, 80, 90],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "plot_task", "args": { "name": "G", "path": "/scratch/groups/saggar/demapper-w3c/data/task_info.csv" } },
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp", "args": { "skip_mat": true }  }
+  ]
+}

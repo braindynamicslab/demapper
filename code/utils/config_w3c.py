@@ -44,6 +44,7 @@ DATASETS = {
     'hightr_w3cv6lens_fast': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv6lens_fast.json/',
     'hightr_w3cv5lens2_fast': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv5lens2_fast.json/',
     'hightr_w3cv6lens2_fast': BASE_PATH + 'w3c_hightr/analysis/mappers_w3cv6lens2_fast.json/',
+    'hightr2_w3cv5lens2_fast': BASE_PATH + 'w3c_hightr2/analysis/mappers_w3cv5lens2_fast.json/',
 }
 
 _FILTERS = {}
