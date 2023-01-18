@@ -1,11 +1,12 @@
 
 
 FILE=commands_to_run_v3to6_hightr.m
-FILE=commands_to_run_w3cv5lens2_hightr2.m
+FILE=commands_to_run_w3cv6kval_hightr3.m
 
 echo '% starting ' > $FILE
 
 # CONF=mappers_w3cv5lens2_fast.json
+# CONF=mappers_w3cv6kval_fast.json
 # for CONF in mappers_w3cv1.json mappers_w3cv2.json
 for CONF in mappers_w3cv3.json mappers_w3cv4.json mappers_w3cv5dist.json mappers_w3cv6dist.json
 do
@@ -33,9 +34,9 @@ do
   echo "${ARGS} run('code/w3c/circle_test.m')" >> $FILE
 
 
-  DATAFOLDER="/scratch/groups/saggar/demapper-w3c/hightr2_results/${CONF}/"
-  COHORT_PATH="$HOME/projects/w3c_hightr2/cohort_mapper.csv"
-  OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/hightr2_results/analysis/${CONF}/"
+  DATAFOLDER="/scratch/groups/saggar/demapper-w3c/hightr3_results/${CONF}/"
+  COHORT_PATH="$HOME/projects/w3c_hightr3/cohort_mapper.csv"
+  OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/hightr3_results/analysis/${CONF}/"
   ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
   echo "clear" >> $FILE
   echo "${ARGS} run('code/w3c/circle_test_multitiming.m')" >> $FILE

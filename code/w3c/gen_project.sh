@@ -12,6 +12,7 @@ echo """
 
 # Generate the project
 cd $GROUP_SCRATCH/dh/pipeline/
+module load python/3.9.0
 python3 neupipe/mapper.py w3c \
     /scratch/groups/saggar/demapper-w3c/data \
     --data-json-path W3C_ids.json \
@@ -257,26 +258,26 @@ vim /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapper.sbatch
 /scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv
 
 
-## Version 2:
+## Version 3:
 echo """
 {
-      \"id0\": [\"e2v0\", \"e2v1\", \"e3v0\", \"e3v1\"],
+      \"id0\": [\"SBJe1v0ws1\", \"SBJe1v0ws2\", \"SBJe1v0ws4\", \"SBJe1v0ws8\", \"SBJe2v0ws1\", \"SBJe2v0ws2\", \"SBJe2v0ws4\", \"SBJe2v0ws8\", \"SBJe3v0ws1\", \"SBJe3v0ws2\", \"SBJe3v0ws4\", \"SBJe3v0ws8\"],
       \"id1\": \"\", \"id2\": \"\",
-      \"path\": \"SBJ{{id0}}_bold.npy\",
-      \"task_path_G\": \"/oak/stanford/groups/saggar/demapper/data/w3c/data_hightr/task_info_{{id0}}.csv\",
+      \"path\": \"{{id0}}_bold.npy\",
+      \"task_path_G\": \"/oak/stanford/groups/saggar/demapper/data/w3c/data_hightr3/task_info_{{id0}}.csv\",
       \"TR\": \"XXX\"
-}""" > W3C_ids_hightr2.json
+}""" > W3C_ids_hightr3.json
 
-neupipe mapper w3c_hightr2 \
-    /oak/stanford/groups/saggar/demapper/data/w3c/data_hightr/\
-    --data-json-path W3C_ids_hightr2.json \
-    --output-path /scratch/groups/saggar/demapper-w3c/hightr2_results \
-    --project-dir $HOME/projects/w3c_hightr2/ \
+neupipe mapper w3c_hightr3 \
+    /oak/stanford/groups/saggar/demapper/data/w3c/data_hightr3/\
+    --data-json-path W3C_ids_hightr3.json \
+    --output-path /scratch/groups/saggar/demapper-w3c/hightr3_results \
+    --project-dir $HOME/projects/w3c_hightr3/ \
     --mappertoolbox-dir /home/groups/saggar/repos/mappertoolbox-matlab/ \
     --extra-args has_TR=True
 
 # Change the TR file:
-vim $HOME/projects/w3c_hightr2/cohort_mapper.csv
+vim $HOME/projects/w3c_hightr3/cohort_mapper.csv
 
 
 
@@ -298,8 +299,12 @@ sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapp
     --rerun_uncomputed --rerun_analysis plot_task
 
 
-sbatch -p saggar $HOME/projects/w3c_hightr2/run_mapper.sbatch \
-    $HOME/demapper/code/configs/mappers_w3cv5lens2_fast.json \
+sbatch -p saggar $HOME/projects/w3c_hightr3/run_mapper-2sbj.sbatch \
+    $HOME/demapper/code/configs/mappers_w3cv6kval_fast.json \
+    --rerun_uncomputed
+
+sbatch -p saggar $HOME/projects/w3c_hightr3/run_mapper-2sbj.sbatch \
+    $HOME/demapper/code/configs/mappers_w3cv5lens2_disp2.json \
     --rerun_uncomputed
 
 ## Compute and combine
@@ -324,9 +329,16 @@ python3 neupipe/tools/cache.py compute_stats \
 
 # Compute stats
 cd /home/groups/saggar/repos/pipeline
+module load python/3.9.0
+ve
+
 python3 neupipe/tools/cache.py compute_stats \
-    --cohort_path $HOME/projects/w3c_hightr2/cohort_mapper.csv \
-    --mapper_dir $GROUP_SCRATCH/demapper-w3c/hightr2_results/mappers_w3cv5lens2_fast.json/
+    --cohort_path $HOME/projects/w3c_hightr3/cohort_mapper.csv \
+    --mapper_dir $GROUP_SCRATCH/demapper-w3c/hightr3_results/mappers_w3cv5lens2_fast.json/
+
+python3 neupipe/tools/cache.py compute_stats \
+    --cohort_path $HOME/projects/w3c_hightr3/cohort_mapper-2sbj.csv \
+    --mapper_dir $GROUP_SCRATCH/demapper-w3c/hightr3_results/mappers_w3cv6kval_fast.json/
 
 
 ## Regenrated for figure 4, in matlab, run code:
