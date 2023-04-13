@@ -45,22 +45,32 @@ target_chgs = findchangepts(timing_arr', 'MaxNumChanges', 15);
 % p_chgs = 0:9;
 
 % TODO: Get the correct path for figure 4
-res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_disp.json';
-avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_BDLMapper_12_30_60.1D']);
-p_chgs = [0, 1, 2, 4, 6, 7, 8, 10];
+res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev6kval_disp.json';
 
-% Same code:
-CHANGE_POINTS = 10;
-chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
-output_path = [res_path, '/change-degs_BDLMapper_12_30_58.png'];
-
-plot_degs(avg_degs, timing_labels, timing_changes, chgs, p_chgs, output_path);
+gen_plot_degs('DistsGeoBDLMapper_euclidean_12_20_50', res_path, timing_labels, timing_changes)
+gen_plot_degs('DistsGeoBDLMapper_cityblock_12_20_50', res_path, timing_labels, timing_changes)
+gen_plot_degs('DistsGeoBDLMapper_chebychev_12_20_50', res_path, timing_labels, timing_changes)
+gen_plot_degs('DistsGeoBDLMapper_correlation_12_20_50', res_path, timing_labels, timing_changes)
+gen_plot_degs('DistsBDLMapper_euclidean_20_50', res_path, timing_labels, timing_changes)
+gen_plot_degs('DistsBDLMapper_correlation_20_50', res_path, timing_labels, timing_changes)
 
 
 %% Helper functions
+function gen_plot_degs(mapper_name, res_path, timing_labels, timing_changes)
+    avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_', mapper_name, '.1D']);
+    
+    % Same code:
+    CHANGE_POINTS = 10;
+    chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
+    output_path = [res_path, '/change-degs_', mapper_name, '.png'];
+    p_chgs = 0:length(chgs);
+    
+    plot_degs(avg_degs, timing_labels, timing_changes, chgs, p_chgs, output_path);
+end
+
 function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_path)
     f = figure;
-    f.Position = [f.Position(1:2) 2000 400];
+    f.Position = [f.Position(1:2) 1000 100];
     hold on;
     
     for cid = 2:length(timing_changes)
@@ -69,30 +79,33 @@ function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_pat
         assert(strcmp(timing_labels(ch1), timing_labels(ch2)))
         label = timing_labels(ch1);
     
+        modulatory = 1;
         col = '';
         switch label 
             case 'instruction'
                 continue
             case 'rest'
-                col = [0.0352, 0.8828, 0.2383]; % 'g'; % green
+                col = [0.0352, 0.8828, 0.2383] * modulatory; % 'g'; % green
             case 'math'
-                col = [0.6914, 0.1250, 0.1016]; % 'r'; % red
+                col = [0.6914, 0.1250, 0.1016] * modulatory; % 'r'; % red
             case 'memory'
-                col = [0.9531, 0.8398, 0.1641]; % 'yellow';
+                col = [0.9531, 0.8398, 0.1641] * modulatory; % 'yellow';
             case 'video'
-                col = [0.8984, 0.4805, 0.0625]; % orange
+                col = [0.8984, 0.4805, 0.0625] * modulatory; % orange
         end
     
-        patch([ch1 ch2 ch2 ch1], [0 0, 1, 1], col, 'FaceAlpha', .25)
+        patch([ch1 ch2 ch2 ch1], [0 0, 1, 1], col, 'FaceAlpha', .1)
     
 %         avg_deg = mean(degs(1, ch1:ch2));
 %         plot(ch1:ch2, repmat(avg_deg, ch2-ch1+1, 1), 'black');
     end
 
     % plot the found changes
-%     for ch=p_chgs
-%         xline(ch, '--m')
-%     end
+    for i=p_chgs
+        if i > 0
+          xline(chgs(i), '-k', 'LineWidth', 3)
+        end
+    end
     for i=p_chgs
         x1 = 1;
         x2 = length(degs);
@@ -109,6 +122,7 @@ function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_pat
     
     plot(1:length(degs), degs, 'black')
     xlim([1,length(degs) * 1.01])
+    ylim([0, 1.1])
 %     title(['TR Degrees for ', mapper_name], 'Interpreter', 'none')
 
     saveas(f, output_path);

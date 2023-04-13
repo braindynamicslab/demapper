@@ -1,12 +1,13 @@
 
 
 FILE=commands_to_run_v3to6_hightr.m
-FILE=commands_to_run_w3cv6kval_hightr3.m
+FILE=commands_to_run_w3cv56kval2_ss2.m
+mappers_w3cv5kval2_fast.json/
 
 echo '% starting ' > $FILE
 
 # CONF=mappers_w3cv5lens2_fast.json
-# CONF=mappers_w3cv6kval_fast.json
+# CONF=mappers_w3cv9clust.json
 # for CONF in mappers_w3cv1.json mappers_w3cv2.json
 for CONF in mappers_w3cv3.json mappers_w3cv4.json mappers_w3cv5dist.json mappers_w3cv6dist.json
 do

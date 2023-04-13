@@ -32,9 +32,9 @@ run_main
 
 # `sdev` and then run the following:
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev7kval_fast.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev6kval_disp.json/"
 FN_TIMING="/oak/stanford/groups/saggar/data-cme-shine375/timing.csv"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/ch10_mappers_cmev7kval_fast.json/"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-cme/analysis/ch10_mappers_cmev6kval_disp.json/"
 STAT_TYPE="compute_degrees_from_TCM" # "compute_degrees_from_TCM", "compute_degrees", "degrees_TRs"
 CHANGE_POINTS=10
 HAS_INSTRUCTIONS=1;
@@ -64,15 +64,19 @@ sbatch -p saggar /scratch/groups/saggar/dh/pipeline/projects/cme/run_mapper.sbat
 ### the new versions
 
 sbatch /home/users/hasegan/projects/cme/run_mapper.sbatch \
-    /home/users/hasegan/demapper/code/configs/mappers_cmev3_disp.json \
+    /home/users/hasegan/demapper/code/configs/mappers_cmev6kval_disp.json \
      --rerun_analysis plot_task
 
      --rerun_uncomputed 
 
 # cache
+cd /home/groups/saggar/repos/pipeline
+module load python/3.9.0
+ve
+
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path /home/users/hasegan/projects/cme/cohort_mapper.csv \
-    --mapper_dir /scratch/groups/saggar/demapper-cme/mappers_cmev3_disp.json
+    --mapper_dir /scratch/groups/saggar/demapper-cme/mappers_cmev6kval_disp.json
 
 
 
@@ -86,10 +90,10 @@ python3 code/utils/plot_task_grid.py \
 
 # RERUN_UNCOMPUTED
 RERUN_UNCOMPUTED=1;
-datafolder='/scratch/groups/saggar/demapper-cme/mappers_cmev6kval_fast.json/';
+datafolder='/scratch/groups/saggar/demapper-cme/mappers_cmev6kval_disp.json/';
 fn_timing='/oak/stanford/groups/saggar/data-cme-shine375/timing.csv';
-output_dir='/scratch/groups/saggar/demapper-cme/analysis/ch7_mappers_cmev6kval_fast.json/';
-stat_type='compute_degrees_from_TCM'; HAS_INSTRUCTIONS=1; CHANGE_POINTS=7;
+output_dir='/scratch/groups/saggar/demapper-cme/analysis/ch10_mappers_cmev6kval_disp.json/';
+stat_type='compute_degrees_from_TCM'; HAS_INSTRUCTIONS=1; CHANGE_POINTS=10;
 run('code/cme/deg_analysis_sbjs.m')
 
 MAPPER_NAME=ch7_mappers_cmev6kval_fast.json

@@ -158,8 +158,8 @@ sbatch -p bigmem \
     --rerun_uncomputed
 
 # subsampled 2
-sbatch -p saggar $HOME/projects/w3c_ss2/run_mapper.sbatch \
-    $HOME/demapper/code/configs/mappers_w3cv5lens2_fast.json \
+sbatch -p saggar $HOME/projects/w3c_ss2/run_mapper-1sbj.sbatch \
+    $HOME/demapper/code/configs/mappers_w3cv5kval2_fast.json \
     --rerun_uncomputed
 
 # Compute stats
@@ -173,8 +173,8 @@ python3 neupipe/tools/cache.py compute_stats \
 
 
 python3 neupipe/tools/cache.py compute_stats \
-    --cohort_path $HOME/projects/w3c_ss2/cohort_mapper.csv \
-    --mapper_dir $GROUP_SCRATCH/demapper-w3c/ss2_results/mappers_w3cv5lens2_fast.json/
+    --cohort_path $HOME/projects/w3c_ss2/cohort_mapper-1sbj.csv \
+    --mapper_dir $GROUP_SCRATCH/demapper-w3c/ss2_results/mappers_w3cv5kval2_fast.json/
 
 
 ## Regenerate plots without the legend
@@ -300,7 +300,7 @@ sbatch -p owners /scratch/groups/saggar/dh/pipeline/projects/w3c_hightr/run_mapp
 
 
 sbatch -p saggar $HOME/projects/w3c_hightr3/run_mapper-2sbj.sbatch \
-    $HOME/demapper/code/configs/mappers_w3cv6kval_fast.json \
+    $HOME/demapper/code/configs/mappers_w3cv8embed_fastv2.json \
     --rerun_uncomputed
 
 sbatch -p saggar $HOME/projects/w3c_hightr3/run_mapper-2sbj.sbatch \
@@ -310,12 +310,17 @@ sbatch -p saggar $HOME/projects/w3c_hightr3/run_mapper-2sbj.sbatch \
 ## Compute and combine
 
 module load matlab
-DATAFOLDER="/scratch/groups/saggar/demapper-w3c/hightr_results/mappers_w3cv1.json/"
-COHORT_PATH="/scratch/groups/saggar/demapper-w3c/data_hightr/cohort.csv"
-TIMING_BASE_PATH="/scratch/groups/saggar/demapper-w3c/data_hightr/"
-OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/hightr_results/analysis/mappers_w3cv1.json/"
+DATAFOLDER="/scratch/groups/saggar/demapper-w3c/hightr3_results/mappers_w3cv8embed_fastv2.json/"
+COHORT_PATH="$HOME/projects/w3c_hightr3/cohort_mapper-2sbj.csv"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/hightr3_results/analysis/mappers_w3cv8embed_fastv2.json/"
+ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
+matlab -r "${ARGS} run('code/w3c/circle_test_multitiming.m')"
 
-ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}'; timing_base_path='${TIMING_BASE_PATH}';"
+module load matlab
+DATAFOLDER="/Users/dh/workspace/BDL/demapper/results/w3c_hightr3/mappers_w3cv8embed_umap/"
+COHORT_PATH="/Users/dh/workspace/BDL/demapper/data/w3c_hightr3/cohort-2sbjs.csv"
+OUTPUT_DIR="/Users/dh/workspace/BDL/demapper/results/w3c_hightr3/analysis/mappers_w3cv8embed_umap/"
+ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
 matlab -r "${ARGS} run('code/w3c/circle_test_multitiming.m')"
 
 
@@ -338,7 +343,8 @@ python3 neupipe/tools/cache.py compute_stats \
 
 python3 neupipe/tools/cache.py compute_stats \
     --cohort_path $HOME/projects/w3c_hightr3/cohort_mapper-2sbj.csv \
-    --mapper_dir $GROUP_SCRATCH/demapper-w3c/hightr3_results/mappers_w3cv6kval_fast.json/
+    --mapper_dir $GROUP_SCRATCH/demapper-w3c/hightr3_results/mappers_w3cv8embed_fastv2.json/
+
 
 
 ## Regenrated for figure 4, in matlab, run code:

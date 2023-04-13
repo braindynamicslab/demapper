@@ -1,0 +1,46 @@
+{
+  "preprocess": [
+      { "type": "drop-nan" },
+      { "type": "drop-lowvar", "var": 1e-2 },
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "CustomMapper",
+    "name": "ClustLinkBDLMapper",
+    "preprocess_type": "none",
+    "dist_type": "euclidean",
+    "prelens_type": "wtd-pen",
+    "prelens_rknnparam": [4, 8, 16, 24, 32],
+    "embed_type": "CMDS",
+    "embed_dim": 2,
+    "binning_type": "Nd",
+    "binning_resolution": [10, 15, 20, 25, 30],
+    "binning_gain": [30, 40, 50, 60, 70],
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": [5, 10, 15, 20],
+    "finalgraph_type": "full"
+  },{
+    "type": "CustomMapper",
+    "name": "ClustDBSCANBDLMapper",
+    "preprocess_type": "none",
+    "dist_type": "euclidean",
+    "prelens_type": "wtd-pen",
+    "prelens_rknnparam": [4, 8, 16, 24, 32],
+    "embed_type": "CMDS",
+    "embed_dim": 2,
+    "binning_type": "Nd",
+    "binning_resolution": [10, 15, 20, 25, 30],
+    "binning_gain": [30, 40, 50, 60, 70],
+    "binning_nsides": 4,
+    "clustering_type": "DBSCAN",
+    "clustering_eps_type": "elbow",
+    "clustering_eps_arg": [2, 4, 8, 16],
+    "clustering_minpts": 3,
+    "finalgraph_type": "full"
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } }
+  ]
+}

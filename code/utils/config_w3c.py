@@ -18,9 +18,11 @@ DATASETS = {
     'ss_w3cv5lens2_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv5lens2_fast.json/',
     'ss2_w3cv5lens2_fast': BASE_PATH + 'w3c_ss2/analysis/mappers_w3cv5lens2_fast.json/',
     'ss_w3cv5kval_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv5kval_fast.json/',
+    'ss2_w3cv5kval2_fast': BASE_PATH + 'w3c_ss2/analysis/mappers_w3cv5kval2_fast.json/',
     'ss_w3cv6lens_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv6lens_fast.json/',
     'ss_w3cv6lens2_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv6lens2_fast.json/',
     'ss_w3cv6kval_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv6kval_fast.json/',
+    'ss2_w3cv6kval2_fast': BASE_PATH + 'w3c_ss2/analysis/mappers_w3cv6kval2_fast.json/',
     'ss_w3cv8embed_fast': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv8embed_fast.json/',
     'wnoise_w3cv1': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv1.json/',
     'wnoise_w3cv2': BASE_PATH + 'w3c_wnoise/analysis/mappers_w3cv2.json/',
@@ -47,6 +49,9 @@ DATASETS = {
     'hightr2_w3cv5lens2_fast': BASE_PATH + 'w3c_hightr2/analysis/mappers_w3cv5lens2_fast.json/',
     'hightr3_w3cv5lens2_fast': BASE_PATH + 'w3c_hightr3/analysis/mappers_w3cv5lens2_fast.json/',
     'hightr3_w3cv6kval_fast': BASE_PATH + 'w3c_hightr3/analysis/mappers_w3cv6kval_fast.json/',
+    'hightr3_w3cv8embed_fastv2': BASE_PATH + 'w3c_hightr3/analysis/mappers_w3cv8embed_fastv2.json/',
+    'hightr3_w3cv8embed_umap': BASE_PATH + 'w3c_hightr3/analysis/mappers_w3cv8embed_umap/',
+    'hightr3_w3cv9clust': BASE_PATH + 'w3c_hightr3/analysis/mappers_w3cv9clust.json/',
 }
 
 _FILTERS = {}
@@ -67,8 +72,13 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['DistsGeoNeuMapper']
     if k.endswith('w3cv6'):
         _FILTERS[k] = ['CustomNeuMapper']
-    if 'w3cv8embed' in k:
-        _FILTERS[k] = ['EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'EmbedBDLMapperDist', 'tSNEBDLMapperDist', 'EmbedBDLMapperPrep', 'tSNEBDLMapperPrep']
+    if 'w3cv8embed_umap' in k:
+        _FILTERS[k] = ['umapBDLMapperWtd', 'umapBDLMapperDist', 'umapBDLMapperPrep']
+    elif 'w3cv8embed' in k:
+        _FILTERS[k] = [
+            'EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'EmbedBDLMapperDist', 'tSNEBDLMapperDist', 'EmbedBDLMapperPrep', 'tSNEBDLMapperPrep',]
+    if 'w3cv9clust' in k:
+        _FILTERS[k] = ['ClustLinkBDLMapper', 'ClustDBSCANBDLMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
@@ -131,6 +141,13 @@ def extract_params_f(df, filter_by):
         df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
         df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
         param_cols = ['K', 'perplexity', 'edim', 'R', 'G']
+    elif filter_by == 'umapBDLMapperWtd':
+        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        df['eK'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
+        param_cols = ['K', 'eK', 'edim', 'R', 'G']
     elif filter_by == 'EmbedBDLMapperDist' or filter_by == 'EmbedBDLMapperPrep':
         df['embed'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
         df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
@@ -143,6 +160,24 @@ def extract_params_f(df, filter_by):
         df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
         df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
         param_cols = ['perplexity', 'edim', 'R', 'G']
+    elif filter_by == 'umapBDLMapperDist' or filter_by == 'umapBDLMapperPrep':
+        df['eK'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['eK', 'edim', 'R', 'G']
+    elif filter_by == 'ClustLinkBDLMapper':
+        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['linkbins'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['K', 'R', 'G', 'linkbins']
+    elif filter_by == 'ClustDBSCANBDLMapper':
+        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['clustEps'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['K', 'R', 'G', 'clustEps']
     else:
         raise Exception('Mapper type not recognized')
     return df, param_cols
