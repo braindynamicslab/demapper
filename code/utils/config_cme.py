@@ -14,6 +14,9 @@ def ch_ds(ch):
         'cmev5MH': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5MH.json'.format(ch),
         'cmev6kval': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev6kval_fast.json'.format(ch),
         'cmev7kval': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev7kval_fast.json'.format(ch),
+        'cmev8clust': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev8clust.json'.format(ch),
+        'cmev9embed': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev9embed_fast.json'.format(ch),
+        'cmev9umap': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev9embed_umap.json'.format(ch),
     }
 
 ALL_DATASETS = {
@@ -40,6 +43,12 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper', 'DistsGeoNeuMapper']
     elif k == 'cmev7kval':
         _FILTERS[k] = ['DistsGeoNeuMapper']
+    elif k == 'cmev8clust':
+        _FILTERS[k] = ['ClustLinkBDLMapper', 'ClustDBSCANBDLMapper']
+    elif k == 'cmev9embed':
+        _FILTERS[k] = ['EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'tSNEBDLMapperPrep']
+    elif k == 'cmev9umap':
+        _FILTERS[k] = ['umapBDLMapperPrep']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
@@ -58,58 +67,3 @@ def get_plot_columns(mapper_name):
     else:
         raise Exception('Cannot find plot vars (for columns) for Mapper {}'.format(mapper_name))
     return fixedV, indexV, colV
-
-def extract_params_f(df, filter_by):
-    param_cols = None
-    if filter_by == 'BDLMapper' or filter_by == 'NeuMapper' or filter_by == 'EucNeuMapper':
-        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        param_cols = ['K', 'R', 'G']
-    elif filter_by == 'CustomBDLMapper' or filter_by == 'CustomNeuMapper':
-        df['preptype'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
-        df['dist'] = df.apply(lambda x: x['Mapper'].split('_')[2], axis=1)
-        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
-        df['linkbins'] = df.apply(lambda x: int(x['Mapper'].split('_')[6]), axis=1)
-        param_cols = ['preptype', 'dist', 'K', 'R', 'G', 'linkbins']
-    elif filter_by == 'CMDSMapperNoKNN':
-        df['preptype'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
-        df['dist'] = df.apply(lambda x: x['Mapper'].split('_')[2], axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
-        df['linkbins'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
-        param_cols = ['preptype', 'dist', 'R', 'G', 'linkbins']
-    elif filter_by == 'BDLMapperNS3':
-        df['prelens_type'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
-        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
-        param_cols = ['prelens_type', 'K', 'R', 'G']
-    elif filter_by == 'BDLMapperMH_':
-        df['prelens_type'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
-        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
-        df['NS'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
-        param_cols = ['prelens_type', 'K', 'R', 'G', 'NS']
-    elif filter_by == 'BDLMapperMHNoKnn':
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
-        df['NS'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        param_cols = ['R', 'G', 'NS']
-    elif filter_by in ['DistsGeoBDLMapper', 'DistsGeoNeuMapper']:
-        df['dist'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
-        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
-        param_cols = ['dist', 'K', 'R', 'G']
-    elif filter_by == 'DistsBDLMapper':
-        df['dist'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        param_cols = ['dist', 'R', 'G']
-    else:
-        raise Exception('Mapper type not recognized')
-    return df, param_cols

@@ -50,6 +50,22 @@ done
 # 
 # run('commands_to_run.m')
 
+### Create a file with this:
+
+#!/bin/bash
+#SBATCH --job-name=circlemetrics
+#SBATCH --begin=now
+#SBATCH --time=4:00:00
+#SBATCH --mail-type=ALL
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+#SBATCH -p saggar
+
+module load matlab
+
+matlab -r "run('commands_to_runvall.m');"
+
 
 # Copy scores after done:
 cd $GROUP_SCRATCH/demapper-w3c
