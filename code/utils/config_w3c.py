@@ -6,6 +6,8 @@ import numpy as np
 BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
 
 DATASETS = {
+    'w3cfig3d': BASE_PATH + 'w3c/analysis/mappers_w3c_fig3d.json/',
+    'w3cfig3e': BASE_PATH + 'w3c/analysis/mappers_w3c_fig3e.json/',
     'ss_w3cv1': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv1.json/',
     'ss_w3cv2': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv2.json/',
     'ss_w3cv3': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv3.json/',
@@ -79,6 +81,8 @@ for k in DATASETS.keys():
             'EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'EmbedBDLMapperDist', 'tSNEBDLMapperDist', 'EmbedBDLMapperPrep', 'tSNEBDLMapperPrep',]
     if 'w3cv9clust' in k:
         _FILTERS[k] = ['ClustLinkBDLMapper', 'ClustDBSCANBDLMapper']
+    if 'fig3' in k:
+        _FILTERS[k] = ['BDLMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
