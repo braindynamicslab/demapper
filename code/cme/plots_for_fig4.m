@@ -1,36 +1,22 @@
+%% Generates the figure 4d
+%% Requires set: fn_timing res_path mapper_name
+% fn_timing='/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
+% res_path='/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_disp.json';
+% mapper_name='BDLMapper_12_30_60';
+% CHANGE_POINTS = 10;
 
-
-basefolder  = split(pwd, 'BDL');
-basefolder  = [basefolder{1}, 'BDL/mappertoolbox-matlab'];
-codefolder  = [basefolder,'/code'];
-addpath(genpath(codefolder));
-
-% Get the timing
-% fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/input/timing.csv';
-fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
+% Get the timing table
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
 timing_table.task_name = string(timing_table.task_name);
 timing_labels = timing_table.task_name;
-if table_isfield(timing_table, 'task')
-    timing_arr = timing_table.task;
-else
-    timing_arr = get_timing_arr(timing_table.task_name);
-end
+timing_arr = timing_table.task;
 timing_changes = find([timing_arr(2:end) - timing_arr(1:end-1); 1]);
-target_chgs = findchangepts(timing_arr', 'MaxNumChanges', 15);
 
-% Load Data
-res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_disp.json';
-avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_BDLMapper_12_30_60.1D']);
-p_chgs = [0, 1, 2, 4, 6, 7, 8, 10];
-
-% Same code:
-CHANGE_POINTS = 10;
+% Load Data & process
+avg_degs = read_1d([res_path, '/compute_degrees_from_TCM/avgstat_', mapper_name, '.1D']);
 chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
-output_path = [res_path, '/change-degs_BDLMapper_12_30_58.png'];
-
+output_path = [res_path, '/change-degs_', mapper_name, '.png'];
 plot_degs(avg_degs, timing_labels, timing_changes, chgs, p_chgs, output_path);
-
 
 %% Helper functions
 function plot_degs(degs, timing_labels, timing_changes, chgs, p_chgs, output_path)
@@ -86,8 +72,4 @@ function data = read_1d(data_path)
 data_opts = delimitedTextImportOptions('Delimiter', ' ');
 data = readmatrix(data_path, data_opts);
 data = str2double(data);
-end
-
-function b = table_isfield(tbl, f)
-    b = sum(ismember(tbl.Properties.VariableNames, f));
 end

@@ -1,22 +1,24 @@
 import pandas as pd
 import numpy as np
 
+BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
 
 def ch_ds(ch):
     return {
-        'cmev3': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev3.json'.format(ch),
-        'cmev4': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4.json'.format(ch),
-        'cmev4euc': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4_euc.json'.format(ch),
-        'cmev3_fast': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev3_fast.json'.format(ch),
-        'cmev4_fast': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4_fast.json'.format(ch),
-        'cmev4euc_fast': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev4_euc_fast.json'.format(ch),
-        'cmev5': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5.json'.format(ch),
-        'cmev5MH': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev5MH.json'.format(ch),
-        'cmev6kval': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev6kval_fast.json'.format(ch),
-        'cmev7kval': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev7kval_fast.json'.format(ch),
-        'cmev8clust': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev8clust.json'.format(ch),
-        'cmev9embed': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev9embed_fast.json'.format(ch),
-        'cmev9umap': '/Users/dh/workspace/BDL/demapper/results/cme/{}_mappers_cmev9embed_umap.json'.format(ch),
+        'cmefig4e': BASE_PATH + 'cme/analysis/mappers_cme_fig4e.json',
+        'cmev3': BASE_PATH + 'cme/{}_mappers_cmev3.json'.format(ch),
+        'cmev4': BASE_PATH + 'cme/{}_mappers_cmev4.json'.format(ch),
+        'cmev4euc': BASE_PATH + 'cme/{}_mappers_cmev4_euc.json'.format(ch),
+        'cmev3_fast': BASE_PATH + 'cme/{}_mappers_cmev3_fast.json'.format(ch),
+        'cmev4_fast': BASE_PATH + 'cme/{}_mappers_cmev4_fast.json'.format(ch),
+        'cmev4euc_fast': BASE_PATH + 'cme/{}_mappers_cmev4_euc_fast.json'.format(ch),
+        'cmev5': BASE_PATH + 'cme/{}_mappers_cmev5.json'.format(ch),
+        'cmev5MH': BASE_PATH + 'cme/{}_mappers_cmev5MH.json'.format(ch),
+        'cmev6kval': BASE_PATH + 'cme/{}_mappers_cmev6kval_fast.json'.format(ch),
+        'cmev7kval': BASE_PATH + 'cme/{}_mappers_cmev7kval_fast.json'.format(ch),
+        'cmev8clust': BASE_PATH + 'cme/{}_mappers_cmev8clust.json'.format(ch),
+        'cmev9embed': BASE_PATH + 'cme/{}_mappers_cmev9embed_fast.json'.format(ch),
+        'cmev9umap': BASE_PATH + 'cme/{}_mappers_cmev9embed_umap.json'.format(ch),
     }
 
 ALL_DATASETS = {
@@ -25,7 +27,7 @@ ALL_DATASETS = {
     'ch10': ch_ds('ch10'),
     'ch11': ch_ds('ch11'),
 }
-DATASETS = ALL_DATASETS['ch8']
+DATASETS = ALL_DATASETS['ch10']
 
 _FILTERS = {}
 for k in DATASETS.keys():
@@ -49,6 +51,8 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'tSNEBDLMapperPrep']
     elif k == 'cmev9umap':
         _FILTERS[k] = ['umapBDLMapperPrep']
+    elif k.startswith('cmefig4'):
+        _FILTERS[k] = ['BDLMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
