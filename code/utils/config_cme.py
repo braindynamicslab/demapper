@@ -5,6 +5,7 @@ BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
 
 def ch_ds(ch):
     return {
+        'cmefig4d': BASE_PATH + 'cme/analysis/mappers_cme_fig4d.json',
         'cmefig4e': BASE_PATH + 'cme/analysis/mappers_cme_fig4e.json',
         'cmev3': BASE_PATH + 'cme/{}_mappers_cmev3.json'.format(ch),
         'cmev4': BASE_PATH + 'cme/{}_mappers_cmev4.json'.format(ch),

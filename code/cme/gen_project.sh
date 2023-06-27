@@ -87,7 +87,7 @@ python3 neupipe/tools/cache.py compute_stats \
 
 
 MAPPERCONF=mappers_cmev4_euc.json
-python3 code/utils/plot_task_grid.py \
+python3 code/utils/plot_grids.py \
     /scratch/groups/saggar/demapper-cme/${MAPPERCONF} \
     /scratch/groups/saggar/demapper-cme/analysis/ch8_${MAPPERCONF}/plot_task-grids
 
