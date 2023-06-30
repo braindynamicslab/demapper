@@ -1,0 +1,63 @@
+{
+  "preprocess": [
+      { "type": "drop-nan" },
+      { "type": "drop-lowvar", "var": 1e-2 },
+      { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "CustomMapper",
+    "name": "DistsGeoBDLMapper",
+    "preprocess_type": "none",
+    "dist_type": ["correlation", "euclidean", "chebychev", "cityblock"],
+    "embed_type": "CMDS",
+    "embed_dim": 2,
+    "prelens_type": "wtd-pen",
+    "prelens_rknnparam": 12,
+    "binning_type": "Nd",
+    "binning_resolution": 20,
+    "binning_gain": 50,
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }, {
+    "type": "CustomMapper",
+    "name": "DistsBDLMapper",
+    "preprocess_type": "none",
+    "dist_type": ["correlation", "euclidean", "chebychev", "cityblock"],
+    "embed_type": "CMDS",
+    "embed_dim": 2,
+    "prelens_type": "dist",
+    "binning_type": "Nd",
+    "binning_resolution": 20,
+    "binning_gain": 50,
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }, {
+    "type": "CustomMapper",
+    "name": "DistsGeoNeuMapper",
+    "preprocess_type": "none",
+    "dist_type": ["cityblock", "euclidean", "chebychev", "correlation", "cosine"],
+    "embed_type": "none",
+    "prelens_type": "wtd-pen",
+    "prelens_rknnparam": 12,
+    "binning_type": "cball",
+    "binning_resolution": 150,
+    "binning_gain": 50,
+    "binning_nsides": 4,
+    "clustering_type": "linkage_histo",
+    "clustering_histo_bins": 10,
+    "finalgraph_type": "full"
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp", "args": { "skip_mat": true } },
+    { "type": "plot_task", "args": {
+      "name": "CME",
+      "path": "/Users/dh/workspace/BDL/demapper/data/cme/timing.csv"
+    } }
+  ]
+}

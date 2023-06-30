@@ -7,6 +7,7 @@ def ch_ds(ch):
     return {
         'cmefig4d': BASE_PATH + 'cme/analysis/mappers_cme_fig4d.json',
         'cmefig4e': BASE_PATH + 'cme/analysis/mappers_cme_fig4e.json',
+        'cmefig6b': BASE_PATH + 'cme/analysis/mappers_cme_fig6b.json',
         'cmev3': BASE_PATH + 'cme/{}_mappers_cmev3.json'.format(ch),
         'cmev4': BASE_PATH + 'cme/{}_mappers_cmev4.json'.format(ch),
         'cmev4euc': BASE_PATH + 'cme/{}_mappers_cmev4_euc.json'.format(ch),
@@ -54,6 +55,8 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['umapBDLMapperPrep']
     elif k.startswith('cmefig4'):
         _FILTERS[k] = ['BDLMapper']
+    elif k.startswith('cmefig6'):
+        _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper', 'DistsGeoNeuMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
