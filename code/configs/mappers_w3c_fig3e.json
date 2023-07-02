@@ -5,8 +5,8 @@
   "mappers": [{
     "type": "BDLMapper",
     "k": [10, 20, 30, 40, 50, 60, 70],
-    "resolution": [10, 15, 20, 25, 30, 35, 40, 50],
-    "gain": [50, 55, 60, 65, 70, 75, 80, 85, 90]
+    "resolution": [5, 10, 15, 20, 25, 30, 35, 40],
+    "gain": [20, 30, 40, 50, 60, 70, 80, 90]
   }],
   "analyses": [
     { "type": "compute_stats", "args": { "HRF_threshold": 11 } }
