@@ -6,11 +6,11 @@ import numpy as np
 BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
 
 DATASETS = {
-    'w3cfig3d': BASE_PATH + 'w3c/analysis/mappers_w3c_fig3d.json/',
-    'w3cfig3e': BASE_PATH + 'w3c/analysis/mappers_w3c_fig3e.json/',
-    'w3cfig5c': BASE_PATH + 'w3c/analysis/mappers_w3c_fig5c.json/',
-    'w3cfig5d': BASE_PATH + 'w3c-wnoise/analysis/mappers_w3c_fig5d.json/',
-    'w3cfig5e': BASE_PATH + 'w3c-hightr/analysis/mappers_w3c_fig5e.json/',
+    'w3c-bins1': BASE_PATH + 'w3c/analysis/mappers_w3c_bins1.json/',
+    'w3c-bins2': BASE_PATH + 'w3c/analysis/mappers_w3c_bins2.json/',
+    'w3c-dists2': BASE_PATH + 'w3c/analysis/mappers_w3c_dists2.json/',
+    'w3c-dists3': BASE_PATH + 'w3c-wnoise/analysis/mappers_w3c_dists3.json/',
+    'w3c-dists4': BASE_PATH + 'w3c-hightr/analysis/mappers_w3c_dists4.json/',
     'ss_w3cv1': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv1.json/',
     'ss_w3cv2': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv2.json/',
     'ss_w3cv3': BASE_PATH + 'w3c_ss/analysis/mappers_w3cv3.json/',
@@ -84,9 +84,9 @@ for k in DATASETS.keys():
             'EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'EmbedBDLMapperDist', 'tSNEBDLMapperDist', 'EmbedBDLMapperPrep', 'tSNEBDLMapperPrep',]
     if 'w3cv9clust' in k:
         _FILTERS[k] = ['ClustLinkBDLMapper', 'ClustDBSCANBDLMapper']
-    if 'fig3' in k:
+    if 'w3c-bins' in k:
         _FILTERS[k] = ['BDLMapper']
-    if 'fig5' in k:
+    if 'w3c-dists' in k:
         _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper']
 FILTERS = _FILTERS
 

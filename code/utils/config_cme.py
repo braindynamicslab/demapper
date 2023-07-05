@@ -5,9 +5,9 @@ BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
 
 def ch_ds(ch):
     return {
-        'cmefig4d': BASE_PATH + 'cme/analysis/mappers_cme_fig4d.json',
-        'cmefig4e': BASE_PATH + 'cme/analysis/mappers_cme_fig4e.json',
-        'cmefig6b': BASE_PATH + 'cme/analysis/mappers_cme_fig6b.json',
+        'cme-bins1': BASE_PATH + 'cme/analysis/mappers_cme_bins1.json',
+        'cme-bins2': BASE_PATH + 'cme/analysis/mappers_cme_bins2.json',
+        'cme-dists2': BASE_PATH + 'cme/analysis/mappers_cme_dists2.json',
         'cmev3': BASE_PATH + 'cme/{}_mappers_cmev3.json'.format(ch),
         'cmev4': BASE_PATH + 'cme/{}_mappers_cmev4.json'.format(ch),
         'cmev4euc': BASE_PATH + 'cme/{}_mappers_cmev4_euc.json'.format(ch),
@@ -53,9 +53,9 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'tSNEBDLMapperPrep']
     elif k == 'cmev9umap':
         _FILTERS[k] = ['umapBDLMapperPrep']
-    elif k.startswith('cmefig4'):
+    elif k.startswith('cme-bins'):
         _FILTERS[k] = ['BDLMapper']
-    elif k.startswith('cmefig6'):
+    elif k.startswith('cme-dists'):
         _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper', 'DistsGeoNeuMapper']
 FILTERS = _FILTERS
 
