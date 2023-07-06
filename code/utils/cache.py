@@ -69,9 +69,9 @@ def combine_compute_stats(cohort_path, mapper_dir, output_dir=None, skip_uncompu
   df = df[cols]
   df.to_csv(os.path.join(output_dir, 'compute_stats-combined.csv'), float_format='%.9f', index=False)
 
-  dfg1 = df.groupby('mapper').mean()
+  dfg1 = df.groupby(IDS + ['mapper']).mean()
   dfg1 = dfg1.rename(columns={c:c+'-mean' for c in dfg1.columns.tolist()})
-  dfg2 = df.groupby('mapper').std()
+  dfg2 = df.groupby(IDS + ['mapper']).std()
   dfg2 = dfg2.rename(columns={c:c+'-std' for c in dfg2.columns.tolist()})
   dfg = pd.concat([dfg1, dfg2], axis=1)
   dfg = dfg[sorted(dfg.columns.tolist())]
