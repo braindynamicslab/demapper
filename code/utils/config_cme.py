@@ -8,6 +8,7 @@ def ch_ds(ch):
         'cme-bins1': BASE_PATH + 'cme/analysis/mappers_cme_bins1.json',
         'cme-bins2': BASE_PATH + 'cme/analysis/mappers_cme_bins2.json',
         'cme-dists2': BASE_PATH + 'cme/analysis/mappers_cme_dists2.json',
+        'cme-clust1': BASE_PATH + 'cme/analysis/mappers_cme_clust1.json',
         'cmev3': BASE_PATH + 'cme/{}_mappers_cmev3.json'.format(ch),
         'cmev4': BASE_PATH + 'cme/{}_mappers_cmev4.json'.format(ch),
         'cmev4euc': BASE_PATH + 'cme/{}_mappers_cmev4_euc.json'.format(ch),
@@ -57,6 +58,8 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['BDLMapper']
     elif k.startswith('cme-dists'):
         _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper', 'DistsGeoNeuMapper']
+    elif k.startswith('cme-clust'):
+        _FILTERS[k] = ['ClustLinkBDLMapper', 'ClustDBSCANBDLMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
