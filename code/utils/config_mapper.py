@@ -47,17 +47,34 @@ def extract_params_f(df, filter_by):
     elif filter_by == 'EmbedBDLMapperWtd':
         df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
         df['embed'] = df.apply(lambda x: x['Mapper'].split('_')[2], axis=1)
-        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
-        param_cols = ['K', 'embed', 'edim', 'R', 'G']
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+
+        # df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        # df['embed'] = df.apply(lambda x: x['Mapper'].split('_')[2], axis=1)
+        # df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        # df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        # df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
+        # param_cols = ['K', 'embed', 'edim', 'R', 'G']
+        param_cols = ['K', 'embed', 'R', 'G']
     elif filter_by == 'tSNEBDLMapperWtd':
+        # df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
+        # df['perplexity'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        # df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        # df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        # df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
+        # param_cols = ['K', 'perplexity', 'edim', 'R', 'G']
         df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
         df['perplexity'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
-        df['edim'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
-        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
-        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[5]), axis=1)
-        param_cols = ['K', 'perplexity', 'edim', 'R', 'G']
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['K', 'perplexity', 'R', 'G']
+    elif filter_by == 'KEmbedBDLMapper':
+        df['embed'] = df.apply(lambda x: x['Mapper'].split('_')[1], axis=1)
+        df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
+        df['R'] = df.apply(lambda x: int(x['Mapper'].split('_')[3]), axis=1)
+        df['G'] = df.apply(lambda x: int(x['Mapper'].split('_')[4]), axis=1)
+        param_cols = ['embed', 'K', 'R', 'G']
     elif filter_by == 'umapBDLMapperWtd':
         df['K'] = df.apply(lambda x: int(x['Mapper'].split('_')[1]), axis=1)
         df['eK'] = df.apply(lambda x: int(x['Mapper'].split('_')[2]), axis=1)
