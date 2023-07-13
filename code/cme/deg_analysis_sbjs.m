@@ -50,6 +50,9 @@ end
 if ~exist('RERUN_UNCOMPUTED', 'var')
     RERUN_UNCOMPUTED = 0;
 end
+if ~exist('do_plot', 'var')
+    do_plot = 1;
+end
 
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
 timing_table.task_name = string(timing_table.task_name);
@@ -140,7 +143,9 @@ for mid = 1:length(all_mappers)
         write_1d(avg_degs, stat_output_path);
 
         chgs = findchangepts(avg_degs, 'MaxNumChanges', CHANGE_POINTS);
-        plot_degs(avg_degs, timing_labels, timing_changes, chgs, mapper_name, output_path);
+        if do_plot
+            plot_degs(avg_degs, timing_labels, timing_changes, chgs, mapper_name, output_path);
+        end
     else
         % use the already computed avg_degs
         stat_output_path = fullfile(stat_outdir, ['avgstat_', mapper_name, '.1D']);
