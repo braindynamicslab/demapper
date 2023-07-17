@@ -133,3 +133,77 @@ stat_type='compute_degrees_from_TCM';
 HAS_INSTRUCTIONS=1;
 CHANGE_POINTS=10;
 run('code/cme/deg_analysis_sbjs.m')
+
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+module load matlab
+DATAFOLDER="/scratch/groups/saggar/demapper-w3c/1sbj_results/mappers_w3c_clust1.json/"
+COHORT_PATH="/oak/stanford/groups/saggar/demapper/data/w3c/data_subsampled/cohort_1sbj.csv"
+OUTPUT_DIR="/scratch/groups/saggar/demapper-w3c/1sbj_results/mappers_w3c_clust1.json/"
+ARGS="datafolder='${DATAFOLDER}'; cohort_path='${COHORT_PATH}'; output_dir='${OUTPUT_DIR}';"
+matlab -r "${ARGS} run('code/w3c/circle_test_multitiming.m')"
+
+
+py code/utils/cache.py compute_stats \
+  /oak/stanford/groups/saggar/demapper/data/w3c/data_subsampled/cohort_1sbj.csv \
+  /scratch/groups/saggar/demapper-w3c/1sbj_results/mappers_w3c_clust1.json
+
+
+
+
+
+
+py code/utils/cache.py compute_stats \
+  /oak/stanford/groups/saggar/demapper/data/w3c/data_subsampled/cohort_1sbj.csv \
+  /scratch/groups/saggar/demapper-w3c/1sbj_results/mappers_w3c_clust1.json
+
+demapper-cme/mappers_cme_clust1.json/
+
+
+CONF=mappers_cme_clust1.json
+CONF=mappers_cme_embed1-p2.json
+CONF=mappers_cme_embed1-p3.json
+CONF=mappers_cme_embed1.json
+
+python3 code/utils/cache.py compute_stats \
+    --cohort_path /home/users/hasegan/projects/cme/cohort_mapper.csv \
+    --mapper_dir /scratch/groups/saggar/demapper-cme/$CONF
+
+
+
+module load matlab
+
+ARGS="datafolder='/scratch/groups/saggar/demapper-cme/$CONF/'; fn_timing='/oak/stanford/groups/saggar/data-cme-shine375/timing.csv'; output_dir='/scratch/groups/saggar/demapper-cme/$CONF/'; stat_type='compute_degrees_from_TCM'; HAS_INSTRUCTIONS=1; CHANGE_POINTS=10;"
+matlab -r "$ARGS run('code/cme/deg_analysis_sbjs.m')"
+
+
+
+
+-----
+local
+
+
+CONF=mappers_cme_embed1-umap.json
+
+python3 code/utils/cache.py compute_stats \
+    --cohort_path /Users/dh/workspace/BDL/demapper/data/cme/shine/cohort.csv \
+    --mapper_dir /Users/dh/workspace/BDL/demapper/results/cme/$CONF/ \
+    --output_dir /Users/dh/workspace/BDL/demapper/results/cme/analysis/$CONF/
+
+
+cd /Users/dh/workspace/BDL/demapper
+datafolder='/Users/dh/workspace/BDL/demapper/results/cme/mappers_cme_embed1-umap.json/';
+fn_timing='/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
+output_dir='/Users/dh/workspace/BDL/demapper/results/cme/analysis/mappers_cme_embed1-umap.json/';
+stat_type='compute_degrees_from_TCM';
+HAS_INSTRUCTIONS=1;
+CHANGE_POINTS=10;
+run('code/cme/deg_analysis_sbjs.m')

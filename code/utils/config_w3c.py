@@ -93,8 +93,7 @@ for k in DATASETS.keys():
     if 'w3c-clust' in k:
         _FILTERS[k] = ['ClustLinkBDLMapper', 'ClustDBSCANBDLMapper']
     if 'w3c-embed' in k:
-        _FILTERS[k] = [
-            'EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'KEmbedBDLMapper']
+        _FILTERS[k] = ['EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'KEmbedBDLMapper']
 FILTERS = _FILTERS
 
 def get_plot_columns(mapper_name):
