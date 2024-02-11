@@ -3,4 +3,4 @@ pandas
 jupyter
 matplotlib
 tqdm
-dotenv
+python-dotenv
