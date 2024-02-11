@@ -20,4 +20,30 @@ Create a file in this folder named: `.env` with the following environmental para
 
 ## data
 
-Downloading the synthetic (w3c) and real (cme) datasets.
+The synthetic (w3c) dataset is included in the repository at the following path:
+
+    data/w3c/
+
+**Downloading the real (cme) datasets**
+
+As similar as for w3c, for the real dataset, we need 3 file types:
+
+1. The preprocessed data in either `.mat` or `.npy` format. This will be a file for each subject. For example: `data/cme/SBJ02_Shine_375.npy`
+
+2. The `cohort.csv` file describing the dataset properties. 
+An example file is as follows:
+
+        id0,id1,id2,path,TR
+        SBJ01,,,SBJ01_Shine_375.npy,1.5
+        SBJ02,,,SBJ02_Shine_375.npy,1.5
+        ...
+    
+3. The task info file, which is a `.csv` file with the following format: it needs a column `task_name` that describes the task for each time point in the input dataset. In the cme real dataset, this file will need 1017 rows and 1 column. The value for each row will be the task name: `instruction`, `rest`, `memory`, `math`, or `video`. Additionally, you could have the columns: `run_name`, `task`, which describe the run number (always 1) or the task id code (1 to 5). 
+Example file: 
+
+        run_name,task,task_name
+        1,1,instruction
+        1,2,rest
+        1,2,rest
+        1,2,rest
+        ...
