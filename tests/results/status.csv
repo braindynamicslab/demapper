@@ -1,0 +1,6 @@
+id0,id1,id2,mapper,preprocess,result,plot_graph,compute_stats,compute_temp
+sub-1,rest1,schaefer400x7,NeuMapper_16_100_90,1,1,1,1,1
+sub-1,rest1,schaefer400x7,BDLMapper_32_20_60,1,1,1,1,1
+sub-1,rest1,schaefer400x7,NeuMapper_16_100_90,-1,-1,1,-1,-1
+sub-1,rest1,schaefer400x7,BDLMapper_32_20_60,-1,-1,1,-1,-1
+sub-1,rest1,schaefer400x7,BDLMapper_32_30_60,1,1,1,1,1

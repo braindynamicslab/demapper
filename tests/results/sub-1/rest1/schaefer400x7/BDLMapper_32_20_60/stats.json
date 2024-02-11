@@ -1,0 +1,10 @@
+{
+	"coverage_nodes" : 0.985726,
+	"coverage_TRs" : 0.987136,
+	"hrfdur_stat" : 0.0201511,
+	"distances_max" : 23,
+	"distances_entropy" : 3.73188,
+	"assortativity" : -0.0781711,
+	"degree_TRs_avg" : 130.895,
+	"degree_TRs_entropy" : 7.70211
+}

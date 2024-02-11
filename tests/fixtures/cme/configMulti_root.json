@@ -1,0 +1,20 @@
+{
+  "preprocess": [
+    { "type": "drop-nan" },
+    { "type": "drop-lowvar", "var": 1e-2 },
+    { "type": "zscore" }
+  ],
+  "mappers": [{
+    "type": "BDLMapper",
+    "k": 8,
+    "resolution": 5,
+    "gain": 50
+  }],
+  "analyses": [
+    { "type": "plot_graph" },
+    { "type": "plot_task", "args": { "name": "CMEX1", "path": "tests/fixtures/cme/mapper/timing.csv" } },
+    { "type": "plot_task", "args": { "name": "CMEX2", "path": "tests/fixtures/cme/mapper/timing2.csv" } },
+    { "type": "compute_stats","args": { "HRF_threshold": 11 } },
+    { "type": "compute_temp" }
+  ]
+}
