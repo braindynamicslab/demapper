@@ -2,8 +2,8 @@
 
 % Setup 
 clear;
-basefolder  = split(pwd, 'mappertoolbox-matlab');
-basefolder  = [basefolder{1}, 'mappertoolbox-matlab'];
+basefolder  = split(pwd, 'demapper');
+basefolder  = [basefolder{1}, 'demapper'];
 codefolder  = [basefolder,'/code'];
 toolsfolder  = [basefolder,'/tests/tools'];
 addpath(genpath(codefolder));
@@ -11,13 +11,13 @@ addpath(genpath(toolsfolder));
 
 
 % Setup needed variables and test if it fails without them
-testError(@() rmain(),"MapperToolbox:IncorrectSetup");
+testError(@() rmain(),"DeMapper:IncorrectSetup");
 cohort_csv = [basefolder, '/tests/fixtures/cohort_mapper.csv'];
-testError(@() rmain(),"MapperToolbox:IncorrectSetup");
+testError(@() rmain(),"DeMapper:IncorrectSetup");
 config_path = [basefolder, '/tests/fixtures/config.json'];
-testError(@() rmain(),"MapperToolbox:IncorrectSetup");
+testError(@() rmain(),"DeMapper:IncorrectSetup");
 data_root = [basefolder, '/tests/fixtures'];
-testError(@() rmain(),"MapperToolbox:IncorrectSetup");
+testError(@() rmain(),"DeMapper:IncorrectSetup");
 output_dir = [basefolder, '/tests/results'];
 
 if exist(output_dir, "dir")

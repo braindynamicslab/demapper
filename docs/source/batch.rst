@@ -24,7 +24,7 @@ where the inputs are set as variables:
 .. code-block::
  :caption: Example command line call to run_main 
 
- matlab -r "cohort_csv='...'; config_path='...'; run('/.../mappertoolbox-matlab/code/analysis/run_main.m'); "
+ matlab -r "cohort_csv='...'; config_path='...'; run('/.../demapper/code/analysis/run_main.m'); "
 
 Below, I present a more detailed example with all the required arguments set:
 
@@ -41,10 +41,10 @@ Below, I present a more detailed example with all the required arguments set:
   MATLAB_ARGS="${MATLAB_ARGS} data_root='${PROJECT_ROOT}/data/';"
   MATLAB_ARGS="${MATLAB_ARGS} output_dir='${PROJET_ROOT}/results/${CONFNAME}';"
 
-  MAPPERTOOLBOX_MAIN="${PROJECT_ROOT}/mappertoolbox-matlab/code/analysis/run_main.m"
+  DEMAPPER_MAIN="${PROJECT_ROOT}/demapper/code/analysis/run_main.m"
 
   # write command, submit, wait
-  CMD="matlab -r \"${MATLAB_ARGS} run('$MAPPERTOOLBOX_MAIN')\"";
+  CMD="matlab -r \"${MATLAB_ARGS} run('$DEMAPPER_MAIN')\"";
   echo $CMD;
   eval $CMD;
   wait

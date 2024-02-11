@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 import os
 
-project = 'MapperToolbox'
+project = 'DeMapper'
 copyright = '2022, Brain Dynamics Lab @ Stanford'
 author = 'Daniel Hasegan'
 
@@ -19,13 +19,13 @@ extensions = ['sphinxcontrib.matlab', 'sphinx.ext.autodoc', 'sphinx.ext.napoleon
 templates_path = ['_templates']
 exclude_patterns = []
 
-def get_mappertoolbox_path():
+def get_demapper_path():
   toks = os.path.abspath('.').split('/')
-  mt_inds = [i for i,tok in enumerate(toks) if tok == 'mappertoolbox-matlab']
+  mt_inds = [i for i,tok in enumerate(toks) if tok == 'demapper']
   return '/'.join(toks[:mt_inds[0]+1]) if len(mt_inds) else os.path.abspath('.')
 
 primary_domain = 'mat'
-matlab_src_dir = get_mappertoolbox_path()
+matlab_src_dir = get_demapper_path()
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

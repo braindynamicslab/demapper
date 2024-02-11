@@ -1,6 +1,6 @@
 clear;
-basefolder  = split(pwd, 'mappertoolbox-matlab');
-basefolder  = [basefolder{1}, 'mappertoolbox-matlab'];
+basefolder  = split(pwd, 'demapper');
+basefolder  = [basefolder{1}, 'demapper'];
 codefolder  = [basefolder,'/code'];
 toolsfolder  = [basefolder,'/tests/tools'];
 addpath(genpath(codefolder));
@@ -21,15 +21,15 @@ item = table;
 item.Name = ["SBJ99"];
 
 testError(@() run_analysis(res, analysis, item, resdir), ...
-    'MapperToolbox:IncorrectAnalysisArguments');
+    'DeMapper:IncorrectAnalysisArguments');
 
 analysis.args = struct;
 testError(@() run_analysis(res, analysis, item, resdir), ...
-    'MapperToolbox:IncorrectAnalysisArguments');
+    'DeMapper:IncorrectAnalysisArguments');
 
 analysis.args.name = 'BA';
 testError(@() run_analysis(res, analysis, item, resdir), ...
-    'MapperToolbox:IncorrectAnalysisArguments');
+    'DeMapper:IncorrectAnalysisArguments');
 
 analysis.args.path = task_path;
 run_analysis(res, analysis, item, resdir);

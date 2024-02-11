@@ -47,28 +47,28 @@
 %   displays the status of the process running all mappers.
 %
 
-basefolder  = split(pwd, 'mappertoolbox-matlab');
-basefolder  = [basefolder{1}, 'mappertoolbox-matlab'];
+basefolder  = split(pwd, 'demapper');
+basefolder  = [basefolder{1}, 'demapper'];
 codefolder  = [basefolder,'/code'];
 addpath(genpath(codefolder));
 
 VALID_ANALYSES = {'plot_graph', 'plot_task', 'compute_stats', 'compute_temp'};
 
 if ~exist('cohort_csv', 'var')
-    error('MapperToolbox:IncorrectSetup', ...
-        'Please set up variable cohort_csv to correctly run MapperToolbox');
+    error('DeMapper:IncorrectSetup', ...
+        'Please set up variable cohort_csv to correctly run DeMapper');
 end
 if ~exist('config_path', 'var')
-    error('MapperToolbox:IncorrectSetup', ...
-        'Please set up variable config_path to correctly run MapperToolbox');
+    error('DeMapper:IncorrectSetup', ...
+        'Please set up variable config_path to correctly run DeMapper');
 end
 if ~exist('data_root', 'var')
-    error('MapperToolbox:IncorrectSetup', ...
-        'Please set up variable data_root to correctly run MapperToolbox');
+    error('DeMapper:IncorrectSetup', ...
+        'Please set up variable data_root to correctly run DeMapper');
 end
 if ~exist('output_dir', 'var')
-    error('MapperToolbox:IncorrectSetup', ...
-    'Please set up variable output_dir to correctly run MapperToolbox');
+    error('DeMapper:IncorrectSetup', ...
+    'Please set up variable output_dir to correctly run DeMapper');
 end
 
 %% Special option of running one step only
@@ -219,7 +219,7 @@ parfor (params_idx = 1:size(params,1), parForArg)
         try
             if ~any(strcmp(an.type, VALID_ANALYSES))
                 % Throw if the analysis type is not valid
-                error('MapperToolbox:UnidentifiedAnalysisType', ...
+                error('DeMapper:UnidentifiedAnalysisType', ...
                     'Cannot process analysis of type: %s', analysis.type);
             end
             analysis_name = get_analysis_name(an, has_multi_plot_tasks);

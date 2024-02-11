@@ -45,12 +45,12 @@ switch eps_type
         [~,D]= knnsearch(distMat, distMat, 'k', eps_arg);
         eps = median(D(D>0));
     otherwise
-        error('MapperToolbox:part_cluster_dbscan', ...
+        error('DeMapper:part_cluster_dbscan', ...
             'Have to set an Epsilon for DBSCAN');
 end
 
 if not(minpts > 1)
-    error('MapperToolbox:part_cluster_dbscan', ...
+    error('DeMapper:part_cluster_dbscan', ...
             'Have to set an minpts higher than 1 for DBSCAN');
 end
 

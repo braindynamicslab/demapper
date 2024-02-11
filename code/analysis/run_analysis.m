@@ -65,7 +65,7 @@ switch analysis.type
                 end
             end
             if ~exist('task_path', 'var')
-                error('MapperToolbox:IncorrectAnalysisArguments', ...
+                error('DeMapper:IncorrectAnalysisArguments', ...
                     'Cannot process plot_task %s because of missing task path', name);
             end
 
@@ -105,7 +105,7 @@ switch analysis.type
                     [resdir, '/plot_task-', name, '.png'], no_legend)
             end
         else
-            error('MapperToolbox:IncorrectAnalysisArguments', ...
+            error('DeMapper:IncorrectAnalysisArguments', ...
                 'Cannot process analysis of type: %s because of missing arguments', analysis.type);
         end
     case 'compute_stats'

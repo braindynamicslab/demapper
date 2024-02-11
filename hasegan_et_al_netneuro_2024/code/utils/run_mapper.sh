@@ -97,7 +97,7 @@ esac
 # Load matlab # <-- not needed here
 # module load matlab
 
-MAPPERTOOLBOX_MAIN="$MAPPERTOOLBOX/code/analysis/run_main.m"
+DEMAPPER_MAIN="$DEMAPPER/code/analysis/run_main.m"
 
 MATLAB_ARGS=""
 MATLAB_ARGS="${MATLAB_ARGS} cohort_csv='${COHORT_CSV}';"
@@ -116,7 +116,7 @@ if [[ -n ${RERUN_ANALYSIS} ]]; then
 fi
 
 # write command, submit, wait
-CMD="matlab -nodesktop -r \"${MATLAB_ARGS} run('$MAPPERTOOLBOX_MAIN')\"";
+CMD="matlab -nodesktop -r \"${MATLAB_ARGS} run('$DEMAPPER_MAIN')\"";
 echo $CMD;
 eval $CMD;
 wait

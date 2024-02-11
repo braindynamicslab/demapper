@@ -12,11 +12,11 @@ Once you downloaded the repository, install the required python packages
 
     pip install -r requirements.txt
 
-Make sure you download and install the MapperToolbox from https://github.com/braindynamicslab/mappertoolbox-matlab
+Make sure you download and install the DeMapper from https://github.com/braindynamicslab/demapper
 
 Create a file in this folder named: `.env` with the following environmental parameters:
 
-    echo "WORKSPACE=`pwd`\nMAPPERTOOLBOX=<CHANGE_THIS_TO_PATH_TO_MAPPERTOOLBOX>" > .env
+    echo "WORKSPACE=`pwd`\nDEMAPPER=<CHANGE_THIS_TO_PATH_TO_DEMAPPER>" > .env
 
 ## data
 

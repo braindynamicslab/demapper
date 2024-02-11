@@ -1,8 +1,8 @@
 %% Test of code/mapper/mapper.m
 % Setup base path
 clear;
-basefolder  = split(pwd, 'mappertoolbox-matlab');
-basefolder  = [basefolder{1}, 'mappertoolbox-matlab'];
+basefolder  = split(pwd, 'demapper');
+basefolder  = [basefolder{1}, 'demapper'];
 codefolder  = [basefolder,'/code'];
 toolsfolder  = [basefolder,'/tests/tools'];
 addpath(genpath(codefolder));

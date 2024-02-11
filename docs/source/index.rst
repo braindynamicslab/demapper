@@ -1,7 +1,7 @@
-MapperToolbox
+DeMapper
 ==============
 
-Welcome to MapperToolbox (MATLAB version)
+Welcome to DeMapper Toolbox (MATLAB version)
 
 Usage:
 ------

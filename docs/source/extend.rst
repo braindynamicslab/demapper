@@ -1,4 +1,4 @@
-Building an extension to MapperToolbox
+Building an extension to DeMapper
 ========================================
 
 ========================================
