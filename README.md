@@ -3,6 +3,8 @@ DeMapper: A **De**constructed **Mapper** (TDA) Toolbox for MATLAB
 
 DeMapper is a simple toolbox to run Mapper techniques (from Topological Data Analysis) in MATLAB.
 
+Find the documentation at: https://braindynamicslab.github.io/demapper/
+
 There are many examples on how to use the tool, as tests:
      https://github.com/braindynamicslab/demapper/tree/master/tests
 
