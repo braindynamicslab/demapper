@@ -47,6 +47,16 @@ Then build the sphinx documentation
 
     sphinx-build -b html docs/source docs/build
 
+To generate for the website, please run the following instead:
+
+    git co website                                  # Check out the website branch
+    git merge master                                # Merge the master branch            
+                                                    # Resolve any issues with the merge
+    sphinx-build -b html docs/source docs           # Build the documentation
+    git add docs                                    # Add the documentation to the staging area
+    git ci -m "Update documentation"                # Commit the changes
+    git push                                        # Push the changes to the website branch
+
 # Authors
 
 Created and maintained by the [Brain Dynamics Lab](https://braindynamicslab.github.io/)
