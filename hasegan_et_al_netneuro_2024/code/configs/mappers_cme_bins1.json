@@ -16,7 +16,6 @@
     { "type": "compute_temp", "args": { "skip_mat": true } },
     { "type": "plot_task", "args": {
         "name": "CME",
-        "path": "/Users/dh/workspace/BDL/demapper/data/cme/timing.csv",
         "no_legend": true,
         "cmap": [[0.0430, 0.3750, 0.6133],
                  [0.0352, 0.8828, 0.2383],

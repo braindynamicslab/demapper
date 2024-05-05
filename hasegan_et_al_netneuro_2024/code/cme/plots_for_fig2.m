@@ -1,12 +1,13 @@
 %% Generates the figure 2g
-%% Requires set: fn_timing res_path mapper_name
-% fn_timing='/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
-% res_path='/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_disp.json';
-% mapper_name='BDLMapper_12_30_60';
-% CHANGE_POINTS = 10;
+%% Requires set:
+% - fn_timing
+% - res_path
+% - mapper_name
+% - CHANGE_POINTS
 
-fn_timing='/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
-res_path='/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_disp.json';
+workspace = getenv('WORKSPACE');
+fn_timing = [workspace, 'data/cme/timing.csv'];
+res_path = [workspace, 'results/cme/ch10_mappers_cmev3_disp.json'];
 mapper_name='BDLMapper_12_30_60';
 CHANGE_POINTS = 10;
 

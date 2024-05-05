@@ -1,9 +1,10 @@
 import os
 import pandas as pd
 import numpy as np
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
 
-
-BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
+BASE_PATH = os.path.join(os.environ['WORKSPACE'], 'results/')
 
 DATASETS = {
     'w3c-bins1': BASE_PATH + 'w3c/analysis/mappers_w3c_bins1.json/',

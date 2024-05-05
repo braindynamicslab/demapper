@@ -1,15 +1,17 @@
 %{
 ## Run command locally:
 
-datafolder = '/Users/dh/workspace/BDL/demapper/data/cme/';
-fn_timing = '/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
-output_dir = '/Users/dh/workspace/BDL/demapper/results/cme/test';
+workspace = getenv('WORKSPACE');
+datafolder = [workspace, '/data/cme/'];
+fn_timing = [workspace, '/data/cme/timing.csv'];
+output_dir = [workspace, '/results/cme/test'];
 stat_type = 'compute_degrees';
 CHANGE_POINTS = 7;
 HAS_INSTRUCTIONS=1
 deg_analysis_sbjs
 
 ## Run the with the following command on Sherlock (on `sdev`)
+# This is the same as above but started from a BASH script.
 
 module load matlab
 DATAFOLDER="/scratch/groups/saggar/demapper-cme/mappers_cmev2.json/"

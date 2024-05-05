@@ -1,10 +1,11 @@
 %{
 ## Run command locally:
 
-datafolder = '/Users/dh/workspace/BDL/demapper/results/w3c_sim/mappers_test/';
-cohort_path = '/Users/dh/workspace/BDL/demapper/data/w3c_subsampled/cohort.csv';
-timing_base_path = '/Users/dh/workspace/BDL/demapper/data/w3c_subsampled/';
-output_dir = '/Users/dh/workspace/BDL/demapper/results/w3c_sim/analysis/mappers_test/';
+workspace = getenv('WORKSPACE');
+datafolder = [workspace, '/results/w3c_sim/mappers_test/'];
+cohort_path = [workspace, '/data/w3c_subsampled/cohort.csv'];
+timing_base_path = [workspace, '/data/w3c_subsampled/'];
+output_dir = [workspace, '/results/w3c_sim/analysis/mappers_test/'];
 circle_test_multitiming
 
 ## Run the with the following command on Sherlock (on `sdev`)

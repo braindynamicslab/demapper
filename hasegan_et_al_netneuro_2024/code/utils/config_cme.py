@@ -1,7 +1,10 @@
+import os
 import pandas as pd
 import numpy as np
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
 
-BASE_PATH = '/Users/dh/workspace/BDL/demapper/results/'
+BASE_PATH = os.path.join(os.environ['WORKSPACE'], 'results/')
 
 def ch_ds(ch):
     return {
@@ -22,7 +25,7 @@ DATASETS = ALL_DATASETS['ch10']
 
 _FILTERS = {}
 for k in DATASETS.keys():
-    elif k.startswith('cme-bins'):
+    if k.startswith('cme-bins'):
         _FILTERS[k] = ['BDLMapper']
     elif k.startswith('cme-dists'):
         _FILTERS[k] = ['DistsGeoBDLMapper', 'DistsBDLMapper', 'DistsGeoNeuMapper']

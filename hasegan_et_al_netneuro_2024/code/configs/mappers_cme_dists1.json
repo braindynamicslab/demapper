@@ -56,8 +56,7 @@
     { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
     { "type": "compute_temp", "args": { "skip_mat": true } },
     { "type": "plot_task", "args": {
-      "name": "CME",
-      "path": "/Users/dh/workspace/BDL/demapper/data/cme/timing.csv"
+      "name": "CME"
     } }
   ]
 }

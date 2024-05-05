@@ -1,8 +1,9 @@
 %{
 ## Example command locally:
 
-mappers_path = '/Users/dh/workspace/BDL/demapper/results/cme_mappers/mappers_cmev6kval_fast.json/SBJ01/';
-output_path = '/Users/dh/workspace/BDL/demapper/results/cme_mappers/res.csv';
+workspace = getenv('WORKSPACE');
+mappers_path = [workspace, '/results/cme_mappers/mappers_cmev6kval_fast.json/SBJ01/'];
+output_path = [workspace, '/results/cme_mappers/res.csv'];
 
 ## Run the with the following command on Sherlock (on `sdev`)
 

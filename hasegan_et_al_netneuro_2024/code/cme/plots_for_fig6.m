@@ -1,10 +1,15 @@
 %% Generates the figure 6a
-%% Requires set: fn_timing res_path mapper_name
-% fn_timing='/Users/dh/workspace/BDL/demapper/data/cme/timing.csv';
-% res_path='/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev3_disp.json';
-% mapper_name='BDLMapper_12_30_60';
-% CHANGE_POINTS = 10;
+%% Requires set:
+% - fn_timing
+% - res_path
+% - mapper_name
+% - CHANGE_POINTS
 
+workspace = getenv('WORKSPACE');
+fn_timing = [workspace, '/data/cme/timing.csv'];
+res_path = [workspace, '/results/cme/ch10_mappers_cmev3_disp.json'];
+mapper_name='BDLMapper_12_30_60';
+CHANGE_POINTS = 10;
 
 % Get the timing
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
@@ -15,7 +20,7 @@ timing_changes = find([timing_arr(2:end) - timing_arr(1:end-1); 1]);
 
 % Load Data
 % TODO: Get the correct path for figure 4
-% res_path = '/Users/dh/workspace/BDL/demapper/results/cme/ch10_mappers_cmev6kval_disp.json';
+% res_path = [workspace, '/results/cme/ch10_mappers_cmev6kval_disp.json'];
 
 % Run for all `mapper_name`s as the following:
 % DistsGeoBDLMapper_euclidean_12_20_50
