@@ -2,3 +2,10 @@
 *.mat
 .DS_Store
 tests/results/
+code/
+docs/
+hasegan_et_al_netneuro_2024/
+tests/
+tests.m
+README.md
+LICENSE

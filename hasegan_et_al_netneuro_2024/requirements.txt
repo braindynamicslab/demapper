@@ -1,8 +1,0 @@
-fire
-pandas
-jupyter
-matplotlib
-tqdm
-python-dotenv
-seaborn
-scipy
