@@ -6,15 +6,13 @@ for i=1:size(mapper_opts)
         mopts = cell2mat(mopts);
     end
     switch mopts.type
-        case {'BDLMapper', 'ExBinNS3Mapper', 'NeuMapper'}
+        case {'BDLMapper', 'NeuMapper'}
             for ki = 1:length(mopts.k)
                 for ri = 1:length(mopts.resolution)
                     for gi = 1:length(mopts.gain)
                         switch mopts.type
                             case 'BDLMapper'
                                 m = BDLMapperOpts(mopts.k(ki), mopts.resolution(ri), mopts.gain(gi));
-                            case 'ExBinNS3Mapper'
-                                m = ExBinNS3MapperOpts(mopts.k(ki), mopts.resolution(ri), mopts.gain(gi));
                             case 'NeuMapper'
                                 m = NeuMapperOpts(mopts.k(ki), mopts.resolution(ri), mopts.gain(gi));
                         end
