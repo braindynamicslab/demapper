@@ -1,22 +1,30 @@
 # demapper repository
 
-This is the associated repository of the paper:
+This code is the associated analysis done within the paper:
 
-    TODO
+```bibtex
+@article{hasegan2024demapper,
+  title={Deconstructing the Mapper algorithm to extract richer topological and temporal features from functional neuroimaging data},
+  author={Hasegan, Daniel and Geniesse, Caleb and Chowdhury, Samir and Saggar, Manish},
+  journal={Network Neuroscience},
+  year={2024},
+}
+```
 
 ## install
 
-This repository runs code in MATLAB and Python. Make sure you have those installed and at a newer version (Python >= 3.9). 
+This repository runs code in MATLAB and Python. Make sure you have those installed and at a newer version (Python >= 3.9).
 
 Once you downloaded the repository, install the required python packages
 
     pip install -r requirements.txt
 
-Make sure you download and install the DeMapper from https://github.com/braindynamicslab/demapper
+By running the following snippet in the terminal, create a file in this folder named: `.env` with the following environmental parameters:
 
-Create a file in this folder named: `.env` with the following environmental parameters:
+    # Make sure you are in the correct folder:
+    cd hasegan_et_al_netneuro_2024/
 
-    echo "WORKSPACE=`pwd`\nDEMAPPER=<CHANGE_THIS_TO_PATH_TO_DEMAPPER>" > .env
+    echo "WORKSPACE=`pwd`\nDEMAPPER=$(dirname "`pwd`")" > .env
 
 ## data
 

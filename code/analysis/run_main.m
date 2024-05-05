@@ -283,8 +283,9 @@ function has = has_multiple_analyses(analyses, analysis_type)
 end
 
 function item = generalize_item(item, data_root)
-    % make the tmask to point to absolute path
-    if any(strcmp(fieldnames(item), 'tmask'))
+    % make the tmask and any task_path_* to point to absolute path instead of relative
+    fns = fieldnames(item);
+    if any(strcmp(fns, 'tmask'))
         tmask_path = item.tmask;
         if iscell(tmask_path)
             tmask_path = cell2mat(tmask_path);
@@ -292,6 +293,19 @@ function item = generalize_item(item, data_root)
         if ~startsWith(tmask_path, '/')
             % if not absolute, make absolute
             item.tmask = [data_root, '/', item.tmask];
+        end
+    end
+    for i = 1:length(fns)
+        fn = fns{i};
+        if startsWith(fn, 'task_path')
+            fn_path = item.(fn);
+            if iscell(fn_path)
+                fn_path = cell2mat(fn_path);
+            end
+            if ~startsWith(fn_path, '/')
+                % if not absolute, make absolute
+                item.(fn) = [data_root, '/', fn_path];
+            end
         end
     end
 end
