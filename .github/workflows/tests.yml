@@ -1,5 +1,11 @@
 name: Run MATLAB Tests
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - website
+  pull_request:
+    branches-ignore:
+      - website
 jobs:
   Run-tests:
     name: Run MATLAB Tests
