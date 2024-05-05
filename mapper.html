@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Run Mapper as a library &mdash; DeMapper  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Process Mappers in batch" href="batch.html" />
+    <link rel="prev" title="DeMapper" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DeMapper
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Run Mapper as a library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mapper-definition">Mapper Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preset-configurations">Preset configurations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bdlmapper">BDLMapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#neumapper">NeuMapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keplermapper">KeplerMapper</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Process Mappers in batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Building an extension to DeMapper</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DeMapper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Run Mapper as a library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mapper.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="run-mapper-as-a-library">
+<h1>Run Mapper as a library<a class="headerlink" href="#run-mapper-as-a-library" title="Link to this heading"></a></h1>
+<section id="mapper-definition">
+<h2>Mapper Definition<a class="headerlink" href="#mapper-definition" title="Link to this heading"></a></h2>
+<p>There is one class for Mapper that runs all types of configurations.
+The library is applied on a 2-dimensional matrix and the configuration
+option is determined by the options <cite>struct</cite> class passed in. Check the
+documentation below to see all possible options for calling the Mapper
+function.</p>
+<p>For simpler usage, you can use one of the preset configuration options.</p>
+<dl class="mat function">
+<dt class="sig sig-object mat" id="code.mapper.mapper">
+<span class="sig-prename descclassname"><span class="pre">code.mapper.</span></span><span class="sig-name descname"><span class="pre">mapper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.mapper.mapper" title="Link to this definition"></a></dt>
+<dd><p>Main function to run the Mapper Algorithm on (time x features) data</p>
+<p>Mapper is running multiple steps, named and defined below as
+transformations on the data:</p>
+<blockquote>
+<div><p>input data X</p>
+<p>-&gt; [1] (optional) preprocessing</p>
+<p>-&gt; [2] distance: pair-wise distance calculation</p>
+<p>-&gt; [3] rknn: Reciprocal k-Nearest Neighbors</p>
+<p>-&gt; [4] embed: Embedding into a smaller space</p>
+<p>-&gt; [5] binning: Segmenting the space into bins</p>
+<p>-&gt; [6] clustering: Partial Clustering to group data points into nodes</p>
+<p>-&gt; [7] finalgraph: Create a final graph by adding edges between nodes</p>
+</div></blockquote>
+<p>Each step is parameterized and configurable through the input options
+argument. A step can be activated if the option named &lt;step&gt;_type
+is not of the value “none”. Below we define the options, and the possible
+values that each can take:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">2D</span> <span class="pre">matrix</span></code></span>) – the data (rows are observations TRs, columns are variables ROIs)</p></li>
+<li><p><strong>options</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">struct</span></code></span>) – the struct defining the parameteres to run Mapper. Defined below:</p></li>
+<li><p><strong>options.preprocess_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;none&quot;</span> <span class="pre">|</span> <span class="pre">&quot;PCA&quot;</span> <span class="pre">|</span> <span class="pre">&quot;custom&quot;</span></code></span>) – defines the preprocessing type. Activated if preprocess_type ~= “none”.</p></li>
+<li><p><strong>options.preprocess_varexpl</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span> <span class="pre">between</span> <span class="pre">50.0</span> <span class="pre">and</span> <span class="pre">100.0</span></code></span>) – defines the
+number of dimensions to take (based on target variance to be
+explained). Used if preprocess_type == “PCA”.</p></li>
+<li><p><strong>options.preprocess_func</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">function</span></code></span>) – custom function to run on data. Used if
+prereprocess_type == “custom”.</p></li>
+<li><p><strong>options.dist_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">distance</span> <span class="pre">type</span></code></span>) – defines the distance type to be used to
+compute the pair-wise distances between datapoints.
+Common examples: “cityblock”, “euclidean”, “correlation”. For all
+examples, check MATLAB documentation of “pdist2”.</p></li>
+<li><p><strong>options.dist_func</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">function</span></code></span>) – custom function to use as pair-wise distance
+function. Used if dist_type == “custom”.</p></li>
+<li><p><strong>options.prelens_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;dist&quot;</span> <span class="pre">|</span> <span class="pre">&quot;original&quot;</span> <span class="pre">|</span> <span class="pre">&quot;preprocessed&quot;</span> <span class="pre">|</span> <span class="pre">&quot;bin-pen&quot;</span> <span class="pre">|</span> <span class="pre">&quot;wtd-pen&quot;</span></code></span>) – defines the way to compute the input to the lens function. Either use reciprocal
+k-Nearest Neighbor algorithm, or use the original, preprocessed, or distances
+input data.
+It uses a reciprocal kNN if lens_type in {“wtd-pen”, “bin-pen”}.</p></li>
+<li><p><strong>options.prelens_rknnparam</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the number of neighbors (k) to use as
+parameter for the reciprocal kNN algorithm (PKNNG). Used if rknn is the either
+weighted or binarized penalized algorithm: lens_type in {“wtd-pen”, “bin-pen”}.</p></li>
+<li><p><strong>options.prelens_rknn_directed</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – defines if reciprocal kNN constructs a
+directed (time-based) graph. Used if rknn is the weighted or binarized
+penalized algorithm: lens_type in {“wtd-pen”, “bin-pen”}.
+[Currently not implemented]</p></li>
+<li><p><strong>options.embed_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;none&quot;</span> <span class="pre">|</span> <span class="pre">&quot;custom&quot;</span> <span class="pre">|</span> <span class="pre">&quot;MDS&quot;</span> <span class="pre">|</span> <span class="pre">&quot;CMDS&quot;</span> <span class="pre">|</span> <span class="pre">&quot;PCA&quot;</span> <span class="pre">|</span>
+<span class="pre">&quot;DiffusionMaps&quot;</span> <span class="pre">|</span> <span class="pre">&quot;ManifoldChart&quot;</span> <span class="pre">|</span> <span class="pre">&quot;Isomap&quot;</span> <span class="pre">|</span> <span class="pre">&quot;LLE&quot;</span> <span class="pre">|</span> <span class="pre">&quot;HessianLLE&quot;</span> <span class="pre">|</span>
+<span class="pre">&quot;Laplacian&quot;</span> <span class="pre">|</span> <span class="pre">&quot;LTSA&quot;</span> <span class="pre">|</span> <span class="pre">&quot;SNE&quot;</span> <span class="pre">|</span> <span class="pre">&quot;tSNE&quot;</span> <span class="pre">|</span> <span class="pre">&quot;UMAP&quot;</span></code></span>) – defined the embedding
+algorithm to use to reduce the datapoint space to fewer dimensions.
+Activated if embed_type ~= “none”.</p></li>
+<li><p><strong>options.embed_dim</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the number of dimensions in the final
+embedding space. Used if embed_type ~= “none” AND embed_type ~= “custom”.</p></li>
+<li><p><strong>options.embed_kparam</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the k-param if embed_type is one of
+“Isomap” | “LLE” | “HessianLLE” | “Laplacian” | “LTSA” | “UMAP”</p></li>
+<li><p><strong>options.embed_perplexity</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the perplexity needed for SNE
+embedding algorithms. Used if emed_type is one of “SNE” | “tSNE”.</p></li>
+<li><p><strong>options.embed_func</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">function</span></code></span>) – custom function to use as embedding algorithm.
+Used if embed_type == “custom”.</p></li>
+<li><p><strong>options.embed_postproc</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;identity&quot;</span> <span class="pre">|</span> <span class="pre">&quot;time&quot;</span></code></span>) – defines the post-processing
+type. If embed_postproc == “time”, then time is added as a dimension
+for each datapoint.</p></li>
+<li><p><strong>options.binning_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;Nd&quot;</span> <span class="pre">|</span> <span class="pre">&quot;cball&quot;</span></code></span>) – defines the binning strategy.
+If binning_type == “Nd”, then the N-dimensional space is segmented
+based on polygons or hypercubes. This option requires that the
+embedding step was ran and the space is reduce to N &lt; 9 dimensions.
+If binning_type == “cball”, then the reciprocal kNN graph is
+segmented into landmarks to construct a cover of the space. This
+option needs embed_type == “none”.</p></li>
+<li><p><strong>options.binning_resolution</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the resolution of the binning
+algorithm. For binning_type == “Nd”, the resolution is the number of
+polygons or hypercubes in one dimension. For binning_type == “cball”,
+the resolution is the number of landmarks.</p></li>
+<li><p><strong>options.binning_gain</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span> <span class="pre">between</span> <span class="pre">0.0</span> <span class="pre">and</span> <span class="pre">100.0</span></code></span>) – defines the percentage
+of overlap of the bins.</p></li>
+<li><p><strong>options.binning_nsides</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the number of sides for the polygon
+used for binning. If binning_nsides ~= 4, then the input embeded space
+needs to have exactly 2 dimensions.</p></li>
+<li><p><strong>options.clustering_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;none&quot;</span> <span class="pre">|</span> <span class="pre">&quot;custom&quot;</span> <span class="pre">|</span> <span class="pre">&quot;DBSCAN&quot;</span> <span class="pre">|</span> <span class="pre">&quot;linkage&quot;</span></code></span>) – defines
+the clustering algorithm. This step is activated if clustering_type ~=
+“none”.</p></li>
+<li><p><strong>options.clustering_linkage</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;average&quot;</span> <span class="pre">|</span> <span class="pre">&quot;complete&quot;</span> <span class="pre">|</span> <span class="pre">&quot;single&quot;</span></code></span>) – defines the
+linkage used the clustering algorithm. Used if clustering_type ==
+“linkage”.</p></li>
+<li><p><strong>options.clustering_histo_bins</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the number of histogram bins
+to be used by the clustering algorithm. Used if clustering_type ==
+“linkage”.</p></li>
+<li><p><strong>options.clustering_eps_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – defines how to compute the epsilon used by
+the DBSCAN clustering algorithm. Used if clustering_type == “DBSCAN”.
+Options: ‘fixed’ for a fixed value; ‘elbow’ for getting epsilon based on elbow
+method of kNN distances; ‘median’ for getting epsilon based on the median of
+kNN distances</p></li>
+<li><p><strong>options.clustering_eps_arg</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defines the argument used for getting and epsilon
+used by the DBSCAN clustering algorithm. Used if clustering_type == “DBSCAN”.
+if clustering_eps_type == ‘fixed’, then it represents the epsilon value to be used.
+if clustering_eps_type == ‘elbow’ or ‘median’, then it represents the
+knn value used for finding a knn value.</p></li>
+<li><p><strong>options.clustering_minpts</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span></code></span>) – defined the minimum points to be taken
+for a cluster. Used if clustering_type == “DBSCAN”</p></li>
+<li><p><strong>options.clustering_func</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">function</span></code></span>) – custom function to use as clustering
+algorithm. Used if clustering_type == “custom”.</p></li>
+<li><p><strong>options.finalgraph_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;full&quot;</span> <span class="pre">|</span> <span class="pre">&quot;neighbors&quot;</span></code></span>) – defines the construction of
+the final output graph. If finalgraph_type == “neighbors”, then the
+edges added are restricted to neighbors.</p></li>
+<li><p><strong>options.verbose</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – print runtime debugging comments if verbose ==
+true. Defaults to false.</p></li>
+<li><p><strong>options.low_mem</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – return all intermediary steps as part of the
+output, if low_mem == false. Defaults to true.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns res<span class="colon">:</span></dt>
+<dd class="field-even"><p>a struct containing the resulting Mapper Graph</p>
+<ul class="simple">
+<li><p>adjacencyMat: (nodes x nodes) links between Mapper nodes</p></li>
+<li><p>memberMat: (nodes x TRs) logical matrix if node contains TR</p></li>
+<li><p>nodeMembers: (nodes x list&lt;TRs&gt;) cell list for the TRs of each node</p></li>
+<li><p>options: a struct of options used to generate the results</p></li>
+</ul>
+</dd>
+</dl>
+<blockquote>
+<div><ul class="simple">
+<li><p>Samir Chowdhury</p></li>
+<li><p>Caleb Geniesse</p></li>
+<li><p>Manish Saggar</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="preset-configurations">
+<h2>Preset configurations<a class="headerlink" href="#preset-configurations" title="Link to this heading"></a></h2>
+<p>You can use preset configurations to easily set all
+required Mapper parameters into default configurations.
+This is the easiest way to use the library.</p>
+<p>For example, to run a simple mapper algorithm, once you have a 2-dimensional matrix <cite>data</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">opts</span> <span class="o">=</span> <span class="n">BDLMapperOpts</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">70</span><span class="p">);</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">mapper</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">opts</span><span class="p">);</span>
+</pre></div>
+</div>
+<section id="bdlmapper">
+<h3>BDLMapper<a class="headerlink" href="#bdlmapper" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">options</span> <span class="o">=</span> <span class="n">BDLMapperOpts</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">resolution</span><span class="p">,</span> <span class="n">gain</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">nargin</span> <span class="o">&lt;</span> <span class="mi">4</span>
+    <span class="n">verbose</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
+<span class="n">end</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">struct</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">preprocess_type</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">dist_type</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">prelens_type</span> <span class="o">=</span> <span class="s1">&#39;wtd-pen&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">prelens_rknnparam</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;CMDS&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">embed_dim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_type</span> <span class="o">=</span> <span class="s1">&#39;Nd&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_resolution</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_gain</span> <span class="o">=</span> <span class="n">gain</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_nsides</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_type</span> <span class="o">=</span> <span class="s1">&#39;linkage_histo&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_histo_bins</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">finalgraph_type</span> <span class="o">=</span> <span class="s1">&#39;full&#39;</span><span class="p">;</span>
+
+<span class="n">end</span>
+</pre></div>
+</div>
+</section>
+<section id="neumapper">
+<h3>NeuMapper<a class="headerlink" href="#neumapper" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">options</span> <span class="o">=</span> <span class="n">NeuMapperOpts</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">resolution</span><span class="p">,</span> <span class="n">gain</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">nargin</span> <span class="o">&lt;</span> <span class="mi">4</span>
+    <span class="n">verbose</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
+<span class="n">end</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">struct</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">preprocess_type</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">dist_type</span> <span class="o">=</span> <span class="s1">&#39;cityblock&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">prelens_type</span> <span class="o">=</span> <span class="s1">&#39;wtd-pen&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">prelens_rknnparam</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_type</span> <span class="o">=</span> <span class="s1">&#39;cball&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_resolution</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_gain</span> <span class="o">=</span> <span class="n">gain</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_type</span> <span class="o">=</span> <span class="s1">&#39;linkage_histo&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_histo_bins</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">finalgraph_type</span> <span class="o">=</span> <span class="s1">&#39;full&#39;</span><span class="p">;</span>
+
+
+<span class="n">end</span>
+</pre></div>
+</div>
+</section>
+<section id="keplermapper">
+<h3>KeplerMapper<a class="headerlink" href="#keplermapper" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">options</span> <span class="o">=</span> <span class="n">KeplerMapperOpts</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="n">gain</span><span class="p">,</span> <span class="n">dist_type</span><span class="p">,</span> <span class="n">eps_kvalue</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">nargin</span> <span class="o">&lt;</span> <span class="mi">3</span>
+    <span class="n">dist_type</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">;</span>
+<span class="n">end</span>
+
+<span class="k">if</span> <span class="n">nargin</span> <span class="o">&lt;</span> <span class="mi">4</span>
+    <span class="n">eps_kvalue</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">end</span>
+
+<span class="k">if</span> <span class="n">nargin</span> <span class="o">&lt;</span> <span class="mi">5</span>
+    <span class="n">verbose</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
+<span class="n">end</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">struct</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">preprocess_type</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">dist_type</span> <span class="o">=</span> <span class="n">dist_type</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">prelens_type</span> <span class="o">=</span> <span class="s1">&#39;preprocessed&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">embed_type</span> <span class="o">=</span> <span class="s1">&#39;tSNE&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">embed_dim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">embed_perplexity</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_type</span> <span class="o">=</span> <span class="s1">&#39;Nd&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_resolution</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_gain</span> <span class="o">=</span> <span class="n">gain</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">binning_nsides</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_type</span> <span class="o">=</span> <span class="s1">&#39;DBSCAN&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_eps_type</span> <span class="o">=</span> <span class="s1">&#39;median&#39;</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_eps_arg</span> <span class="o">=</span> <span class="n">eps_kvalue</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">clustering_minpts</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">options</span><span class="o">.</span><span class="n">finalgraph_type</span> <span class="o">=</span> <span class="s1">&#39;neighbors&#39;</span><span class="p">;</span>
+
+<span class="n">end</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="DeMapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="batch.html" class="btn btn-neutral float-right" title="Process Mappers in batch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brain Dynamics Lab @ Stanford.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
