@@ -1,20 +1,17 @@
 % Setup base path
 % clear;
-basefolder  = split(pwd, 'demapper');
-basefolder  = [basefolder{1}, 'demapper'];
+basefolder = fileparts(fileparts(mfilename('fullpath')));
 codefolder  = [basefolder,'/code'];
 toolsfolder  = [basefolder,'/tests/tools'];
 addpath(genpath(codefolder));
 addpath(genpath(toolsfolder));
 
 % Load Data
-% data_path = [basefolder, '/tests/fixtures/sub-1_rest1_schaefer400x7_ts.1D'];
-% data_path = [basefolder, '/tests/fixtures/sub-1_rest1_schaefer400x7_ts.1D'];
-data_path = '/Users/dh/workspace/BDL/bdl-mapper/data-cme-gordon/SBJ01_Gordon333.npy';
+data_path = [basefolder, '/tests/fixtures/sub-1_rest1_schaefer400x7_ts.1D'];
 
-% data = read_1d(data_path);
-data = readNPY(data_path);
-% data = zscore(data);
+data = read_1d(data_path);
+% data = readNPY(data_path);
+data = zscore(data);
 
 % Setup default mapper
 opts = BDLMapperOpts(6, 20, 70);

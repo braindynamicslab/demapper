@@ -12,4 +12,4 @@ jobs:
       - name: Run commands
         uses: matlab-actions/run-command@v1
         with:
-          command: addpath(genpath('code/')); addpath(genpath('tests/')); result = tests(); assertSuccess(result)
+          command: result = tests(); assertSuccess(result)

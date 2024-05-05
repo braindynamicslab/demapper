@@ -47,9 +47,8 @@
 %   displays the status of the process running all mappers.
 %
 
-basefolder  = split(pwd, 'demapper');
-basefolder  = [basefolder{1}, 'demapper'];
-codefolder  = [basefolder,'/code'];
+basefolder = fileparts(fileparts(fileparts(mfilename('fullpath'))));
+codefolder  = [basefolder, '/code'];
 addpath(genpath(codefolder));
 
 VALID_ANALYSES = {'plot_graph', 'plot_task', 'compute_stats', 'compute_temp'};

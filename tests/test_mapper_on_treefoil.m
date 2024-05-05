@@ -1,21 +1,19 @@
 
 clear;
-basefolder  = split(pwd, 'demapper');
-basefolder  = [basefolder{1}, 'demapper'];
+basefolder = fileparts(fileparts(mfilename('fullpath')));
 codefolder  = [basefolder,'/code'];
 toolsfolder  = [basefolder,'/tests/tools'];
 addpath(genpath(codefolder));
 addpath(genpath(toolsfolder));
 
 % Load Data
-% data_path = [basefolder, '/tests/fixtures/sub-1_rest1_schaefer400x7_ts.1D'];
-data_path = '/Users/dh/workspace/BDL/dyneusr/examples/trefoil_knot/data_treefoil.1D';
+data_path = [basefolder, '/hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil.1D'];
 
-fn_timing = '/Users/dh/workspace/BDL/dyneusr/examples/trefoil_knot/data_treefoil_task.csv';
+fn_timing = [basefolder, '/hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil_task.csv'];
 timing_table = readtable(fn_timing, 'FileType', 'text', 'Delimiter', ',');
 timing_table.task_name = string(timing_table.task_name);
 
-coloring_data = '/Users/dh/workspace/BDL/dyneusr/examples/trefoil_knot/data_treefoil_task_nodeCData.1D';
+coloring_data = [basefolder, '/hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil_task_nodeCData.1D'];
 nodeCData = read_1d(coloring_data);
 
 data = read_1d(data_path);

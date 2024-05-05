@@ -2,8 +2,7 @@
 
 % Setup base path
 clear;
-basefolder  = split(pwd, 'demapper');
-basefolder  = [basefolder{1}, 'demapper'];
+basefolder = fileparts(fileparts(fileparts(mfilename('fullpath'))));
 codefolder  = [basefolder,'/code'];
 toolsfolder  = [basefolder,'/tests/tools'];
 addpath(genpath(codefolder));
