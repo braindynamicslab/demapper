@@ -1,0 +1,12 @@
+id0,id1,id2,path,TR,task_path_G
+SBJ-SNR00.5,,,SBJ-SNR00.5.npy,0.72,task_info_99.csv
+SBJ-SNR00.6,,,SBJ-SNR00.6.npy,0.72,task_info_99.csv
+SBJ-SNR00.8,,,SBJ-SNR00.8.npy,0.72,task_info_99.csv
+SBJ-SNR01.0,,,SBJ-SNR01.0.npy,0.72,task_info_99.csv
+SBJ-SNR01.3,,,SBJ-SNR01.3.npy,0.72,task_info_99.csv
+SBJ-SNR02.0,,,SBJ-SNR02.0.npy,0.72,task_info_99.csv
+SBJ-SNR02.5,,,SBJ-SNR02.5.npy,0.72,task_info_99.csv
+SBJ-SNR03.3,,,SBJ-SNR03.3.npy,0.72,task_info_99.csv
+SBJ-SNR05.0,,,SBJ-SNR05.0.npy,0.72,task_info_99.csv
+SBJ-SNR10.0,,,SBJ-SNR10.0.npy,0.72,task_info_99.csv
+SBJ,,,SBJ.npy,0.72,task_info_99.csv
