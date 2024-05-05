@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Process Mappers in batch &mdash; DeMapper  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing steps" href="preprocessing.html" />
+    <link rel="prev" title="Run Mapper as a library" href="mapper.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DeMapper
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Process Mappers in batch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#individual-steps">Individual Steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.html">Preprocessing steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis.html">Analysis steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Building an extension to DeMapper</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DeMapper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Process Mappers in batch</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/batch.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="process-mappers-in-batch">
+<h1>Process Mappers in batch<a class="headerlink" href="#process-mappers-in-batch" title="Link to this heading"></a></h1>
+<p>We always want to run Mapper with multiple configurations and see the final result.
+The tool implemented here is a helper tool to run a batch of Mappers on data.</p>
+<p>These are the main parts of processing one Mapper for one data item (subject):</p>
+<ol class="arabic simple">
+<li><p>Load data item from a cohort file into a matrix</p></li>
+<li><p>Preprocess the matrix</p></li>
+<li><p>Run a Mapper configuration on our matrix</p></li>
+<li><p>Run all analysis steps</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">run_main()</span></code> script runs in parallel the steps above for all
+data items (subjects) and for all mapper configurations.</p>
+<section id="usage-example">
+<h2>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h2>
+<p>Outside of tests and small experiments, the process is run from command line,
+where the inputs are set as variables:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example command line call to run_main</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">matlab</span> <span class="o">-</span><span class="n">r</span> <span class="s2">&quot;cohort_csv=&#39;...&#39;; config_path=&#39;...&#39;; run(&#39;/.../demapper/code/analysis/run_main.m&#39;); &quot;</span>
+</pre></div>
+</div>
+</div>
+<p>Below, I present a more detailed example with all the required arguments set:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example script (BASH / SBATCH)</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PROJECT_ROOT=/Users/daniel/project
+CONFNAME=mappers_v0.1.json
+
+MATLAB_ARGS=&quot;&quot;
+MATLAB_ARGS=&quot;${MATLAB_ARGS} poolsize=8;&quot;
+MATLAB_ARGS=&quot;${MATLAB_ARGS} cohort_csv=&#39;${PROJECT_ROOT}/cohort_mapper.csv&#39;;&quot;
+MATLAB_ARGS=&quot;${MATLAB_ARGS} config_path=&#39;${PROJECT_ROOT}/${CONFNAME}&#39;;&quot;
+MATLAB_ARGS=&quot;${MATLAB_ARGS} data_root=&#39;${PROJECT_ROOT}/data/&#39;;&quot;
+MATLAB_ARGS=&quot;${MATLAB_ARGS} output_dir=&#39;${PROJET_ROOT}/results/${CONFNAME}&#39;;&quot;
+
+DEMAPPER_MAIN=&quot;${PROJECT_ROOT}/demapper/code/analysis/run_main.m&quot;
+
+# write command, submit, wait
+CMD=&quot;matlab -r \&quot;${MATLAB_ARGS} run(&#39;$DEMAPPER_MAIN&#39;)\&quot;&quot;;
+echo $CMD;
+eval $CMD;
+wait
+</pre></div>
+</div>
+</div>
+<p>where we have the following files:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">cohort_mapper.csv</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">id0</span><span class="p">,</span><span class="n">id1</span><span class="p">,</span><span class="n">id2</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">TR</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">mappers_v0.1.json</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;preprocess&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zscore&quot;</span> <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;mappers&quot;</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;BDLMapper&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
+    <span class="s2">&quot;gain&quot;</span><span class="p">:</span> <span class="mi">60</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;NeuMapper&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">&quot;gain&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+  <span class="p">}],</span>
+  <span class="s2">&quot;analyses&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;plot_graph&quot;</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_stats&quot;</span><span class="p">,</span><span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;HRF_threshold&quot;</span><span class="p">:</span> <span class="mi">11</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_temp&quot;</span> <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The JSON configuration above will generate five Mapper results for each
+individual item in cohort file. Two BDLMapper results for 2 resolutions:
+20 and 40, finally named: BDLMapper_32_20_60 and BDLMapper_32_40_60.
+Three NeuMapper results for 3 gain parameters: 70, 80, and 90, similarly
+named.</p>
+<p>This configuration runs 1 preprocessing step (zscore) and 3 analysis
+steps: <cite>plot_graph</cite>, <cite>compute_stats</cite>, and <cite>compute_temp</cite>.
+Check the <cite>run_preprocess</cite> function and the <cite>run_analysis</cite> function for
+detailed descriptions on possible preprocessing and analysis possible.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<dl class="mat function">
+<dt class="sig sig-object mat" id="code.analysis.run_main">
+<span class="sig-prename descclassname"><span class="pre">code.analysis.</span></span><span class="sig-name descname"><span class="pre">run_main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.analysis.run_main" title="Link to this definition"></a></dt>
+<dd><p>RUN_MAIN runs mapper on a large cohort of items based on the config.
+The mapper config is defined at <cite>config_path</cite>.</p>
+<p>The items (cohort) to be processed it defined by each line of the CSV
+file at path <cite>cohort_csv</cite>. Each item’s path is relative to the
+the path <cite>data_root</cite>.</p>
+<p>Finally, the output is saved at the path <cite>output_dir</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cohort_csv</strong> – the path to a CSV file with the header: <cite>id0,id1,id2,path</cite>
+the <cite>id`s can be any string and the path is the location
+of the 1D file used for processing Mapper. The path is
+relative to the `data_root</cite> path.</p></li>
+<li><p><strong>data_root</strong> – the absolute root directory to the paths defined in the
+CSV file: <cite>cohort_csv</cite></p></li>
+<li><p><strong>config_path</strong> – the path to the config file that defines what mappers
+and analysis to be used. Some example configurations are
+at <cite>tests/fixtures/config*.json</cite> or below. This
+configuration also defines the preprocessing step.</p></li>
+<li><p><strong>output_dir</strong> – the absolute root directory of where to save the results
+of the mappers and the analysis.</p></li>
+<li><p><strong>poolsize</strong> – (optional) number of threads to use for parallelizing the
+process and analysis. This is highly recommended for big
+jobs. Usually its set as the number of CPU cores.</p></li>
+<li><p><strong>rerun_analysis</strong> – (optional) if this is set, the process will use
+pre-computed mapper results from a previous run and
+reruns only the specified analysis.
+Possible Values are: “plot_graph”, “compute_stats”,
+“compute_temp”. Or check <cite>run_analysis</cite> function for
+the latest.</p></li>
+<li><p><strong>rerun_uncomputed</strong> – (optional) if this boolean option is set, the
+process will rerun all items of the cohort that
+either failed or didn’t finish successfully based
+on the <cite>status.csv</cite> file.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Output structure:</strong></p>
+<blockquote>
+<div><p>The result of an individual item will be saved at: <cite>id0/id1/id2/MapperID/</cite>,
+<em>where:</em></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Each <cite>id</cite> (id0, id1, id2) is taken from the <cite>cohort_csv</cite> for the item</p></li>
+<li><p>The id <cite>MapperID</cite> is generated from the specific mapper from <cite>config_path</cite></p></li>
+</ul>
+</div></blockquote>
+<p>Moreover, there is a status file saved at <cite>config_name/status.csv</cite>, that
+displays the status of the process running all mappers.</p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="individual-steps">
+<h2>Individual Steps<a class="headerlink" href="#individual-steps" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="analysis.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis.html#analysis-examples">Analysis Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis.html#analysis-types">Analysis Types</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mapper.html" class="btn btn-neutral float-left" title="Run Mapper as a library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="preprocessing.html" class="btn btn-neutral float-right" title="Preprocessing steps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brain Dynamics Lab @ Stanford.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
