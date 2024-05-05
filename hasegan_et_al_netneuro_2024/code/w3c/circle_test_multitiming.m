@@ -51,6 +51,11 @@ for task_path_id=1:length(uniq_task_paths)
             tp = replace(tp, fileparts(tp), timing_base_path);
         end
     end
+    if ~startsWith(tp, '/')
+        % If relative, make absolute w.r.t. cohort path
+        data_root = fileparts(cohort_path);
+        tp = [data_root, '/', tp];
+    end
 
     timing_table = readtable(tp, 'FileType', 'text', 'Delimiter', ',');
     timing_table.task_name = string(timing_table.task_name);
