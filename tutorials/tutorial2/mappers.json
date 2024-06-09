@@ -1,0 +1,16 @@
+{
+    "preprocess": [
+      { "type": "zscore" }
+    ],
+    "mappers": [{
+      "type": "BDLMapper",
+      "k": 6,
+      "resolution": [3, 5, 10],
+      "gain": [30, 40, 50]
+    }],
+    "analyses": [
+        { "type": "plot_graph" },
+        { "type": "compute_stats" },
+        { "type": "compute_temp" }
+    ]
+}

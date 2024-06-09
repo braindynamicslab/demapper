@@ -1,0 +1,5 @@
+ARGS="cohort_csv='`pwd`/tutorials/tutorial3/cohort.csv';"
+ARGS="$ARGS config_path='`pwd`/tutorials/tutorial3/mappers.json';"
+ARGS="$ARGS output_dir='`pwd`/results/tutorial3_mappers';"
+ARGS="$ARGS data_root='`pwd`/tutorials/tutorial3/';"
+matlab -nodesktop -r "$ARGS run('code/analysis/run_main.m')"

@@ -3,6 +3,8 @@ DeMapper: A **De**constructed **Mapper** (TDA) Toolbox for MATLAB
 
 DeMapper is a simple toolbox to run Mapper techniques (from Topological Data Analysis) in MATLAB.
 
+Find the documentation at: https://braindynamicslab.github.io/demapper/
+
 There are many examples on how to use the tool, as tests:
      https://github.com/braindynamicslab/demapper/tree/master/tests
 
@@ -46,6 +48,16 @@ Install sphinx
 Then build the sphinx documentation
 
     sphinx-build -b html docs/source docs/build
+
+To generate for the website, please run the following instead:
+
+    git co website                                  # Check out the website branch
+    git merge master                                # Merge the master branch            
+                                                    # Resolve any issues with the merge
+    sphinx-build -b html docs/source docs           # Build the documentation
+    git add docs                                    # Add the documentation to the staging area
+    git ci -m "Update documentation"                # Commit the changes
+    git push                                        # Push the changes to the website branch
 
 # Authors
 

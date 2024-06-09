@@ -27,9 +27,9 @@
 % :param rerun_analysis: (optional) if this is set, the process will use
 %                     pre-computed mapper results from a previous run and
 %                     reruns only the specified analysis.
-%                     Possible Values are: "plot_graph", "compute_stats",
-%                     "compute_temp". Or check `run_analysis` function for
-%                     the latest.
+%                     Possible Values are: "plot_graph", "plot_task", 
+%                     "compute_stats", "compute_temp".
+%                     Or check `run_analysis` function for the latest.
 % :param rerun_uncomputed: (optional) if this boolean option is set, the
 %                       process will rerun all items of the cohort that
 %                       either failed or didn't finish successfully based
@@ -248,21 +248,6 @@ end
 disp(['Total mapper errors: ', num2str(errors_cnt)]);
 
 %% Helper functions
-function data = read_data(path)
-    % Read data from path based on the extension
-    [~,~,ext] = fileparts(path);
-    switch ext
-        case {'.1D', '.1d'}
-            data = read_1d(path);
-        case {'.NPY', '.npy'}
-            data = readNPY(path);
-        case '.nii'
-            % TODO
-        otherwise
-            data = read_1d(path);
-    end
-end
-
 function has = has_multiple_analyses(analyses, analysis_type)
     count = 0;
     for a_idx = 1:size(analyses)

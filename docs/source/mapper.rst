@@ -13,12 +13,16 @@ function.
 
 For simpler usage, you can use one of the preset configuration options.
 
+Check :doc:`Tutorial 1<tutorial1>` for a step-by-step guide on how to using the library.
+
 .. autofunction:: code.mapper.mapper()
 
 
 ============================
 Preset configurations
 ============================
+
+.. _mappers-preset:
 
 You can use preset configurations to easily set all
 required Mapper parameters into default configurations.
