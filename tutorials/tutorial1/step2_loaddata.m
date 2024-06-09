@@ -1,3 +1,4 @@
+% The data file is a matrix defined in a CSV file format without a header.
 data_path = [datafolder, 'data_treefoil.1D'];
 data = read_1d(data_path);
 

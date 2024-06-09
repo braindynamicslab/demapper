@@ -6,10 +6,10 @@ The tool implemented here is a helper tool to run a batch of Mappers on data.
 
 These are the main parts of processing one Mapper for one data item (subject):
 
-1. Load data item from a cohort file into a matrix
-2. Preprocess the matrix
+1. Load data item from a cohort file into a matrix. :doc:`Detailed here <batch_load>`
+2. Preprocess the matrix. :doc:`Detailed here <batch_preprocessing>`
 3. Run a Mapper configuration on our matrix
-4. Run all analysis steps
+4. Run all analysis steps. :doc:`Detailed here <batch_analysis>`
 
 The ``run_main()`` script runs in parallel the steps above for all
 data items (subjects) and for all mapper configurations.
@@ -55,7 +55,7 @@ where we have the following files:
   :caption: cohort_mapper.csv
 
   id0,id1,id2,path,TR
-
+  SBJ99,,,SBJ99_BOLD.npy,1.5
 
 
 .. code-block::
@@ -111,5 +111,6 @@ Individual Steps
   :glob:
   :maxdepth: 2
 
-  preprocessing
-  analysis
+  batch_load
+  batch_preprocessing
+  batch_analysis

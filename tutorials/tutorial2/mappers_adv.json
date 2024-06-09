@@ -1,0 +1,27 @@
+{
+    "preprocess": [
+      { "type": "zscore" }
+    ],
+    "mappers": [{
+        "type": "CustomMapper",
+        "name": "DistsGeoBDLMapper",
+        "preprocess_type": "none",
+        "dist_type": ["cityblock", "euclidean", "chebychev", "correlation", "cosine"],
+        "embed_type": "CMDS",
+        "embed_dim": 2,
+        "prelens_type": "wtd-pen",
+        "prelens_rknnparam": 6,
+        "binning_type": "Nd",
+        "binning_resolution": 5,
+        "binning_gain": 30,
+        "binning_nsides": 4,
+        "clustering_type": "linkage_histo",
+        "clustering_histo_bins": 10,
+        "finalgraph_type": "full"
+    }],
+    "analyses": [
+        { "type": "plot_graph" },
+        { "type": "compute_stats" },
+        { "type": "compute_temp" }
+    ]
+}

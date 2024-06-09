@@ -13,12 +13,13 @@ We need all the files within the `code` subfolder:
 .. literalinclude:: ../../tutorials/tutorial1/step1_imports.m
     :language: matlab
 
+This was set to run from the `tutorials/tutorial1` location. If you are running from a different location, you need to adjust the path `basefolder` accordingly.
 
 ============================
 Step 2: Explore the data
 ============================
 
-Load the data from the treefoil knot and explore the 3D presentation.
+Load the data from the trefoil knot and explore the 3D presentation.
 
 .. literalinclude:: ../../tutorials/tutorial1/step2_loaddata.m
     :language: matlab
@@ -27,9 +28,9 @@ Resulting image:
 
 .. image:: ../../tutorials/tutorial1/figure_2_1.png
   :width: 400
-  :alt: Treefoil Knot data and colors
+  :alt: trefoil Knot data and colors
 
-*Figure 2.1: Treefoil Knot data in 3D*
+*Figure 2.1: trefoil Knot data in 3D*
 
 ============================
 Step 3: Run Mapper
@@ -109,19 +110,19 @@ The resulting figures are the following:
   :width: 400
   :alt: Mapper graph adjacency
 
-*Figure 4.1: Treefoil Knot data representation after Mapper*
+*Figure 4.1: trefoil Knot data representation after Mapper*
 
 .. image:: ../../tutorials/tutorial1/figure_4_2.png
   :width: 400
   :alt: Mapper graph adjacency
 
-*Figure 4.2: Treefoil Knot data representation after Mapper with node size representing the number of points withing each node; and node color representing the average point index. Based on `nodeMembers`*
+*Figure 4.2: trefoil Knot data representation after Mapper with node size representing the number of points withing each node; and node color representing the average point index. Based on `nodeMembers`*
 
 .. image:: ../../tutorials/tutorial1/figure_4_3.png
   :width: 400
   :alt: Mapper graph adjacency
 
-*Figure 4.3: Treefoil Knot data representation after Mapper with node color representing the average data point membership based on colors defined in `nodeCData` or Figure 2.1*
+*Figure 4.3: trefoil Knot data representation after Mapper with node color representing the average data point membership based on colors defined in `nodeCData` or Figure 2.1*
 
 ==============================================
 Step 5: "Advanced" Visualization: `plot_task`
@@ -136,7 +137,7 @@ The `timing_table` needed is loaded from a CSV file containing the label for eac
 
 .. code-block:: bash
 
-    head hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil_task.csv          
+    head hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil_task.csv
 
         task_name
         green
@@ -155,7 +156,7 @@ The resulting figure is:
   :width: 400
   :alt: Mapper graph adjacency
 
-*Figure 5.1: Treefoil Knot data representation after Mapper with a pie chart for each node, representing its point contribution*
+*Figure 5.1: trefoil Knot data representation after Mapper with a pie chart for each node, representing its point contribution*
 
 ==============================
 Step 6: Using other utilities
@@ -235,6 +236,6 @@ The `TCM_inv` can be seen as following:
 
 .. image:: ../../tutorials/tutorial1/figure_6_1.png
   :width: 400
-  :alt: Dissimilarity matrix between the original points of the treefoil knot
+  :alt: Dissimilarity matrix between the original points of the trefoil knot
 
-*Figure 6.1: Dissimilarity matrix between the original points of the treefoil knot*
+*Figure 6.1: Dissimilarity matrix between the original points of the trefoil knot*

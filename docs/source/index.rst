@@ -39,6 +39,8 @@ Tutorials:
    :hidden:
 
    tutorial1
+   tutorial2
+   tutorial3
 
 .. toctree::
    :maxdepth: 2

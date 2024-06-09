@@ -248,21 +248,6 @@ end
 disp(['Total mapper errors: ', num2str(errors_cnt)]);
 
 %% Helper functions
-function data = read_data(path)
-    % Read data from path based on the extension
-    [~,~,ext] = fileparts(path);
-    switch ext
-        case {'.1D', '.1d'}
-            data = read_1d(path);
-        case {'.NPY', '.npy'}
-            data = readNPY(path);
-        case '.nii'
-            % TODO
-        otherwise
-            data = read_1d(path);
-    end
-end
-
 function has = has_multiple_analyses(analyses, analysis_type)
     count = 0;
     for a_idx = 1:size(analyses)
