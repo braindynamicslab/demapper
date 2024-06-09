@@ -27,9 +27,9 @@
 % :param rerun_analysis: (optional) if this is set, the process will use
 %                     pre-computed mapper results from a previous run and
 %                     reruns only the specified analysis.
-%                     Possible Values are: "plot_graph", "compute_stats",
-%                     "compute_temp". Or check `run_analysis` function for
-%                     the latest.
+%                     Possible Values are: "plot_graph", "plot_task", 
+%                     "compute_stats", "compute_temp".
+%                     Or check `run_analysis` function for the latest.
 % :param rerun_uncomputed: (optional) if this boolean option is set, the
 %                       process will rerun all items of the cohort that
 %                       either failed or didn't finish successfully based
