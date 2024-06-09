@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 2: Running multiple Mappers &mdash; DeMapper  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 3: Running Mappers on fMRI data" href="tutorial3.html" />
+    <link rel="prev" title="Tutorial 1: Running Mapper as a Library" href="tutorial1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DeMapper
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Process Mappers in batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Building an extension to DeMapper</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Tutorial 1: Running Mapper as a Library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial 2: Running multiple Mappers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-check-the-data">Step 1: Check the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-create-the-cohort-file">Step 2: Create the cohort file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-create-the-config-file">Step 3: Create the config file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preprocess">1. preprocess</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mappers">2. mappers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyses">3. analyses</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-4-running-the-demapper-cli">Step 4: Running the DeMapper CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-5-check-the-results">Step 5: Check the results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#res-mat-file">1. <cite>res.mat</cite> file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-plot-graph-analysis">2. The <cite>plot_graph</cite> analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-compute-stats-analysis">3. The <cite>compute_stats</cite> analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-compute-temp-analysis">4. The <cite>compute_temp</cite> analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-6-advanced-mapper-configurations">Step 6: Advanced Mapper configurations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3.html">Tutorial 3: Running Mappers on fMRI data</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DeMapper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 2: Running multiple Mappers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial-2-running-multiple-mappers">
+<h1>Tutorial 2: Running multiple Mappers<a class="headerlink" href="#tutorial-2-running-multiple-mappers" title="Link to this heading"></a></h1>
+<p>In this tutorial, we will show how to run the Mapper algorithm from the command line. We will use the same data as in Tutorial 1, the trefoil knot dataset.</p>
+<p>Our goal is to get to the following command:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Target command to run the DeMapper CLI</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;cohort_csv=&#39;...&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> config_path=&#39;...&#39;;&quot;</span>
+matlab<span class="w"> </span>-nodesktop<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> run(&#39;code/analysis/run_main.m&#39;)&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>The above command will run the <cite>run_main.m</cite> script with two arguments: <cite>cohort_csv</cite> and <cite>config_path</cite>. The <cite>cohort_csv</cite> argument is the path to the cohort file, and the <cite>config_path</cite> argument is the path to the configuration file. Further, we will build those two files.</p>
+<section id="step-1-check-the-data">
+<h2>Step 1: Check the data<a class="headerlink" href="#step-1-check-the-data" title="Link to this heading"></a></h2>
+<p>The example data we will use for this tutorail is a trefoil knot dataset where we have 120 datapoints with 3 features each. The data is stored in a file called <cite>data_treefoil.1D</cite> in the <cite>hasegan_et_al_netneuro_2024/data/trefoil_knot/</cite> directory.</p>
+<p>We need the data to be in the right format in order so that we process it with the DeMapper CLI.</p>
+<p>The data has to be a 2D matrix. DeMapper CLI can load different file formats that contain the matrix, <a class="reference internal" href="batch_load.html"><span class="doc">as described here</span></a>.</p>
+<p>Using BASH, we can check the contents of the trefoil knot dataset:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span>hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil.1D
+<span class="c1"># Output:</span>
+<span class="c1"># 0.0 -1.0 0.0</span>
+<span class="c1"># 0.2635825469361579 -0.9902526406195032 -0.15773807393743752</span>
+<span class="c1"># 0.5246694072399408 -0.9611307990395632 -0.31152669793339155</span>
+<span class="c1"># 0.7807914698042207 -0.9129938129478427 -0.4575153084753231</span>
+<span class="c1"># 1.0295324819206537 -0.8464360205429347 -0.5920486389876383</span>
+
+wc<span class="w"> </span>-l<span class="w"> </span>hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil.1D
+<span class="c1"># Output:</span>
+<span class="c1">#  120 hasegan_et_al_netneuro_2024/data/trefoil_knot/data_treefoil.1D</span>
+</pre></div>
+</div>
+<p>The file has 120 rows and 3 columns separated by a space. This <cite>1D</cite> file is one of the correct formats supported by the DeMapper CLI.</p>
+</section>
+<section id="step-2-create-the-cohort-file">
+<h2>Step 2: Create the cohort file<a class="headerlink" href="#step-2-create-the-cohort-file" title="Link to this heading"></a></h2>
+<p>We want to tell the DeMapper CLI about our participants cohort. In this case, we have only 1 “participant” (the trefoil knot dataset). We will create a cohort file <cite>cohort.csv</cite> with the following content:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">id0</span><span class="p">,</span><span class="n">id1</span><span class="p">,</span><span class="n">id2</span><span class="p">,</span><span class="n">path</span>
+<span class="n">trefoil</span><span class="p">,,,</span><span class="n">hasegan_et_al_netneuro_2024</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">trefoil_knot</span><span class="o">/</span><span class="n">data_treefoil</span><span class="mf">.1</span><span class="n">D</span>
+</pre></div>
+</div>
+<p>This will link the participant <cite>trefoil</cite> with the path pointing to the <cite>data_treefoil.1D</cite> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the path is relative to the base of the DeMapper repository. When running the DeMapper CLI, the path will be resolved to the correct location. So we will have to provide a <cite>data_root</cite> parameter to the CLI, which will be the base of the DeMapper repository.</p>
+</div>
+</section>
+<section id="step-3-create-the-config-file">
+<h2>Step 3: Create the config file<a class="headerlink" href="#step-3-create-the-config-file" title="Link to this heading"></a></h2>
+<p>The config file will contain the parameters for the Mapper algorithm. We will create a configuration file <cite>mappers.json</cite> with the following content:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;preprocess&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zscore&quot;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;mappers&quot;</span><span class="p">:</span> <span class="p">[{</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;BDLMapper&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+      <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+      <span class="s2">&quot;gain&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+    <span class="p">}],</span>
+    <span class="s2">&quot;analyses&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;plot_graph&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_stats&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_temp&quot;</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Let’s break down the configuration file that will be applied for each item in the cohort file:</p>
+<section id="preprocess">
+<h3>1. preprocess<a class="headerlink" href="#preprocess" title="Link to this heading"></a></h3>
+<p>Preprocessing will zscore the data. This is important because the Mapper algorithm is sensitive to the scale of the data. We want to make sure that the data is centered and scaled. You can check other available preprocessing options in the <a class="reference internal" href="batch_preprocessing.html"><span class="doc">preprocessing</span></a> section.</p>
+</section>
+<section id="mappers">
+<h3>2. mappers<a class="headerlink" href="#mappers" title="Link to this heading"></a></h3>
+<p>The <cite>mappers</cite> array will set which Mapper configurations to run. In this case, the Mapper CLI will generate 9 Mappers, with the following tags:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BDLMapperOpts_6_3_30</span>
+<span class="n">BDLMapperOpts_6_3_40</span>
+<span class="n">BDLMapperOpts_6_3_50</span>
+<span class="n">BDLMapperOpts_6_5_30</span>
+<span class="n">BDLMapperOpts_6_5_40</span>
+<span class="n">BDLMapperOpts_6_5_50</span>
+<span class="n">BDLMapperOpts_6_5_30</span>
+<span class="n">BDLMapperOpts_6_5_40</span>
+<span class="n">BDLMapperOpts_6_5_50</span>
+</pre></div>
+</div>
+<p>You can check the preset Mapper configurations in the <a class="reference internal" href="mapper.html#mappers-preset"><span class="std std-ref">configuration presets section</span></a></p>
+<p>Alternatively, you can set all the Mapper parameters manually. We will create a more advanced mapper configuration file <cite>mappers_adv.json</cite> with the following content:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;preprocess&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zscore&quot;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;mappers&quot;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CustomMapper&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;DistsGeoBDLMapper&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;preprocess_type&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dist_type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;cityblock&quot;</span><span class="p">,</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;chebychev&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">,</span> <span class="s2">&quot;cosine&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;embed_type&quot;</span><span class="p">:</span> <span class="s2">&quot;CMDS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;embed_dim&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;prelens_type&quot;</span><span class="p">:</span> <span class="s2">&quot;wtd-pen&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;prelens_rknnparam&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="s2">&quot;binning_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Nd&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;binning_resolution&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;binning_gain&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s2">&quot;binning_nsides&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">&quot;clustering_type&quot;</span><span class="p">:</span> <span class="s2">&quot;linkage_histo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;clustering_histo_bins&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">&quot;finalgraph_type&quot;</span><span class="p">:</span> <span class="s2">&quot;full&quot;</span>
+    <span class="p">}],</span>
+    <span class="s2">&quot;analyses&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;plot_graph&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_stats&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_temp&quot;</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This configuration will generate five Mapper configurations with the distance parameter being set to either “cityblock”, “euclidean”, “chebychev”, “correlation”, or “cosine”. All the other parameters are fixed to constant values defined within the <a class="reference internal" href="mapper.html"><span class="doc">Mapper configuration</span></a>. The following tags will be generated for this configuration, using the <cite>name</cite> parameter as prefix:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DistsGeoBDLMapper_cityblock</span>
+<span class="n">DistsGeoBDLMapper_euclidean</span>
+<span class="n">DistsGeoBDLMapper_chebychev</span>
+<span class="n">DistsGeoBDLMapper_correlation</span>
+<span class="n">DistsGeoBDLMapper_cosine</span>
+</pre></div>
+</div>
+</section>
+<section id="analyses">
+<h3>3. analyses<a class="headerlink" href="#analyses" title="Link to this heading"></a></h3>
+<p>The <cite>analyses</cite> array will set which analyses to run. In this case, we will run the <cite>plot_graph</cite>, <cite>computer_stats</cite>, and <cite>compute_temp</cite> analyses. You can check other available analyses in the <a class="reference internal" href="batch_analysis.html"><span class="doc">analyses</span></a> section.</p>
+</section>
+</section>
+<section id="step-4-running-the-demapper-cli">
+<h2>Step 4: Running the DeMapper CLI<a class="headerlink" href="#step-4-running-the-demapper-cli" title="Link to this heading"></a></h2>
+<p>Now that we created the cohort and configuration files, we can run the DeMapper CLI. We will use the following command, that will run at the base of the DeMapper repository. In this case, the files were created in the <cite>tutorials/tutorial2/</cite> directory, but feel free to create them in any directory as long as you change the paths accordingly.</p>
+<p>Remember that in previous section on the cohort definition, we set the path to the data relative to the base of the DeMapper repository. The DeMapper CLI will resolve the path to the correct location if we provide the <cite>data_root</cite> parameter.</p>
+<p>We will also provide have to provide an output directory where the results will be stored.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;cohort_csv=&#39;`pwd`/tutorials/tutorial2/cohort.csv&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> config_path=&#39;`pwd`/tutorials/tutorial2/mappers.json&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> output_dir=&#39;`pwd`/results/tutorial2_mappers&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> data_root=&#39;`pwd`&#39;;&quot;</span>
+matlab<span class="w"> </span>-nodesktop<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> run(&#39;code/analysis/run_main.m&#39;)&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>MATLAB needs to have the full paths of the files to be able to run the DeMapper CLI. So we use the <cite>pwd</cite> BASH command to set the full path of the cohort and configuration files.</p>
+</div>
+<p>Running the above command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./tutorials/tutorial2/run_mappers.sh
+<span class="c1"># Output:</span>
+<span class="c1"># ...</span>
+<span class="c1"># Total mapper errors: 0</span>
+</pre></div>
+</div>
+</section>
+<section id="step-5-check-the-results">
+<h2>Step 5: Check the results<a class="headerlink" href="#step-5-check-the-results" title="Link to this heading"></a></h2>
+<p>Lets explore the output directory to see the results of the Mapper algorithm. The output directory is defined in the <cite>run_mappers.sh</cite> script. In this case, the output directory is <cite>results/tutorial2_mappers/</cite>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>results/tutorial2_mappers
+<span class="c1"># Output:</span>
+<span class="c1"># status.csv</span>
+<span class="c1"># trefoil</span>
+cat<span class="w"> </span>results/tutorial2_mappers/status.csv
+<span class="c1"># Output:</span>
+<span class="c1"># id0,id1,id2,mapper,preprocess,result,plot_graph,compute_stats,compute_temp</span>
+<span class="c1"># trefoil,,,BDLMapper_6_10_50,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_10_40,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_10_30,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_5_50,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_5_40,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_5_30,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_3_50,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_3_40,1,1,1,1,1</span>
+<span class="c1"># trefoil,,,BDLMapper_6_3_30,1,1,1,1,1</span>
+</pre></div>
+</div>
+<p>The <cite>status.csv</cite> file shows the status of each Mapper configuration. In this case, all the Mappers were successfully computed.</p>
+<p>We can explore the folders generated for each Mapper configuration:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>results/tutorial2_mappers/trefoil
+<span class="c1"># Output:</span>
+<span class="c1"># BDLMapper_6_10_30</span>
+<span class="c1"># BDLMapper_6_10_40</span>
+<span class="c1"># BDLMapper_6_10_50</span>
+<span class="c1"># BDLMapper_6_3_30</span>
+<span class="c1"># BDLMapper_6_3_40</span>
+<span class="c1"># BDLMapper_6_3_50</span>
+<span class="c1"># BDLMapper_6_5_30</span>
+<span class="c1"># BDLMapper_6_5_40</span>
+<span class="c1"># BDLMapper_6_5_50</span>
+
+ls<span class="w"> </span>results/tutorial2_mappers/trefoil/BDLMapper_6_5_30/<span class="w"> </span><span class="p">|</span><span class="w"> </span>cat
+<span class="c1"># Output:</span>
+<span class="c1"># compute_temp-TCM-mat.1D</span>
+<span class="c1"># compute_temp-TCM.png</span>
+<span class="c1"># compute_temp-TCM_inv-mat.1D</span>
+<span class="c1"># compute_temp-TCM_inv.png</span>
+<span class="c1"># plot_graph.png</span>
+<span class="c1"># res.mat</span>
+<span class="c1"># stats.json</span>
+<span class="c1"># stats_betweenness_centrality.1D</span>
+<span class="c1"># stats_betweenness_centrality_TRs_avg.1D</span>
+<span class="c1"># stats_betweenness_centrality_TRs_max.1D</span>
+<span class="c1"># stats_core_periphery.1D</span>
+<span class="c1"># stats_core_periphery_TRs_avg.1D</span>
+<span class="c1"># stats_core_periphery_TRs_max.1D</span>
+<span class="c1"># stats_degrees_TRs.1D</span>
+<span class="c1"># stats_rich_club_coeffs.1D</span>
+</pre></div>
+</div>
+<p>The DeMapper CLI generated a set of files for each Mapper configuration. For an example of the generated files, we will explore the <cite>results/tutorial2_mappers/trefoil/BDLMapper_6_5_30/</cite> directory.</p>
+<p>The <cite>res.mat</cite> file is generate for each Mapper configuration. The other generated files are based on the analyses we defined in the configuration file. For example, the <cite>compute_temp</cite> analysis generated the <cite>compute_temp-TCM.png</cite> and <cite>compute_temp-TCM_inv.png</cite> files. The <cite>plot_graph</cite> analysis generated the <cite>plot_graph.png</cite> file. Those files are detailed below</p>
+<section id="res-mat-file">
+<h3>1. <cite>res.mat</cite> file<a class="headerlink" href="#res-mat-file" title="Link to this heading"></a></h3>
+<p>The <cite>res.mat</cite> file contains the application of Mapper. This file is the same as the one generated in <a class="reference internal" href="tutorial1.html"><span class="doc">Tutorial 1</span></a>. Loading it, we can generate the same Mapper graph as in the previous tutorial.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">load</span><span class="p">(</span><span class="s">&#39;results/tutorial2_mappers/trefoil/BDLMapper_6_5_30/res.mat&#39;</span><span class="p">);</span>
+
+<span class="c">%% Simple visualization. Check Tutorial 1, Step 4 for more details</span>
+<span class="n">avgNode</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">cellfun</span><span class="p">(@</span><span class="nb">mean</span><span class="p">,</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">nodeMembers</span><span class="p">);</span>
+
+<span class="c">% and by sizing the nodes based on the number of node members</span>
+<span class="n">nodeSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">cell2mat</span><span class="p">(</span><span class="nb">cellfun</span><span class="p">(@(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">size</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="n">nodeMembers</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;UniformOutput&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">));</span>
+<span class="n">nodeSize</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">normalize</span><span class="p">(</span><span class="n">nodeSize</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;range&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">]);</span>
+
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">g</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">graph</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">adjacencyMat</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Layout&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;force&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Usegravity&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;WeightEffect&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;inverse&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&#39;MarkerSize&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">nodeSize</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;NodeCData&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">avgNode</span><span class="p">);</span>
+<span class="n">colorbar</span>
+<span class="s">colormap</span><span class="w"> </span><span class="s">parula</span>
+</pre></div>
+</div>
+<p>The generated visualization will look like:</p>
+<a class="reference internal image-reference" href="_images/mappers_plot_graph.png"><img alt="_images/mappers_plot_graph.png" src="_images/mappers_plot_graph.png" style="width: 400px;" /></a>
+</section>
+<section id="the-plot-graph-analysis">
+<h3>2. The <cite>plot_graph</cite> analysis<a class="headerlink" href="#the-plot-graph-analysis" title="Link to this heading"></a></h3>
+<p>The <cite>plot_graph</cite> analysis generates a simple visualization of the Mapper graph. The visualization is saved in the <cite>plot_graph.png</cite> file, as seen below.</p>
+<a class="reference internal image-reference" href="_images/mappers_plot_graph.png"><img alt="_images/mappers_plot_graph.png" src="_images/mappers_plot_graph.png" style="width: 400px;" /></a>
+<p>You can observe that it’s the same image as we generated with the MATLAB code above. The DeMapper CLI generated this image automatically, so now you can easily check the Mapper graph without having to run the MATLAB code. You could check all the other Mappers graphs with a simple command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>open<span class="w"> </span>results/tutorial2_mappers/trefoil/*/plot_graph.png
+</pre></div>
+</div>
+<p>You can see that some of the Mapper graphs are different. For example, one configuration failed to capture the shape of the trefoil knot as it tried to capture too much detail.</p>
+<a class="reference internal image-reference" href="_images/mappers_plot_graph_fail.png"><img alt="_images/mappers_plot_graph_fail.png" src="_images/mappers_plot_graph_fail.png" style="width: 400px;" /></a>
+<p>Can you guess which Mapper configuration failed to capture the shape of the trefoil knot?</p>
+</section>
+<section id="the-compute-stats-analysis">
+<h3>3. The <cite>compute_stats</cite> analysis<a class="headerlink" href="#the-compute-stats-analysis" title="Link to this heading"></a></h3>
+<p>The files prefixed with <cite>stats</cite> are generated by the <cite>compute_stats</cite> analysis. The <cite>stats.json</cite> file contains basic statistics of the Mapper graph.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>results/tutorial2_mappers/trefoil/BDLMapper_6_5_30/stats.json
+<span class="c1"># Output:</span>
+<span class="c1"># {</span>
+<span class="c1">#     &quot;n_nodes&quot; : 16,</span>
+<span class="c1">#     &quot;coverage_nodes&quot; : 1,</span>
+<span class="c1">#     &quot;coverage_TRs&quot; : 1,</span>
+<span class="c1">#     &quot;distances_max&quot; : 8,</span>
+<span class="c1">#     &quot;distances_entropy&quot; : 3.14629,</span>
+<span class="c1">#     &quot;assortativity&quot; : 0.238255,</span>
+<span class="c1">#     &quot;degree_TRs_avg&quot; : 2.83333,</span>
+<span class="c1">#     &quot;degree_TRs_entropy&quot; : 0.979869</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+<p>Check the <cite>code/analysis/compute_stats.m</cite> file for the definition of the statistics generated. The <cite>compute_stats</cite> analysis is useful to understand the properties of the Mapper graph. Since it is generated for each configuration, you can compare the Mapper graphs based on the statistics.</p>
+</section>
+<section id="the-compute-temp-analysis">
+<h3>4. The <cite>compute_temp</cite> analysis<a class="headerlink" href="#the-compute-temp-analysis" title="Link to this heading"></a></h3>
+<p>The <cite>compute_temp</cite> analysis generates the temporal connectivity matrix (TCM) and its inverse. The TCM is the similarity matrix between the original points. The <cite>TCM_inv</cite> matrix is the inverse of the <cite>TCM</cite> matrix, representing the dissimilarity of original points. Those matrices can be used as input for other analysis or visualization.</p>
+<a class="reference internal image-reference" href="_images/mappers_compute_temp-TCM.png"><img alt="_images/mappers_compute_temp-TCM.png" src="_images/mappers_compute_temp-TCM.png" style="width: 400px;" /></a>
+<p>You can observe that each datapoint from the original dataset is similar to the other points in the neighborhood. The <cite>compute_temp</cite> analysis is useful to understand the similarity between the original points and how they are connected in the Mapper graph.</p>
+</section>
+</section>
+<section id="step-6-advanced-mapper-configurations">
+<h2>Step 6: Advanced Mapper configurations<a class="headerlink" href="#step-6-advanced-mapper-configurations" title="Link to this heading"></a></h2>
+<p>Similarly, you could run the advanced Mapper configuration file <cite>mappers_adv.json</cite>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;cohort_csv=&#39;`pwd`/tutorials/tutorial2/cohort.csv&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> config_path=&#39;`pwd`/tutorials/tutorial2/mappers_adv.json&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> output_dir=&#39;`pwd`/results/tutorial2_mappers_adv&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> data_root=&#39;`pwd`&#39;;&quot;</span>
+matlab<span class="w"> </span>-nodesktop<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> run(&#39;code/analysis/run_main.m&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>Running the above command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./tutorials/tutorial2/run_mappers_adv.sh
+<span class="c1"># Output:</span>
+<span class="c1"># ...</span>
+<span class="c1"># Total mapper errors: 0</span>
+</pre></div>
+</div>
+<p>The results will be stored in the <cite>results/tutorial2_mappers_adv/</cite> directory. You can explore the results as we did before.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial1.html" class="btn btn-neutral float-left" title="Tutorial 1: Running Mapper as a Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial3.html" class="btn btn-neutral float-right" title="Tutorial 3: Running Mappers on fMRI data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brain Dynamics Lab @ Stanford.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

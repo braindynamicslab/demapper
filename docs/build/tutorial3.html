@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 3: Running Mappers on fMRI data &mdash; DeMapper  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 4: Analyze Mapper parameters" href="tutorial4.html" />
+    <link rel="prev" title="Tutorial 2: Running multiple Mappers" href="tutorial2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DeMapper
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Process Mappers in batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Building an extension to DeMapper</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Tutorial 1: Running Mapper as a Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Tutorial 2: Running multiple Mappers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial 3: Running Mappers on fMRI data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-mappers-configuration">Step 1. Mappers configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-running-demapper-cli">Step 2. Running DeMapper CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-running-demapper-cli-in-parallel">Step 3. Running DeMapper CLI in parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-4-generate-task-graphs">Step 4. Generate task graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4.html">Tutorial 4: Analyze Mapper parameters</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DeMapper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 3: Running Mappers on fMRI data</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial3.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial-3-running-mappers-on-fmri-data">
+<h1>Tutorial 3: Running Mappers on fMRI data<a class="headerlink" href="#tutorial-3-running-mappers-on-fmri-data" title="Link to this heading"></a></h1>
+<p>In this tutorial, we will run the Mapper algorithm on fMRI data. We expect that you have gone through the previous tutorials and have a basic understanding of the Mapper algorithm.</p>
+<p>Let’s say that you have a dataset of fMRI data of 1 participant performing a task over two MRI sessions. You analyzed your data with <a class="reference external" href="https://fmriprep.org/en/stable/">fmriprep</a> and <a class="reference external" href="https://xcpengine.readthedocs.io/">xcpengine</a>.  Now, your xcpengine process generated a <cite>cohort.csv</cite> file with the following columns, using the schaefer400x7 parcelation atlas. The file looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">id0</span><span class="p">,</span><span class="n">id1</span><span class="p">,</span><span class="n">id2</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">TR</span>
+<span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">task1</span><span class="p">,</span><span class="n">schaefer400x7</span><span class="p">,</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="n">_task1_schaefer400x7_ts</span><span class="mf">.1</span><span class="n">D</span><span class="p">,</span><span class="mf">0.72</span>
+<span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">task2</span><span class="p">,</span><span class="n">schaefer400x7</span><span class="p">,</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="n">_task2_schaefer400x7_ts</span><span class="mf">.1</span><span class="n">D</span><span class="p">,</span><span class="mf">0.72</span>
+</pre></div>
+</div>
+<p>The <cite>path</cite> column contains the path to the timeseries data, and the <cite>TR</cite> column contains the repetition time of the fMRI data.</p>
+<p>In this tutorial, we will run the Mapper algorithm on the fMRI data of the participant for both sessions.</p>
+<section id="step-1-mappers-configuration">
+<h2>Step 1. Mappers configuration<a class="headerlink" href="#step-1-mappers-configuration" title="Link to this heading"></a></h2>
+<p>Let’s say we want to analyze the Mapper graphs for the fMRI data of the participant. We do not know which parameters to use for the Mapper algorithm, so we have to run the DeMapper toolbox to generate all of the Mapper graphs for different parameters.</p>
+<p>We will generate the following configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;preprocess&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;drop-nan&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;drop-lowvar&quot;</span><span class="p">,</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="mf">1e-2</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zscore&quot;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;mappers&quot;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;BDLMapper&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span>
+        <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
+        <span class="s2">&quot;gain&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">]</span>
+    <span class="p">}],</span>
+    <span class="s2">&quot;analyses&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;plot_graph&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_stats&quot;</span><span class="p">,</span> <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;HRF_threshold&quot;</span><span class="p">:</span> <span class="mi">11</span> <span class="p">}</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_temp&quot;</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We now have new preprocessing steps: <cite>drop-nan</cite> and <cite>drop-lowvar</cite>. The <cite>drop-nan</cite> step will drop the columns or TRs with NaN values and drop rows that contain at least one NaN value. The <cite>drop-lowvar</cite> will drop the rows (ROIs) that have a variance below the set variance (<cite>0.01</cite>). You can read more about those steps in the <cite>preprocessing section &lt;batch_preprocessing&gt;</cite>.</p>
+<p>There are a set of Mapper parameters that will be varied: ‘k’, ‘resolution’, and ‘gain’. Totally, we will generate 4x3x5=60 Mapper configurations.</p>
+<p>The analysis step <cite>compute_stats</cite> now contains extra arguments. This <cite>HRF_threshold</cite> will set generate new stats. Check the <cite>analysis section &lt;batch_analysis&gt;</cite> for more details.</p>
+</section>
+<section id="step-2-running-demapper-cli">
+<h2>Step 2. Running DeMapper CLI<a class="headerlink" href="#step-2-running-demapper-cli" title="Link to this heading"></a></h2>
+<p>Putting all the files together, we can set up the script to run the DeMapper toolbox:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;cohort_csv=&#39;`pwd`/tutorials/tutorial3/cohort.csv&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> config_path=&#39;`pwd`/tutorials/tutorial3/mappers.json&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> output_dir=&#39;`pwd`/results/tutorial3_mappers&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> data_root=&#39;`pwd`/tutorials/tutorial3/&#39;;&quot;</span>
+matlab<span class="w"> </span>-nodesktop<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> run(&#39;code/analysis/run_main.m&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>Then we can run the above command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./tutorials/tutorial3/run_mappers.sh
+<span class="c1"># Output:</span>
+<span class="c1"># ...</span>
+<span class="c1"># Total mapper errors: 0</span>
+</pre></div>
+</div>
+<p>The script might take a while to generate all the Mapper graphs. You can check the status of the Mapper runs by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tail<span class="w"> </span>-f<span class="w"> </span>results/tutorial3_mappers/status.csv
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We will expect to have 120 total Mappers generated (60 for each session). This script will take too long to finish, so we will have to run it in parallel instead.</p>
+</div>
+</section>
+<section id="step-3-running-demapper-cli-in-parallel">
+<h2>Step 3. Running DeMapper CLI in parallel<a class="headerlink" href="#step-3-running-demapper-cli-in-parallel" title="Link to this heading"></a></h2>
+<p>Let’s modify the above script to tell the DeMapper toolbox to generate the Mappers in parallel. Also, we would like to not regenerate the ones that we already have. We will use the <cite>–skip</cite> argument to skip the already generated Mappers.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;cohort_csv=&#39;`pwd`/tutorials/tutorial3/cohort.csv&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> config_path=&#39;`pwd`/tutorials/tutorial3/mappers.json&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> output_dir=&#39;`pwd`/results/tutorial3_mappers&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> data_root=&#39;`pwd`/tutorials/tutorial3/&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> data_root=&#39;`pwd`/tutorials/tutorial3/&#39;;&quot;</span>
+
+<span class="c1"># new arguments</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARGS</span><span class="si">}</span><span class="s2"> poolsize=8;&quot;</span><span class="w"> </span><span class="c1"># generate 8 parallel workers</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARGS</span><span class="si">}</span><span class="s2"> rerun_uncomputed=1;&quot;</span><span class="w">  </span><span class="c1"># Rerun Uncomputed</span>
+
+matlab<span class="w"> </span>-nodesktop<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> run(&#39;code/analysis/run_main.m&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>Then we can run the above command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./tutorials/tutorial3/run_mappers_parallel.sh
+<span class="c1"># Output:</span>
+<span class="c1"># ...</span>
+<span class="c1"># Total mapper errors: 0</span>
+</pre></div>
+</div>
+<p>One could analyze the results, as we did in the previous tutorials.</p>
+</section>
+<section id="step-4-generate-task-graphs">
+<h2>Step 4. Generate task graphs<a class="headerlink" href="#step-4-generate-task-graphs" title="Link to this heading"></a></h2>
+<p>Let’s say that we have some task information that is consistently different throughout the sessions. We want to see how those datapoints during the task are differently represented in the Mapper graph.</p>
+<p>For example, during each session, the participant performed a task that was divided into 2 conditions: <cite>rest</cite> and <cite>thinking</cite>. From our task design we know during each session when the participant was in the <cite>rest</cite> and <cite>thinking</cite> conditions. We can supposedly generate the task CSV files for each session.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>head<span class="w"> </span>tutorials/tutorial3/sub-1_task1.csv
+<span class="c1"># Output:</span>
+<span class="c1"># task_name</span>
+<span class="c1"># rest</span>
+<span class="c1"># rest</span>
+<span class="c1"># rest</span>
+<span class="c1"># rest</span>
+<span class="c1"># rest</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+
+head<span class="w"> </span>tutorials/tutorial3/sub-1_task2.csv
+<span class="c1"># Output:</span>
+<span class="c1"># task_name</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+<span class="c1"># thinking</span>
+<span class="c1"># rest</span>
+<span class="c1"># rest</span>
+<span class="c1"># rest</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The task CSV files contain the <cite>task_name</cite> column that contains the task condition for each TR.</p>
+</div>
+<p>Now we can create a new cohort file that provides the task information for each session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">id0</span><span class="p">,</span><span class="n">id1</span><span class="p">,</span><span class="n">id2</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">TR</span><span class="p">,</span><span class="n">task_path_CONDITION</span>
+<span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">task1</span><span class="p">,</span><span class="n">schaefer400x7</span><span class="p">,</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="n">_task1_schaefer400x7_ts</span><span class="mf">.1</span><span class="n">D</span><span class="p">,</span><span class="mf">0.72</span><span class="p">,</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="n">_task1</span><span class="o">.</span><span class="n">csv</span>
+<span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">task2</span><span class="p">,</span><span class="n">schaefer400x7</span><span class="p">,</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="n">_task2_schaefer400x7_ts</span><span class="mf">.1</span><span class="n">D</span><span class="p">,</span><span class="mf">0.72</span><span class="p">,</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="n">_task2</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The name of the task column is very important. It has to be of the format <cite>task_path_&lt;LABEL&gt;</cite>, where the <cite>&lt;LABEL&gt;</cite> can be any string. This label is referenced in the Mapper configuration file.</p>
+</div>
+<p>Now we can tell Mapper to generate the task graphs for each session. We will update the configuration file by adding the <cite>plot_task</cite> analysis step:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;preprocess&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;drop-nan&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;drop-lowvar&quot;</span><span class="p">,</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="mf">1e-2</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;zscore&quot;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;mappers&quot;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;BDLMapper&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span>
+        <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
+        <span class="s2">&quot;gain&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">]</span>
+    <span class="p">}],</span>
+    <span class="s2">&quot;analyses&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;plot_graph&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_stats&quot;</span><span class="p">,</span> <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;HRF_threshold&quot;</span><span class="p">:</span> <span class="mi">11</span> <span class="p">}</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_temp&quot;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;plot_task&quot;</span><span class="p">,</span> <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CONDITION&quot;</span> <span class="p">}</span> <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice the new plot_task analysis step. The <cite>args</cite> field contains the <cite>name</cite> field that references the task column in the cohort file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can have multiple <cite>plot_task</cite> analysis steps in the configuration file. Each <cite>plot_task</cite> analysis step will generate a different task graph.</p>
+</div>
+<p>Now we can update the script to generate the new task plots:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;cohort_csv=&#39;`pwd`/tutorials/tutorial3/cohort_wtask.csv&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> config_path=&#39;`pwd`/tutorials/tutorial3/mappers_wtask.json&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> output_dir=&#39;`pwd`/results/tutorial3_mappers_wtask&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> data_root=&#39;`pwd`/tutorials/tutorial3/&#39;;&quot;</span>
+<span class="nv">ARGS</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARGS</span><span class="si">}</span><span class="s2"> poolsize=8;&quot;</span><span class="w"> </span><span class="c1"># generate 8 parallel workers</span>
+
+matlab<span class="w"> </span>-nodesktop<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> run(&#39;code/analysis/run_main.m&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>Then we can run the above command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./tutorials/tutorial3/run_mappers_wtask.sh
+<span class="c1"># Output:</span>
+<span class="c1"># ...</span>
+<span class="c1"># Total mapper errors: 0</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Since we are generating a new analysis type, we need to generate the Mappers again. We can easily do that by changing the output directory.</p>
+</div>
+<p>Once the script is done, we can check the results in the <cite>results/tutorial3_mappers_wtask</cite> folder.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="n">results</span><span class="o">/</span><span class="n">tutorial3_mappers_wtask</span> <span class="o">|</span> <span class="n">cat</span>
+<span class="c1"># Output:</span>
+<span class="c1"># status.csv</span>
+<span class="c1"># sub-1</span>
+
+<span class="n">ls</span> <span class="n">results</span><span class="o">/</span><span class="n">tutorial3_mappers_wtask</span><span class="o">/</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span> <span class="o">|</span> <span class="n">cat</span>
+<span class="c1"># Output:</span>
+<span class="c1"># task1</span>
+<span class="c1"># task2</span>
+
+<span class="n">ls</span> <span class="n">results</span><span class="o">/</span><span class="n">tutorial3_mappers_wtask</span><span class="o">/</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">task1</span><span class="o">/</span><span class="n">schaefer400x7</span>
+<span class="c1"># BDLMapper_16_10_30 BDLMapper_16_20_70 BDLMapper_32_10_60 BDLMapper_32_5_50  BDLMapper_6_20_40  BDLMapper_8_10_30  BDLMapper_8_20_70</span>
+<span class="c1"># BDLMapper_16_10_40 BDLMapper_16_5_30  BDLMapper_32_10_70 BDLMapper_32_5_60  BDLMapper_6_20_50  BDLMapper_8_10_40  BDLMapper_8_5_30</span>
+<span class="c1"># BDLMapper_16_10_50 BDLMapper_16_5_40  BDLMapper_32_20_30 BDLMapper_32_5_70  BDLMapper_6_20_60  BDLMapper_8_10_50  BDLMapper_8_5_40</span>
+<span class="c1"># BDLMapper_16_10_60 BDLMapper_16_5_50  BDLMapper_32_20_40 BDLMapper_6_10_30  BDLMapper_6_20_70  BDLMapper_8_10_60  BDLMapper_8_5_50</span>
+<span class="c1"># BDLMapper_16_10_70 BDLMapper_16_5_60  BDLMapper_32_20_50 BDLMapper_6_10_40  BDLMapper_6_5_30   BDLMapper_8_10_70  BDLMapper_8_5_60</span>
+<span class="c1"># BDLMapper_16_20_30 BDLMapper_16_5_70  BDLMapper_32_20_60 BDLMapper_6_10_50  BDLMapper_6_5_40   BDLMapper_8_20_30  BDLMapper_8_5_70</span>
+<span class="c1"># BDLMapper_16_20_40 BDLMapper_32_10_30 BDLMapper_32_20_70 BDLMapper_6_10_60  BDLMapper_6_5_50   BDLMapper_8_20_40</span>
+<span class="c1"># BDLMapper_16_20_50 BDLMapper_32_10_40 BDLMapper_32_5_30  BDLMapper_6_10_70  BDLMapper_6_5_60   BDLMapper_8_20_50</span>
+<span class="c1"># BDLMapper_16_20_60 BDLMapper_32_10_50 BDLMapper_32_5_40  BDLMapper_6_20_30  BDLMapper_6_5_70   BDLMapper_8_20_60</span>
+
+<span class="n">ls</span> <span class="n">results</span><span class="o">/</span><span class="n">tutorial3_mappers_wtask</span><span class="o">/</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">task1</span><span class="o">/</span><span class="n">schaefer400x7</span><span class="o">/</span><span class="n">BDLMapper_8_10_40</span><span class="o">/</span>
+<span class="c1"># Output:</span>
+<span class="c1"># compute_temp-TCM-mat.1D                 res.mat                                 stats_core_periphery_TRs_avg.1D</span>
+<span class="c1"># compute_temp-TCM.png                    stats.json                              stats_core_periphery_TRs_max.1D</span>
+<span class="c1"># compute_temp-TCM_inv-mat.1D             stats_betweenness_centrality.1D         stats_degrees_TRs.1D</span>
+<span class="c1"># compute_temp-TCM_inv.png                stats_betweenness_centrality_TRs_avg.1D stats_rich_club_coeffs.1D</span>
+<span class="c1"># plot_graph.png                          stats_betweenness_centrality_TRs_max.1D</span>
+<span class="c1"># plot_task-CONDITION.png                 stats_core_periphery.1D</span>
+
+<span class="nb">open</span> <span class="n">results</span><span class="o">/</span><span class="n">tutorial3_mappers_wtask</span><span class="o">/</span><span class="n">sub</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">task1</span><span class="o">/</span><span class="n">schaefer400x7</span><span class="o">/</span><span class="n">BDLMapper_8_10_40</span><span class="o">/</span><span class="n">plot_task</span><span class="o">-</span><span class="n">CONDITION</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+<p>An example of the task plot generated is seen below:</p>
+<a class="reference internal image-reference" href="_images/sub-1_task1_example_plot_task.png"><img alt="_images/sub-1_task1_example_plot_task.png" src="_images/sub-1_task1_example_plot_task.png" style="width: 500px;" /></a>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial2.html" class="btn btn-neutral float-left" title="Tutorial 2: Running multiple Mappers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial4.html" class="btn btn-neutral float-right" title="Tutorial 4: Analyze Mapper parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brain Dynamics Lab @ Stanford.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

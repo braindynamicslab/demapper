@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analysis steps &mdash; DeMapper  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Building an extension to DeMapper" href="extend.html" />
+    <link rel="prev" title="Preprocessing step" href="batch_preprocessing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DeMapper
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="batch.html">Process Mappers in batch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="batch.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch.html#usage">Usage</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="batch.html#individual-steps">Individual Steps</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="batch_load.html">Loading step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="batch_preprocessing.html">Preprocessing step</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Analysis steps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis-examples">Analysis Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis-types">Analysis Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Building an extension to DeMapper</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Tutorial 1: Running Mapper as a Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Tutorial 2: Running multiple Mappers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3.html">Tutorial 3: Running Mappers on fMRI data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4.html">Tutorial 4: Analyze Mapper parameters</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DeMapper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="batch.html">Process Mappers in batch</a></li>
+      <li class="breadcrumb-item active">Analysis steps</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/batch_analysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="analysis-steps">
+<h1>Analysis steps<a class="headerlink" href="#analysis-steps" title="Link to this heading"></a></h1>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<dl class="mat function">
+<dt class="sig sig-object mat" id="code.analysis.run_analysis">
+<span class="sig-prename descclassname"><span class="pre">code.analysis.</span></span><span class="sig-name descname"><span class="pre">run_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.analysis.run_analysis" title="Link to this definition"></a></dt>
+<dd><p>RUN_ANALYSIS runs an analysis step on an item and saves the results to
+the output <cite>resdir</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>res</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">2D</span> <span class="pre">matrix</span></code></span>) – the Mapper output result as struct for the item</p></li>
+<li><p><strong>analysis</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">struct</span></code></span>) – the config definition of a specific analysis. Minimally, it
+needs a field <cite>type</cite> as string. It might also have other
+arguments that are needed for the analysis.</p></li>
+<li><p><strong>item</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">table</span> <span class="pre">item</span></code></span>) – individual item details that are further needed for specifc analysis.</p></li>
+<li><p><strong>resdir</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – the path of where to save the analysis results.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Possible <cite>analysis</cite> structs types:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_graph</span></code>: plots the mapper shape graph and saved the plot at
+the path: ‘../plot_graph.png’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compute_stats</span></code>: compute the basis graph statistics (coverage,
+distances, assortativity, core_periphery) which are
+saved at the path ‘stats.json’. It also produces
+detailed results (1D files) for the basic graph
+measures (betweenness_centrality, core_periphery).
+If the <cite>HRF_threshold</cite> value is provided as an
+argument within the analysis struct, then the item
+needs a <cite>TR</cite> value, and the HRF_DURATION_STAT will be
+computed. The TR value is expected as either another
+argument or as a column part of the <cite>item</cite>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compute_temp</span></code>: creates the temporal connectivity matrices (TCM and
+TCM_inverted) which are saved as plots and as matrices
+(as 1D files). If skip_mat is set, it will avoid saving
+the matrix.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_task</span></code>: plots the mapper shape graph with each node labelled based
+on a task file. This analysis requires extra arguments.
+First, “name” is required and can be any string. Second, a
+path to a CSV file is needed. The path can be set as an
+argument in the analysis as “task_path” argument, or
+alternatively, as a table column part of the <cite>item</cite>
+analyzed, with the column name as: “task_path_&lt;name&gt;”,
+where &lt;name&gt; represents the name defined as an argument.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Below, we have a few examples of analysis objects (in JSON format)
+with an associated item:</p>
+</section>
+<section id="analysis-examples">
+<h2>Analysis Examples<a class="headerlink" href="#analysis-examples" title="Link to this heading"></a></h2>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example 1: Plot simple shape graph figure</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Analysis:
+{ &quot;type&quot;: &quot;plot_graph&quot; }
+Explanation:
+Running this analysis will create the file: `plot_graph.png`
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example 2: Compute basic stats</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Analysis:
+{ &quot;type&quot;: &quot;compute_stats&quot; }
+Explanation:
+Running this analysis will multiple files with the prefix stats:
+`stats.json`: is a json file with basic stats of the mapper shape graph
+`stats_degrees_TRs.1D: is a 1D file with each line representing the node
+                       degree of each TR in the shape graph
+`stats_core_periphery.1D`: is a 1D file representing the core-periphery
+                           value for each node of the mapper shape graph
+`stats_core_periphery_TRs_avg.1D`: is a 1D file representing the
+                                   core-periphery value for each TRs
+                                   computed as an average from each node
+`stats_betweenness_centrality.1D`: the betweenness centrality of each node
+                                   of the mapper shape graph
+`stats_*`: other stats computed
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example 3: Compute basic stats with HRF measure</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Analysis:
+{ &quot;type&quot;: &quot;compute_stats&quot;, &quot;args&quot;: { &quot;HRF_threshold&quot;: 11 } }
+Example cohort table (CSV file):
+id0,id1,id2,path,TR
+SBJ01,REST_LR_1,gordon333,/path/to/SBJ01/REST_LR_1/gordon333.npy,0.72
+SBJ02,REST_LR_1,gordon333,/path/to/SBJ02/REST_LR_1/gordon333.npy,0.72
+Explanation:
+Running this analysis will produce similar results as the previous
+`compute_stats` example, with the additional stats related to HRF stats:
+Now, `stats.json` will include a `hrfdur_stat` statistic of the percentage
+of nodes of the shape graph that have TRs with a time difference higher
+than the `HRF_threshold` in seconds. For this, the RepetitionTime of each
+scan is needed, and provided as part of the cohort file. In our example, we
+will have nodes that have TRs separated by 11s, or 11s / 0.72 (TR) = 15
+steps.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example 4: Compute temporal connectivity/similarity matrices (TCM)</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Analysis</span><span class="p">:</span>
+<span class="p">{</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;compute_temp&quot;</span><span class="p">,</span> <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;skip_mat&quot;</span><span class="p">:</span> <span class="n">true</span> <span class="p">}</span> <span class="p">}</span>
+<span class="n">Explanation</span><span class="p">:</span>
+<span class="n">Running</span> <span class="n">this</span> <span class="n">analysis</span> <span class="n">will</span> <span class="n">produce</span> <span class="mi">2</span> <span class="n">files</span> <span class="n">representing</span> <span class="n">the</span> <span class="n">similarity</span>
+<span class="n">matrix</span> <span class="ow">and</span> <span class="n">its</span> <span class="n">inverse</span><span class="p">,</span> <span class="ow">in</span> <span class="n">PNG</span> <span class="nb">format</span> <span class="n">only</span><span class="o">.</span> <span class="n">Changing</span> <span class="n">the</span> <span class="s2">&quot;skip_mat&quot;</span> <span class="n">value</span>
+<span class="n">to</span> <span class="n">false</span><span class="p">,</span> <span class="n">will</span> <span class="nb">print</span> <span class="n">two</span> <span class="mi">1</span><span class="n">D</span> <span class="n">files</span> <span class="k">with</span> <span class="n">the</span> <span class="n">TCM</span> <span class="n">matrix</span> <span class="ow">and</span> <span class="n">it</span><span class="s1">&#39;s inverse.</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example 5: Plot task</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Analysis:
+{ &quot;type&quot;: &quot;plot_task&quot;, &quot;args&quot;: { &quot;name&quot;: &quot;CME&quot;, &quot;path&quot;: &quot;/path/to/timing.csv&quot; } }
+Explanation:
+Running this analysis will create the file: `plot_task-CME.png` that will
+color each node as a pie chart with the distribution of each label of TRs.
+The label of each TR is extracted from the column `task_name` from the CSV
+linked.
+Important Requirement: the CSV containing the task_name column, should have
+the same number of rows as number of TRs in all inputs from the cohort
+file. If you have a varying number of rows (nr of TRs) for different
+inputs, then you have to set a separate task file for each of those item in
+the cohort file. Check the example below for such a setup.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Example 6: Plot task with varying number of TRs</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Analysis:
+{ &quot;type&quot;: &quot;plot_task&quot;, &quot;args&quot;: { &quot;name&quot;: &quot;CME&quot; }
+Example cohort table (CSV file):
+id0,id1,id2,path,TR,task_path_CME
+SBJ01,REST,gordon333,/path/to/bold1.npy,0.72,/path/to/task_labels_for_item1.csv
+SBJ02,REST,gordon333,/path/to/bold2.npy,0.72,/path/to/task_labels_for_item2.csv
+Explanation:
+Running this analysis is similar to the `plot_task` example above but each
+individual item from the cohort file has it&#39;s own separate task labels.
+This is a useful setting in case your bold files have a varying number of
+TRs per scan.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Example 7: Plot task on task labels with a temporal filtering mask</span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Analysis:
+{ &quot;type&quot;: &quot;plot_task&quot;, &quot;args&quot;: { &quot;name&quot;: &quot;CME&quot; }
+Example cohort table (CSV file):
+id0,id1,id2,path,TR,task_path_CME,tmask
+SBJ01,REST,g333,/path/to/bold1.npy,0.72,/path/to/lbls_item1.csv,/path/to/confound2/scrubbed_item1.1D
+SBJ02,REST,g333,/path/to/bold2.npy,0.72,/path/to/lbls_item2.csv,/path/to/confound2/scrubbed_item2.1D
+Explanation:
+Running this analysis is similar to the `plot_task` example above but in
+this case the CSV is filtered by the tmask. This setup is useful when
+running after a task that removes certain TRs of the scan. In that case,
+the labels need to be filtered as well.
+</pre></div>
+</div>
+</div>
+</section>
+<section id="analysis-types">
+<h2>Analysis Types<a class="headerlink" href="#analysis-types" title="Link to this heading"></a></h2>
+<dl class="mat function">
+<dt class="sig sig-object mat" id="code.analysis.plot_graph">
+<span class="sig-prename descclassname"><span class="pre">code.analysis.</span></span><span class="sig-name descname"><span class="pre">plot_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.analysis.plot_graph" title="Link to this definition"></a></dt>
+<dd><p>PLOT_GRAPH Plot the Mapper Graph</p>
+<p>Inputs:
+:param res: the results from running Mapper
+:type res: Mapper struct</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>save_path</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – where to save the resulting graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="mat function">
+<dt class="sig sig-object mat" id="code.analysis.plot_task">
+<span class="sig-prename descclassname"><span class="pre">code.analysis.</span></span><span class="sig-name descname"><span class="pre">plot_task</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.analysis.plot_task" title="Link to this definition"></a></dt>
+<dd><p>PLOT_TASK Plot the Mapper Graph based on task data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>res</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">Mapper</span> <span class="pre">struct</span></code></span>) – the results from running Mapper</p></li>
+<li><p><strong>timing_table</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">table</span></code></span>) – describes the task performed as classifying
+each TR as a value described in ‘task_name’.
+Optionally, one can add ‘task’ field as the ID of
+the task. The table must have the same amount of rows
+as there are TRs in the Mapper result.</p></li>
+<li><p><strong>save_path</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – where to save the resulting graph plot</p></li>
+<li><p><strong>no_legend</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – if set to True, it will not print the legend</p></li>
+<li><p><strong>cmap</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">(3xN)</span> <span class="pre">2D</span> <span class="pre">Matrix</span></code></span>) – if set, it is a matrix that has the same number of rows as
+tasks in timing_table. Expected 3 columns for RGB for each task.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="mat function">
+<dt class="sig sig-object mat" id="code.analysis.compute_stats">
+<span class="sig-prename descclassname"><span class="pre">code.analysis.</span></span><span class="sig-name descname"><span class="pre">compute_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.analysis.compute_stats" title="Link to this definition"></a></dt>
+<dd><p>STATS get stats from the Mapper Graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>res</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">Mapper</span> <span class="pre">struct</span></code></span>) – the results from running Mapper</p></li>
+<li><p><strong>args</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">struct</span></code></span>) – extra details to help create the stats</p></li>
+<li><p><strong>resdir</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – where to save the resulting plots and matrices</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="mat function">
+<dt class="sig sig-object mat" id="code.analysis.compute_temp">
+<span class="sig-prename descclassname"><span class="pre">code.analysis.</span></span><span class="sig-name descname"><span class="pre">compute_temp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.analysis.compute_temp" title="Link to this definition"></a></dt>
+<dd><p>COMPUTE_TEMP Compute and plot the Temporal matrices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>res</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">Mapper</span> <span class="pre">struct</span></code></span>) – the results from running Mapper</p></li>
+<li><p><strong>resdir</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – where to save the resulting plots and matrices</p></li>
+<li><p><strong>skip_mat</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – if true, it doesn’t print out the TCM matrices (default: false)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="batch_preprocessing.html" class="btn btn-neutral float-left" title="Preprocessing step" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="extend.html" class="btn btn-neutral float-right" title="Building an extension to DeMapper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brain Dynamics Lab @ Stanford.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -16,13 +16,13 @@
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="installation.html" />
-    <link rel="prev" title="Analysis steps" href="analysis.html" /> 
+    <link rel="next" title="Tutorial 1: Running Mapper as a Library" href="tutorial1.html" />
+    <link rel="prev" title="Analysis steps" href="batch_analysis.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,6 +53,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-new-analysis-type">Adding a new Analysis type</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Tutorial 1: Running Mapper as a Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Tutorial 2: Running multiple Mappers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3.html">Tutorial 3: Running Mappers on fMRI data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4.html">Tutorial 4: Analyze Mapper parameters</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul>
@@ -110,7 +117,7 @@
 </div></blockquote>
 </li>
 <li><p>Make sure you test the functionality before you add it to the library. You can use one of the data fixtures in <cite>tests</cite> to verify your code. While in the process, create a test file. In our example, create <cite>tests/analysis/test_compute_modularity.m</cite>. Follow the similar test files in the same folder and make sure you use <cite>assert(..)</cite> to verify that a variable is correct.</p></li>
-<li><p>Now that you are confident your code works, you can add it to the <a class="reference internal" href="analysis.html#code.analysis.run_analysis" title="code.analysis.run_analysis"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">code.analysis.run_analysis()</span></code></a> switch-case by adding a new case with your analysis type. For example:</p>
+<li><p>Now that you are confident your code works, you can add it to the <a class="reference internal" href="batch_analysis.html#code.analysis.run_analysis" title="code.analysis.run_analysis"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">code.analysis.run_analysis()</span></code></a> switch-case by adding a new case with your analysis type. For example:</p>
 <blockquote>
 <div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">analysis</span><span class="o">.</span><span class="n">type</span>
     <span class="k">case</span> <span class="s1">&#39;compute_modularity&#39;</span>
@@ -141,8 +148,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="analysis.html" class="btn btn-neutral float-left" title="Analysis steps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="batch_analysis.html" class="btn btn-neutral float-left" title="Analysis steps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial1.html" class="btn btn-neutral float-right" title="Tutorial 1: Running Mapper as a Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
