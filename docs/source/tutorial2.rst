@@ -1,4 +1,4 @@
-Tutorial 2: Running multiple Mappers
+Tutorial 2: Running Mappers in batch
 =====================================
 
 In this tutorial, we will show how to run the Mapper algorithm from the command line. We will use the same data as in Tutorial 1, the trefoil knot dataset.
