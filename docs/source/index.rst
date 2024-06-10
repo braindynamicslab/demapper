@@ -59,3 +59,5 @@ Tutorials:
    installation
    changelog
    genindex
+   Code on GitHub ⎘ <https://github.com/braindynamicslab/demapper>
+   Lab Website ⎘ <https://braindynamicslab.github.io/>
