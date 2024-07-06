@@ -16,6 +16,13 @@ function [res, preprop_deets] = run_preprocess(config, data)
 %                    to preprocess the data
 % :type preprop_deets: (struct)
 %
+% **Note:** This will process any 2D matrix. As the output of the processing is 
+% a 2D matrix that will be used within Mapper, the output rows will be
+% reduced by the Mapper. If you want to reduce the columns instead,
+% you can use the `transpose` preprocessing step.
+% Usually for fMRI data, if we want to process the dynamics, we use rows
+% as the time points (TRs) and columns as the ROIs, with the value being
+% the BOLD response at a ROI at that point in time.
 %
 % **Possible preprocessing steps:**
 %
@@ -29,12 +36,12 @@ function [res, preprop_deets] = run_preprocess(config, data)
 %
 %   - ``transpose``: simply transposes the data.
 %
-%   - ``drop-nan``: drop nan values in two steps: (1) drop columns (TRs) that
-%     are all nan; (2) drop rows (ROIs) that contain at least one
-%     nan value.
+%   - ``drop-nan``: drop Not-A-Number (nan) values in two steps: 
+%     (1) drop rows (e.g., TRs) that are all nan;
+%     (2) drop columns (e.g., ROIs) that contain at least one nan value.
 %
-%   - ``drop-lowvar``: drop all rows (ROIs) that have a variance below the one
-%     provided as value `var`. 
+%   - ``drop-lowvar``: drop all columns (e.g., ROIs) that have a variance
+%     below the one provided as value `var`.
 % 
 
 res = data;

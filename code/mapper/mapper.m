@@ -25,7 +25,8 @@ function res = mapper(X, options)
 % is not of the value "none". Below we define the options, and the possible
 % values that each can take:
 % 
-% :param X: the data (rows are observations TRs, columns are variables ROIs)
+% :param X: the input data. The rows will be reduced considering the features set in
+%           the columns (e.g., rows are observations TRs, columns are variables ROIs)
 % :type X: 2D matrix
 %
 % :param options: the struct defining the parameteres to run Mapper. Defined below:

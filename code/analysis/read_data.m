@@ -1,5 +1,8 @@
 function data = read_data(path)
     %% Read data from path based on the extension
+    % For CSV-like files, the lines of the files will become rows on the matrix.
+    % Note: Mapper will reduce the matrix over rows, but you could also transpose
+    %       using preprocessing step
     %
     % **Supported formats:**
     % 
