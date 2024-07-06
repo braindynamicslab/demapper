@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Process Mappers in batch" href="batch.html" />
-    <link rel="prev" title="DeMapper" href="index.html" /> 
+    <link rel="prev" title="Start here" href="simple.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,6 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="simple.html">Start here</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Run Mapper as a library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#mapper-definition">Mapper Definition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#preset-configurations">Preset configurations</a><ul>
@@ -133,7 +134,8 @@ values that each can take:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">2D</span> <span class="pre">matrix</span></code></span>) – the data (rows are observations TRs, columns are variables ROIs)</p></li>
+<li><p><strong>X</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">2D</span> <span class="pre">matrix</span></code></span>) – the input data. The rows will be reduced considering the features set in
+the columns (e.g., rows are observations TRs, columns are variables ROIs)</p></li>
 <li><p><strong>options</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">struct</span></code></span>) – the struct defining the parameteres to run Mapper. Defined below:</p></li>
 <li><p><strong>options.preprocess_type</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">&quot;none&quot;</span> <span class="pre">|</span> <span class="pre">&quot;PCA&quot;</span> <span class="pre">|</span> <span class="pre">&quot;custom&quot;</span></code></span>) – defines the preprocessing type. Activated if preprocess_type ~= “none”.</p></li>
 <li><p><strong>options.preprocess_varexpl</strong> (<span><code class="xref mat mat-obj docutils literal notranslate"><span class="pre">number</span> <span class="pre">between</span> <span class="pre">50.0</span> <span class="pre">and</span> <span class="pre">100.0</span></code></span>) – defines the
@@ -352,7 +354,7 @@ This is the easiest way to use the library.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="DeMapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simple.html" class="btn btn-neutral float-left" title="Start here" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="batch.html" class="btn btn-neutral float-right" title="Process Mappers in batch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DeMapper &mdash; DeMapper  documentation</title>
+  <title>Start here &mdash; DeMapper  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,7 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Start here" href="simple.html" /> 
+    <link rel="next" title="Run Mapper as a library" href="mapper.html" />
+    <link rel="prev" title="DeMapper" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +33,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             DeMapper
           </a>
 <div role="search">
@@ -44,8 +45,8 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="simple.html">Start here</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Process Mappers in batch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extend.html">Building an extension to DeMapper</a></li>
@@ -72,17 +73,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">DeMapper</a>
+          <a href="index.html">DeMapper</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">DeMapper</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Start here</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/simple.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -90,48 +91,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="demapper">
-<h1>DeMapper<a class="headerlink" href="#demapper" title="Link to this heading"></a></h1>
-<p>Welcome to DeMapper Toolbox</p>
-<section id="usage">
-<h2>Usage:<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
-<dl class="simple">
-<dt><a class="reference internal" href="simple.html"><span class="doc">Start here</span></a></dt><dd><p>Simplest entrypoint to running Mapper in MATLAB.</p>
-</dd>
-<dt><a class="reference internal" href="mapper.html"><span class="doc">Run Mapper as a library</span></a></dt><dd><p>Details on Mapper implementation. Check <a class="reference internal" href="tutorial1.html"><span class="doc">Tutorial 1</span></a> for a step-by-step guide to using Mapper as a library.</p>
-</dd>
-<dt><a class="reference internal" href="batch.html"><span class="doc">Process Mappers in batch</span></a></dt><dd><p>The Toolbox that helps you run multiple Mapper configurations on multiple subjects. Check <a class="reference internal" href="tutorial2.html"><span class="doc">Tutorial 2</span></a> for a step-by-step guide to using the CLI commands. Or check <a class="reference internal" href="tutorial3.html"><span class="doc">Tutorial 3</span></a> for its application on an fMRI dataset.</p>
-</dd>
-<dt><a class="reference internal" href="extend.html"><span class="doc">Building an extension to DeMapper</span></a></dt><dd><p>Documentation on extending the functionality of Mapper or the Toolbox to your specific usecase</p>
-</dd>
-</dl>
-</section>
-<section id="tutorials">
-<h2>Tutorials:<a class="headerlink" href="#tutorials" title="Link to this heading"></a></h2>
-<dl class="simple">
-<dt><a class="reference internal" href="tutorial1.html"><span class="doc">Tutorial 1: Running Mapper as a Library</span></a></dt><dd><p>A step-by-step guide to using DeMapper Toolbox as a library</p>
-</dd>
-<dt><a class="reference internal" href="tutorial2.html"><span class="doc">Tutorial 2: Running Mappers in batch</span></a></dt><dd><p>A guide to using DeMapper CLI to run multiple Mappers on one dataset of multiple participants.</p>
-</dd>
-<dt><a class="reference internal" href="tutorial3.html"><span class="doc">Tutorial 3: Running Mappers on fMRI data</span></a></dt><dd><p>A guide to using DeMapper on an functional MRI dataset.</p>
-</dd>
-<dt><a class="reference internal" href="tutorial4.html"><span class="doc">Tutorial 4: Analyze Mapper parameters</span></a></dt><dd><p>Links to further applications of DeMapper, including how to generate the figures for Hasegan et al., 2024.</p>
-</dd>
-</dl>
-<div class="toctree-wrapper compound">
+  <section id="start-here">
+<h1>Start here<a class="headerlink" href="#start-here" title="Link to this heading"></a></h1>
+<p>After you install and load up the package in MATLAB (check <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> if you havent),
+you can start using the Mapper algorithm by running the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">opts</span> <span class="o">=</span> <span class="n">BDLMapperOpts</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">70</span><span class="p">);</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">mapper</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">opts</span><span class="p">);</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
+<ul class="simple">
+<li><p>This will set up a default Mapper algorithm with 20 bins, 70% overlap, and using a k-value of 32.</p></li>
+<li><p>The <cite>data</cite> parameter should be a matrix of size <cite>n x m</cite> where <cite>n</cite> is the number of samples and <cite>m</cite> is the number of features. The Mapper will simplify on the rows dimension, compressing the data into a graph structure that represents the shape of the data.</p></li>
+</ul>
+<p>The <cite>res</cite> variable will contain the Mapper output, representing the graph structure of the data.
+You can simply visualize it as follows:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="nb">figure</span><span class="p">;</span>
+<span class="n">g</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">graph</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">adjacencyMat</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Layout&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;force&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Usegravity&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;WeightEffect&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;inverse&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
-</div>
-</section>
+<p><strong>Next steps</strong></p>
+<p>For more information on the Mapper algorithm, check the <a class="reference internal" href="mapper.html"><span class="doc">Run Mapper as a library</span></a> page.</p>
+<p>Or you can follow the tutorials to get a step-by-step guide on how to use the Mapper algorithm
+in different scenarios. <a class="reference internal" href="tutorial1.html"><span class="doc">Tutorial 1: Running Mapper as a Library</span></a> is a good place to start.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="simple.html" class="btn btn-neutral float-right" title="Start here" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="DeMapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mapper.html" class="btn btn-neutral float-right" title="Run Mapper as a library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

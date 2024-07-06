@@ -46,6 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="simple.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="batch.html">Process Mappers in batch</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="batch.html#usage-example">Usage Example</a></li>
@@ -123,7 +124,12 @@
 <dl class="mat function">
 <dt class="sig sig-object mat" id="code.analysis.read_data">
 <span class="sig-prename descclassname"><span class="pre">code.analysis.</span></span><span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#code.analysis.read_data" title="Link to this definition"></a></dt>
-<dd><p>Read data from path based on the extension</p>
+<dd><p>Read data from path based on the extension
+For CSV-like files, the lines of the files will become rows on the matrix.
+Note: Mapper will reduce the matrix over rows, but you could also transpose</p>
+<blockquote>
+<div><p>using preprocessing step</p>
+</div></blockquote>
 <p><strong>Supported formats:</strong></p>
 <blockquote>
 <div><ul class="simple">

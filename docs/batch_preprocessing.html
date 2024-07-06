@@ -46,6 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="simple.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="batch.html">Process Mappers in batch</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="batch.html#usage-example">Usage Example</a></li>
@@ -124,6 +125,13 @@ using the preprocessing steps in <cite>config</cite></p>
 to preprocess the data</p>
 </dd>
 </dl>
+<p><strong>Note:</strong> This will process any 2D matrix. As the output of the processing is
+a 2D matrix that will be used within Mapper, the output rows will be
+reduced by the Mapper. If you want to reduce the columns instead,
+you can use the <cite>transpose</cite> preprocessing step.
+Usually for fMRI data, if we want to process the dynamics, we use rows
+as the time points (TRs) and columns as the ROIs, with the value being
+the BOLD response at a ROI at that point in time.</p>
 <p><strong>Possible preprocessing steps:</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -134,11 +142,11 @@ diving by the standard deviation of the baseline
 data. The baseline data indices are defined within
 the preprocess step as <cite>min</cite> and <cite>max</cite>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">transpose</span></code>: simply transposes the data.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">drop-nan</span></code>: drop nan values in two steps: (1) drop columns (TRs) that
-are all nan; (2) drop rows (ROIs) that contain at least one
-nan value.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">drop-lowvar</span></code>: drop all rows (ROIs) that have a variance below the one
-provided as value <cite>var</cite>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop-nan</span></code>: drop Not-A-Number (nan) values in two steps:
+(1) drop rows (e.g., TRs) that are all nan;
+(2) drop columns (e.g., ROIs) that contain at least one nan value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop-lowvar</span></code>: drop all columns (e.g., ROIs) that have a variance
+below the one provided as value <cite>var</cite>.</p></li>
 </ul>
 </div></blockquote>
 </dd></dl>

@@ -1,10 +1,13 @@
 DeMapper
 ==============
 
-Welcome to DeMapper Toolbox (MATLAB version)
+Welcome to DeMapper Toolbox
 
 Usage:
 ------
+
+:doc:`simple`
+   Simplest entrypoint to running Mapper in MATLAB.
 
 :doc:`mapper`
    Details on Mapper implementation. Check :doc:`Tutorial 1<tutorial1>` for a step-by-step guide to using Mapper as a library.
@@ -37,6 +40,7 @@ Tutorials:
    :caption: Usage:
    :hidden:
 
+   simple
    mapper
    batch
    extend

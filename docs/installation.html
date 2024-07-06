@@ -46,6 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Usage:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="simple.html">Start here</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapper.html">Run Mapper as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Process Mappers in batch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extend.html">Building an extension to DeMapper</a></li>
@@ -53,15 +54,21 @@
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Tutorial 1: Running Mapper as a Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Tutorial 2: Running multiple Mappers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Tutorial 2: Running Mappers in batch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial3.html">Tutorial 3: Running Mappers on fMRI data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial4.html">Tutorial 4: Analyze Mapper parameters</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#matlab-setup">MATLAB Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cli-setup">CLI Setup</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/braindynamicslab/demapper">Code on GitHub ⎘</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://braindynamicslab.github.io/">Lab Website ⎘</a></li>
 </ul>
 
         </div>
@@ -90,10 +97,41 @@
              
   <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
-<p>To get DeMapper, simply clone the project and start using it in Matlab.</p>
+<p>To get DeMapper, download the repository from GitHub from following the link:
+<a class="reference external" href="https://github.com/braindynamicslab/demapper">https://github.com/braindynamicslab/demapper</a>.</p>
+<p>Or by cloning the project using the following command if you have SSH keys set up:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">braindynamicslab</span><span class="o">/</span><span class="n">demapper</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
+<p>Or by cloning the project using the HTTPS link:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">braindynamicslab</span><span class="o">/</span><span class="n">demapper</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<section id="matlab-setup">
+<h2>MATLAB Setup<a class="headerlink" href="#matlab-setup" title="Link to this heading"></a></h2>
+<p>Once you have the repository, you can use it directly by adding the path
+to the repository to your MATLAB path.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">addpath</span><span class="p">(</span><span class="n">genpath</span><span class="p">(</span><span class="s1">&#39;path_to_demapper&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+</section>
+<section id="cli-setup">
+<h2>CLI Setup<a class="headerlink" href="#cli-setup" title="Link to this heading"></a></h2>
+<p>You don’t have to open MATLAB to run the deMapper Toolbox.
+You can run the Mapper algorithm from the command line interface (CLI)
+by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>matlab<span class="w"> </span>-nodesktop<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ARGS</span><span class="s2"> run(&#39;path_to_demapper/code/analysis/run_main.m&#39;)&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You need MATLAB installed on your computer. Ideally it is linked to the <cite>matlab</cite>
+command. Otherwise, you might have to change the way to call MATLAB in the command line.</p>
+</div>
+<p>Where <cite>$ARGS</cite> is the arguments you want to pass to the Mapper CLI.
+Follow <a class="reference internal" href="batch.html"><span class="doc">Process Mappers in batch</span></a> for more information on how to use the CLI.
+Or check <a class="reference internal" href="tutorial2.html"><span class="doc">Tutorial 2: Running Mappers in batch</span></a> for a step-by-step guide on how to use the CLI.</p>
+</section>
 </section>
 
 
