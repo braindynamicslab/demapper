@@ -7,13 +7,17 @@ load_dotenv()  # take environment variables from .env.
 BASE_PATH = os.path.join(os.environ['WORKSPACE'], 'results/')
 
 def ch_ds(ch):
-    return {
+    locs = {
         'cme-bins1': BASE_PATH + 'cme/analysis/mappers_cme_bins1.json',
         'cme-bins2': BASE_PATH + 'cme/analysis/mappers_cme_bins2.json',
         'cme-dists2': BASE_PATH + 'cme/analysis/mappers_cme_dists2.json',
         'cme-clust1': BASE_PATH + 'cme/analysis/mappers_cme_clust1.json',
         'cme-embed1': BASE_PATH + 'cme/analysis/mappers_cme_embed1.json',
+        'cme-shufPN': BASE_PATH + 'cme/analysis/mappers_cme.json',
     }
+    for i in range(1, 21):
+        locs[f'cme-shufP{i}'] = BASE_PATH + f'cme-shufs/P{i}/analysis/mappers_cme.json'
+    return locs
 
 ALL_DATASETS = {
     'ch7': ch_ds('ch7'),
@@ -33,4 +37,6 @@ for k in DATASETS.keys():
         _FILTERS[k] = ['ClustLinkBDLMapper', 'ClustDBSCANBDLMapper']
     elif k.startswith('cme-embed'):
         _FILTERS[k] = ['EmbedBDLMapperWtd', 'tSNEBDLMapperWtd', 'KEmbedBDLMapper']
+    elif k.startswith('cme-shuf'):
+        _FILTERS[k] = ['BDLMapper', 'NeuMapper']
 FILTERS = _FILTERS

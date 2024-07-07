@@ -89,6 +89,12 @@ case $DATASET in
     OUTPUT_DIR="$WORKSPACE/results/w3c-hightr/${CONF}"
     ;;
 
+  cme-shufs)
+    COHORT_CSV="$WORKSPACE/data/cme/shine_shufs/P${3}/cohort.csv"
+    DATA_ROOT="$WORKSPACE/data/cme/shine_shufs/P${3}"
+    OUTPUT_DIR="$WORKSPACE/results/cme-shufs/P${3}/${CONF}"
+    ;;
+
   *)
     echo "Dataset not found! '${DATASET}'"
     ;;
@@ -116,7 +122,7 @@ if [[ -n ${RERUN_ANALYSIS} ]]; then
 fi
 
 # write command, submit, wait
-CMD="matlab -nodesktop -r \"${MATLAB_ARGS} run('$DEMAPPER_MAIN')\"";
+CMD="matlab -nodesktop -r \"${MATLAB_ARGS} run('$DEMAPPER_MAIN'); exit\"";
 echo $CMD;
 eval $CMD;
 wait

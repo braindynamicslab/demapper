@@ -17,8 +17,6 @@
     "gain": [35, 40, 45, 50]
   }],
   "analyses": [
-    { "type": "plot_graph" },
-    { "type": "compute_stats", "args": { "HRF_threshold": 11 } },
-    { "type": "compute_temp", "args": { "skip_mat": true } }
+    { "type": "compute_stats", "args": { "HRF_threshold": 11 } }
   ]
 }
