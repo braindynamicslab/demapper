@@ -1,6 +1,6 @@
 function all_mapper_opts = parse_mappers(mapper_opts)
 all_mapper_opts = {};
-for i=1:size(mapper_opts)
+for i=1:numel(mapper_opts)
     mopts = mapper_opts(i);
     if ~isa(mopts, 'struct')
         mopts = cell2mat(mopts);

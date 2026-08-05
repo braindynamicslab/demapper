@@ -47,7 +47,7 @@ function [res, preprop_deets] = run_preprocess(config, data)
 res = data;
 preprop_deets = struct;
 bystep = cell(1,length(config.preprocess));
-for p_idx = 1:size(config.preprocess)
+for p_idx = 1:numel(config.preprocess)
     prp = config.preprocess(p_idx);
     if iscell(prp)
         prp = cell2mat(prp);
