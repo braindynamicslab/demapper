@@ -210,7 +210,7 @@ parfor (params_idx = 1:size(params,1), parForArg)
     end
 
     %% Run the Analyses
-    for a_idx = 1:size(config.analyses)
+    for a_idx = 1:numel(config.analyses)
         an = config.analyses(a_idx);
         if iscell(an)
             an = cell2mat(an);
@@ -250,7 +250,7 @@ disp(['Total mapper errors: ', num2str(errors_cnt)]);
 %% Helper functions
 function has = has_multiple_analyses(analyses, analysis_type)
     count = 0;
-    for a_idx = 1:size(analyses)
+    for a_idx = 1:numel(analyses)
         an = analyses(a_idx);
         if iscell(an)
             an = cell2mat(an);
